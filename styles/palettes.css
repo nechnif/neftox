@@ -1,0 +1,44 @@
+/* palette tangerine */
+:root {
+    --moonstone:  92, 158, 173;
+       --paynes:  40,  83,  98;
+    --tangerine: 227, 151, 116;
+         --glow: 248, 248, 248;
+      --glowlow: 238, 238, 238;
+}
+
+/* palette sailor */
+:root {
+    --steelblue:  53, 129, 184;
+         --navy:  17,  45,  64;
+   --sandybrown: 252, 176, 126;
+    --mintcream: 243, 248, 242;
+    --alabaster: 222, 226, 214;
+}
+
+/* palette cherry cake */
+:root {
+   --battleship: 156, 153, 144;
+     --eggplant:  75,  59,  71;
+     --lavender: 132, 103, 125;
+      --dimgray: 230, 230, 230;
+        --blush: 222,  213, 213;
+}
+
+/* palette forest */
+:root {
+     --viridian:  76, 133, 119;
+       --walnut:  64,  55,  41;
+   --aquamarine: 143, 219, 192;
+      --tiffany: 219, 255, 250;
+    --alabaster: 222, 226, 214;
+}
+
+/* palette plain blue */
+:root {
+         --glow: 248, 248, 248;
+         --navy:  17,  45,  64;
+         --glow: 248, 248, 248;
+         --navy:  17,  45,  64;
+      --glowlow: 228, 228, 228;
+}

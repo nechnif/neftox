@@ -1,0 +1,232 @@
+/* stylesheet for nechnif's talks, STYLE: popular */
+
+@import url("palettes.css");
+@import url("customs.css");
+
+/*### box behaviour */
+html { box-sizing: border-box; }
+*, ::before, ::after { box-sizing: inherit; }
+
+/* ### Widths and heights */
+:root {
+     --totalwidth: 1706px;
+    --totalheight: 960px;
+    --titleheight: 120px;
+    --footerwidth: 73px;
+      --boxmargin: 8px;
+     --boxpadding: 15px;
+    --textpadding: 4px;
+     --fontfactor: 1.7;
+  --titlefontsize: calc(var(--fontfactor) * var(--basesize));
+}
+
+body {
+        margin: 0;
+       padding: 0;
+    background: white;
+   font-family: var(--fontfamily);
+}
+
+/*### Specify the frame containers. */
+div.frame {
+              width: var(--totalwidth);
+             height: var(--totalheight);
+            padding: calc(var(--boxpadding) / 2);
+          clip-path: border-box;
+           overflow: hidden;
+             /* border: 1px solid red; */
+}
+
+div.background {
+           width: var(--totalwidth);
+          height: var(--totalheight);
+        position: absolute;
+background-color: rgba(var(--back), 1);
+ background-size: cover;
+}
+
+div.cell {
+              margin: var(--boxmargin);
+             padding: var(--boxpadding);
+     background-size: cover;
+           font-size: var(--basesize);
+              /* border: 1px solid red; */
+}
+
+div.cell.BOXTITLE {
+             height: var(--titleheight);
+              float: right;
+          font-size: var(--titlefontsize);
+        font-weight: bold;
+         text-align: center;
+   background-color: rgba(var(--box), 1);
+              color: rgba(var(--highlight), 1);
+         visibility: hidden;
+             /* To vertically align the text: */
+            display: flex;
+    justify-content: center;
+        align-items: center;
+}
+
+div.cell.BOX1 {
+     float: left;
+    height: calc(var(--totalheight) - 4 * var(--boxmargin));
+}
+
+div.cell.BOX2 {
+         float: right;
+        height: calc(var(--totalheight) - var(--titleheight) - 6 * var(--boxmargin));
+    visibility: hidden;
+}
+
+div.cell.BOX3 {
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
+        height: calc((var(--totalheight) - 7 * var(--boxmargin)) * 0.5);
+    visibility: hidden;
+}
+
+div.cell.BOX4 {
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
+        height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5);
+    visibility: hidden;
+}
+
+div.cell.BOX5 {
+         width: calc(var(--totalwidth) - 4 * var(--boxmargin));
+        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+    visibility: hidden;
+}
+
+div.cell.FOOTER {
+           float: left;
+           width: var(--footerwidth);
+          height: calc(var(--totalheight) - 4 * var(--boxmargin));
+       font-size: 20pt;
+background-color: rgba(var(--box), 1);
+           color: rgba(var(--text), 1);
+}
+div.FOOTER span.footer {
+             display: block;
+            position: relative;
+    transform-origin: top left;
+                left: 0;
+                 top: 0;
+        padding-left: var(--boxpadding);
+           transform: rotate(-90deg) translateX(calc(-100% + 2 * var(--boxmargin))) translateY(calc(-2 * var(--boxmargin)));
+               width: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--footerwidth));
+              height: var(--footerwidth);
+         line-height: var(--footerwidth);
+           font-size: calc(var(--basesize) - 7pt);
+              /* border: 1px solid red; */
+}
+div.FOOTER span.page {
+     display: block;
+    position: relative;
+ margin-left: calc(-1 * var(--boxpadding));
+  margin-top: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--boxpadding) - 2 * var(--footerwidth));
+       width: var(--footerwidth);
+      height: var(--footerwidth);
+  text-align: center;
+ line-height: var(--footerwidth);
+ font-weight: bold;
+      /* border: 1px solid red; */
+    /* border-radius: 50%; */
+}
+
+div.FOOTER span.date {
+         position: absolute;
+            right: 0;
+    padding-right: calc(1.5 * var(--boxpadding));
+    /* border: 1px solid red; */
+}
+
+div.FOOTER span.title {
+     position: absolute;
+        width: calc(var(--totalheight) * 0.5);
+    font-size: calc(var(--basesize) - 5pt);
+   text-align: center;
+  font-weight: bold;
+}
+
+
+/*--- General content classes and specifications ----------------------- */
+
+/* Classes for list item separation: */
+ul, ol {
+    margin: var(--boxmargin);
+    /* list-style-type: circle; */
+}
+li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.5); }
+ul.ultrawide  li:not(:last-child) { margin-bottom: calc(var(--basesize) * 1.5); }
+ul.wide       li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.8); }
+ul.tight      li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.3); }
+
+p {
+    margin: 0;
+   padding: var(--textpadding) 0;
+}
+p.headline {
+     font-size: 100px;
+   font-weight: bold;
+    text-align: center;
+         color: rgba(var(--text), 1);
+}
+p.subheadline {
+     font-size: 70px;
+   font-weight: bold;
+    text-align: center;
+         color: rgba(var(--text), 1);
+}
+p.caption {
+       position: absolute;
+    font-family: sans-serif;
+      font-size: calc(var(--basesize) - 15pt);
+}
+
+figure {
+    position: absolute;
+      margin: 0;
+     padding: 0;
+}
+figcaption {
+            position: absolute;
+             padding: 0 var(--boxpadding);
+    background-color: rgba(255,255,255,0.8);
+}
+
+hr {
+              border: 0;
+    background-color: black;
+}
+
+
+/* General text styles: */
+.large { font-size: calc(var(--basesize) + 5pt); }
+.small { font-size: calc(var(--basesize) - 5pt); }
+.tiny { font-size: calc(var(--basesize) - 10pt); }
+.bold { font-weight: bold; }
+.tty { font-family: monospace; }
+
+.shadow { text-shadow: 4px 4px 4px black; }
+.shadowwhite { text-shadow: 4px 4px 4px white; }
+.boxshadow { box-shadow: 8px 8px 8px black; }
+.border { border: 5px solid white; }
+
+.none { list-style: none; }
+/* Classes for horizontal alignment: */
+.left   { text-align: left; }
+.right  { text-align: right; }
+.center { text-align: center; }
+/* Classes for vertical alignment: */
+.top    { vertical-align: top; }
+.bottom { vertical-align: bottom; }
+.middle { vertical-align: middle; }
+
+
+table {
+         width: 100%;
+    text-align: center;
+        /* border: 1px solid black; */
+}

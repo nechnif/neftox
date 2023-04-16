@@ -1,0 +1,335 @@
+<!-- meta -------------------------------------------------------------->
+<!--
+    Fill in all the meta information of your presentation here. TITLE,
+    AUTHOR and DATE will appear in the presentation footer.
+
+    STYLE and PALETTE set the overall appearance. Currently, only one
+    style is available. The different color palettes are listed at the
+    end of this tutorial presentation.
+
+    Set OFFSET to 0 if you do not have a title slide. Default is 1.
+
+    Specify FONT and the base FONTSIZE. Default is nefcal (install it
+    from the styles/fonts/ directory) and 35px.
+-->
+TITLE    = Scientific Presentations
+AUTHOR   = Dr. Raphdi McAuthor
+DATE     = 29.02.2020
+STYLE    = whimsical
+PALETTE  = plain blue
+OFFSET   = 1
+FONT     = nefcal
+FONTSIZE = 35px
+
+
+<!-- FRAME ------------------------------------------------------------>
+<!-- The line above marks the beginning of a new slide. -->
+
+<!--
+    What follows is the meta-section of the slide. First, you should
+    pick a TEMPLATE. Default is 00. The different templates are shown in
+    this tutorial presentation.
+-->
+TEMPLATE = 02
+<!--
+    The BACKGROUND keyword takes any CSS-viable argument, as you can see
+    below. The usual 'style = "..."' can be ommitted. This also works:
+    BACKGROUND_COLOR = <some color in RGBA, HEX, ... format>
+    BACKGROUND_IMG = <image from the 'pictures' folder in your
+    presentation directory>
+ -->
+BACKGROUND = background-image: url(../pictures/background.jpg); background-position: bottom; background-size: cover; filter: saturate(0%);
+BACKGROUND_COLOR = rgba(255, 255, 255, 0.8)
+
+<!--
+    The slide contents are organized in boxes:
+
+        BOXTITLE, BOX1, BOX2 for template 00,
+        BOXTITLE, BOX3, BOX4 for template 01,
+        BOX5 for template 02.
+
+    The content of the boxes can be anything from the HTML and CSS world.
+ -->
+BOX5 = {
+    <p class="headline" style="margin-top: 230px;">
+        Scientific Presentations
+    </p>
+    <p class="subheadline">
+        and all you need is a text editor
+    </p>
+
+    <hr style="width: 100%; height: 1.5px; margin-top: 300px;">
+    <p style="width: 50%; float: left; color: rgba(var(--text),1); font-weight: bold;">
+        Presentation of important results<br>
+        from the latest craze in research<br>
+        on February 29th, 2020<br>
+    </p>
+    <p style="width: 50%; float: right; text-align: right; color: rgba(var(--text),1); font-weight: bold;">
+        Dr. Raphdi McAuthor<br>
+        Institute of Science and Technology<br>
+        Famous University, Planet Earth
+    </p>
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+BOXTITLE = {
+    The title of the first slide
+}
+
+BOX1 = {
+    style="background-color: rgba(var(--color), 1);"
+    <!--
+        You can specify a style (e.g. a custom background) at the
+        very first line within each box, as done above.
+    -->
+    <img src="../pictures/testimage_01.jpg" style="width: 100%; border: 1px solid black;">
+    <br>
+    <p style="width: 100%; text-align: center;">
+        You can place your images almost everywhere.
+        Another image could go below.
+    </p>
+}
+
+BOX2 = {
+    style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
+    <ul class="ultrawide large" style="margin: 30px 25px;">
+        <li>The contents go into boxes like this one.</li>
+        <li>The size of the boxes are adjusted to the length of the title.</li>
+        <li>Boxes have a default style, but <font style="color: red;">everything(!) can be changed</font> in the input code.</li>
+        <li>Even the style of the box itself, like the background, can be altered.</li>
+    </ul>
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+KIND = frame
+TEMPLATE = 01
+BACKGROUND = background-image: linear-gradient(to bottom right, rgba(var(--text), 1), rgba(var(--box), 1));
+
+BOXTITLE = {
+    Different style options
+}
+
+BOX3 = {
+    style="color: white;"
+    <ul class="large">
+        <li>In general, boxes can contain anything from the HTML and CSS world.</li>
+        <li>Like images, lists, plain text, even moving headlines if that's your thing.</li>
+        <li>If you need more freedom, choose the template with the single, giant box and knock yourself out!</li>
+        <li>The different templates are shown at the end of the presentation.</li>
+    </ul>
+}
+
+BOX4 = {
+    style="background-color: rgba(255,255,255,0.4);"
+    <ul class="large" style="text-align: right; list-style: none; ">
+        <li>Btw, gradient backgrounds are possible, too!</li>
+    </ul>
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+BOXTITLE = {
+    Equations with LaTeX
+}
+
+BOX1 = {
+
+}
+
+BOX2 = {
+    style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
+    <ul class="ultrawide large" style="margin: 30px 25px;">
+        <li>Coming soon</li>
+    </ul>
+}
+
+<!-- FRAME ------------------------------------------------------------>
+BOXTITLE = {
+    Frames and subframes
+}
+
+BOX1 = {
+    style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
+    <ul class="ultrawide large" style="margin: 30px 25px;">
+        <li>
+            Slides can be duplicated - called "subframes".
+        </li>
+        <li>
+            All un-altered content and styles are being copied over
+            from the previous slide.
+        </li>
+    </ul>
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+<!--
+    You can duplicate an entire slide by making it a subframe.
+    Boxes and meta info can be updated; everything that is not specified
+    is being copied over from the previous slide.
+-->
+KIND = subframe
+
+BOX1 = {
+    ADD
+    <!--
+        The leading ADD will make the content to be appended to that of
+        the previous slide. Without it, the content will be overwritten.
+    -->
+        <li style="color: red;">
+            The page number will not go up for subframes.
+        </li>
+        <li>
+            This function is really convenient for adding bullet points
+            to a list!
+        </li>
+}
+
+BOX2 = {
+    <img src="../pictures/testimage_02.jpg" style="width: 100%; border: 1px solid black; filter: saturate(50%); margin-top: 200px;">
+    <br>
+    <p style="width: 100%; text-align: center;">
+        ... This image was added to prove our point!
+    </p>
+}
+
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 00
+
+BOXTITLE = {
+    style="border: 3px solid black;"
+    Template 00
+}
+
+BOX1 = {
+    style="border: 3px solid black;"
+    BOX1
+}
+
+BOX2 = {
+    style="border: 3px solid black;"
+    BOX2
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 01
+
+BOXTITLE = {
+    style="border: 3px solid black;"
+    Template 01
+}
+
+BOX3 = {
+    style="border: 3px solid black;"
+    BOX3
+}
+
+BOX4 = {
+    style="border: 3px solid black;"
+    BOX4
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 02
+
+BOXTITLE = {
+    style="border: 3px solid black;"
+    Template 02
+}
+
+BOX5 = {
+    style="border: 3px solid black;"
+    BOX5
+}
+
+
+<!-- FRAME ------------------------------------------------------------>
+BACKGROUND_COLOR = #dddddd
+
+BOXTITLE = {
+    style="background-color: white; color: black;"
+    Color palettes
+}
+
+FOOTER = {
+    style="background-color: white; color: black;"
+}
+
+BOX1 = {
+    style="background-color: white;"
+    <table style="talbe-layout: fixed;">
+        <colgroup>
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:20%">
+        </colgroup>
+        <tbody>
+            <tr>
+                <td colspan=5 style="text-align: left;">tangerine:</td>
+            </tr>
+            <tr style="height: 100px;">
+                <td style="background: rgba(var(--moonstone), 1);">box</td>
+                <td style="background: rgba(var(--paynes), 1); color: white;">text</td>
+                <td style="background: rgba(var(--tangerine), 1);">color</td>
+                <td style="background: rgba(var(--glow), 1);">highlight</td>
+                <td style="background: rgba(var(--glowlow), 1);">back</td>
+            </tr>
+            <tr>
+                <td colspan=5 style="text-align: left;">sailor:</td>
+            </tr>
+            <tr style="height: 100px;">
+                <td style="background: rgba(var(--steelblue), 1);">box</td>
+                <td style="background: rgba(var(--navy), 1); color: white;">text</td>
+                <td style="background: rgba(var(--sandybrown), 1);">color</td>
+                <td style="background: rgba(var(--mintcream), 1);">highlight</td>
+                <td style="background: rgba(var(--alabaster), 1);">back</td>
+            </tr>
+            <tr>
+                <td colspan=5 style="text-align: left;">cherry cake:</td>
+            </tr>
+            <tr style="height: 100px;">
+                <td style="background: rgba(var(--battleship), 1);">box</td>
+                <td style="background: rgba(var(--eggplant), 1); color: white;">text</td>
+                <td style="background: rgba(var(--lavender), 1);">color</td>
+                <td style="background: rgba(var(--dimgray), 1);">highlight</td>
+                <td style="background: rgba(var(--blush), 1);">back</td>
+            </tr>
+            <tr>
+                <td colspan=5 style="text-align: left;">forest:</td>
+            </tr>
+            <tr style="height: 100px;">
+                <td style="background: rgba(var(--viridian), 1);">box</td>
+                <td style="background: rgba(var(--walnut), 1); color: white;">text</td>
+                <td style="background: rgba(var(--aquamarine), 1);">color</td>
+                <td style="background: rgba(var(--tiffany), 1);">highlight</td>
+                <td style="background: rgba(var(--alabaster), 1);">back</td>
+            </tr>
+            <tr>
+                <td colspan=5 style="text-align: left;">plain blue:</td>
+            </tr>
+            <tr style="height: 100px;">
+                <td style="background: rgba(var(--glow), 1);">box</td>
+                <td style="background: rgba(var(--navy), 1); color: white;">text</td>
+                <td style="background: rgba(var(--glow), 1);">color</td>
+                <td style="background: rgba(var(--navy), 1); color: white;">highlight</td>
+                <td style="background: rgba(var(--glowlow), 1);">back</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+BOX2 = {
+    style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
+    <ul class="large ultrawide" style="margin-top: 30px;">
+        <li>Set a color palette with the PALETTE key in the presentation meta info.</li>
+        <li>Palettes are stored in the palettes.css file.</li>
+    </ul>
+}

@@ -1,0 +1,36 @@
+<!-- BOXTITLE, BOX3, BOX4 -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="{STYLE}">
+</head>
+<body>
+
+    {background}
+
+    <div class="frame">
+
+        <div class="cell FOOTER" {FOOTER style}>
+            <span class="footer">
+                <span class="author">{AUTHOR}</span>
+                <span class="title">{TITLE}</span>
+                <span class="date">{DATE}</span>
+            </span>
+            <span class="page">{page}</span>
+        </div>
+
+        <div class="cell BOX3" {BOX3 style}>
+            <div class="cell BOXTITLE" {BOXTITLE style}>{BOXTITLE}</div>
+            {BOX3}
+        </div>
+
+        <div class="cell BOX4" {BOX4 style}>
+            {BOX4}
+        </div>
+
+    </div>
+
+</body>
+</html>
