@@ -40,13 +40,13 @@ Available options:
 --pdf         # Create PDF presentation
 ```
 
-<img src="./tutorial/parse/output_00.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_01.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_02.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_03.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_04.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_05.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_06.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_07.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_08.jpg" alt="example slide" width="49%"/>
-<img src="./tutorial/parse/output_09.jpg" alt="example slide" width="49%"/>
+<img src="./tutorial/parse/output_00.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_01.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_02.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_03.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_04.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_05.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_06.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_07.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_08.jpg" alt="example slide" width="48%"/>
+<img src="./tutorial/parse/output_09.jpg" alt="example slide" width="48%"/>
