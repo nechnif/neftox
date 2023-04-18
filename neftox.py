@@ -15,6 +15,18 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 import img2pdf
 
+#-- Global functions and variables -------------------------------------
+global inputdir, parsedir
+
+def MatchBetween(start, stop, string, len=1):
+
+    pattern = '(?<={})\s*(.*?)\s*(?={})'.format(start, stop)
+    matches = re.findall(pattern, string, flags=re.S|re.M)
+
+    result = (matches if matches else [(None,)*len])
+    return result
+
+#-----------------------------------------------------------------------
 
 class Presentation(object):
 
@@ -30,8 +42,12 @@ class Presentation(object):
             os.remove('styles/customs.css')
 
         ## Extract raw input content:
-        self.inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
-        self.parsedir = os.path.join('{}parse'.format(self.inputdir), '')
+        global inputdir, parsedir
+        inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
+        parsedir = os.path.join('{}parse'.format(inputdir), '')
+        self.inputdir = inputdir
+        self.parsedir = parsedir
+
         addargs  = inputargs[2:]
         with open(self.inputdir+'/input.html', 'r') as f:
             rawcontent = f.read()
@@ -193,6 +209,7 @@ class Presentation(object):
     def GetFrames(self):
         ## Attributes that are being passed over to the frame class:
         passattr = [
+            ('inputdir',  self.inputdir),
             ('styles',    self.styles),
             ('fonts',     self.fonts),
             ('templates', self.templates),
@@ -213,16 +230,16 @@ class Presentation(object):
                 prevframe = self.frames[str(frame.number-1)]
                 subframe_ = copy.deepcopy(prevframe)
                 allowed = frame.templates[frame.TEMPLATE].allowed
-                for boxname in allowed:
-                    if boxname not in frame.boxes.keys():
+                for a in allowed:
+                    if ((not frame.boxes[a].content) and
+                    (not frame.boxes[a].style)):
                         pass
-                    elif ((boxname in frame.boxes.keys()) and
-                    frame.boxes[boxname].content.startswith('ADD')):
-                        subframe_.boxes[boxname].UpdateContent(
-                            frame.boxes[boxname].content
+                    elif 'ADD--' in frame.boxes[a].content:
+                        subframe_.boxes[a].UpdateContent(
+                            frame.boxes[a].content
                         )
                     else:
-                        subframe_.boxes[boxname] = frame.boxes[boxname]
+                        subframe_.boxes[a] = frame.boxes[a]
 
                 frame.__dict__ = subframe_.__dict__.copy()
                 frame.number += 1
@@ -369,11 +386,19 @@ class Frame(object):
 
     def ParseContent(self):
         ## Extract content information for each frame:
-        rawboxes = re.findall(Box.regex_box, self.rawframe)
+
         boxes = {}
-        for rawbox in rawboxes:
-            box = Box(rawbox, self.templates[self.TEMPLATE])
-            boxes[box.name] = box
+        for a in self.templates[self.TEMPLATE].allowed:
+            match_ = MatchBetween(
+                '({})--'.format(a), '--{}'.format(a), self.rawframe, 2
+            )[0]
+            if match_[0]:
+                rawbox = match_
+            else:
+                rawbox = [a, match_[1]]
+            boxes[a] = Box(
+                rawbox, self.templates[self.TEMPLATE], self.number
+            )
 
         self.boxes = boxes
 
@@ -387,11 +412,11 @@ class Frame(object):
         ## Determine width of title (used in some templates):
         if 'BOXTITLE' in self.boxes.keys():
             titlewidth = self.fonts['bold'].getlength(
-                # '{}'.format(self.boxes['BOXTITLE'].content)
                 ' {} '.format(self.boxes['BOXTITLE'].content)
+                # ' {} '.format(self.boxes['BOXTITLE'].content)
             )
             titlewidth += 2*int(self.styles['boxpadding'])
-            self.boxes['BOXTITLE'].SetStyle(('width', '{}px'.format(titlewidth)))
+            self.boxes['BOXTITLE'].SetStyle([('width', '{}px'.format(titlewidth))])
         else:
             titlewidth = 0
         HTML = HTML.replace('{titlewidth}', '{}'.format(titlewidth))
@@ -405,7 +430,7 @@ class Frame(object):
             HTML = HTML.replace(df[0], '')
             for boxname, box in self.boxes.items():
                 if box.name == df[1]:
-                    box.SetStyle(eval(df[2]))
+                    box.SetStyle([eval(df[2])])
 
         for boxname, box in self.boxes.items():
             HTML = HTML.replace('{{{} style}}'.format(box.name), box.style)
@@ -416,32 +441,63 @@ class Frame(object):
 
 class Box(object):
 
-    regex_box = '(BOX\w*) *= *{\s*((style *= *"(.*)")\s*)*((.|\s)*?)\s*}'
+    re_style = '^\s*style *= *\"(.*)\" *\n'
     regex_li  = '\s*<li .*>((.|\s)*)<\/li>'
 
-    def __init__(self, rawbox, template):
-        self.name     = rawbox[0]
-        self.style    = rawbox[2]
-        self.content  = rawbox[4]
-        self.template = template
 
+    def __init__(self, rawbox, template, framenumber):
+        self.name     = rawbox[0]
+        self.style    = ''
+        self.template = template
+        self.frame    = framenumber
+
+        self.ParseContent(rawbox[1])
         self.Appear()
 
-    def SetStyle(self, *styles):
-        ## Append new style commands to the existing style string:
-        newstyle = self.style.lstrip('style="').rstrip('"')
-        for key, value in styles:
-            newstyle += ' {}: {};'.format(key, value)
+    def SetStyle(self, styles):
+        ## Append new style commands to the existing style string.
 
-        newstyle = 'style="{}"'.format(newstyle)
-        self.style = newstyle
+        newstyles = set()
+        ## The styles argument can be passed as a tuple of a css keyword
+        ## and value (clean) or as a string (dirty). The string has to
+        ## be tuple'd first, this happens below:
+        for s_ in styles:
+            if isinstance(s_, tuple):
+                newstyles.add(s_)
+            elif isinstance(s_, str):
+                list_ = list(filter(None, s_.split(';')))
+                for l in list_:
+                    newstyles.add(tuple(l.split(':')))
+            else:
+                newstyles.add((None,))
+
+        result = self.style.lstrip('style="').rstrip('"')
+        for key, value in newstyles:
+            result += ' {}: {};'.format(key, value)
+
+        result = 'style="{}"'.format(result)
+        self.style = result
+
+    def ParseContent(self, rawcontent):
+
+        if rawcontent:
+            style_ = re.search(Box.re_style.format(self.name), rawcontent)
+            if style_:
+                self.SetStyle([style_.group(1)])
+                content = rawcontent.replace(style_.group(0), '')
+            else:
+                content = rawcontent
+        else:
+            content = None
+
+        self.content = str(content or '')
 
     def UpdateContent(self, newcontent, rev=False):
 
         if rev == True:
-            first, second = newcontent, self.content.replace('ADD', '')
+            first, second = newcontent, self.content.replace('ADD--', '')
         else:
-            first, second = self.content, newcontent.replace('ADD', '')
+            first, second = self.content, newcontent.replace('ADD--', '')
 
         lis = re.search(Box.regex_li, second)
         if lis and '</ul>' in first:
@@ -455,9 +511,8 @@ class Box(object):
 
     def Appear(self):
         ## Boxes are hidden by default. This makes them visible.
-
         if self.style or self.content:
-            self.SetStyle(('visibility', 'visible'))
+            self.SetStyle([('visibility', 'visible')])
 
 
 
@@ -488,4 +543,5 @@ if sys.argv[2] in ['--html', '--HTML']:
 if sys.argv[2] in ['--preview']:
     pres.CreatePreview()
 if sys.argv[2] in ['--pdf', '--PDF']:
+# if (sys.argv[2] in ['--pdf', '--PDF']) or (not sys.argv[2]):
     pres.CreatePDF()

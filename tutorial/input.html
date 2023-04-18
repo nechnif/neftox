@@ -50,7 +50,7 @@ BACKGROUND_COLOR = rgba(255, 255, 255, 0.8)
 
     The content of the boxes can be anything from the HTML and CSS world.
  -->
-BOX1 = {
+BOX1--
     <p class="headline" style="margin-top: 230px;">
         Scientific Presentations
     </p>
@@ -69,15 +69,15 @@ BOX1 = {
         Institute of Science and Technology<br>
         Famous University, Planet Earth
     </p>
-}
+--BOX1
 
 
 <!-- FRAME ------------------------------------------------------------>
-BOXTITLE = {
+BOXTITLE--
     The title of the first slide
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="background-color: rgba(var(--color), 1);"
     <!--
         You can specify a style (e.g. a custom background) at the
@@ -89,9 +89,9 @@ BOX1 = {
         You can place your images almost everywhere.
         Another image could go below.
     </p>
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
     <ul class="ultrawide large" style="margin: 30px 25px;">
         <li>The contents go into boxes like this one.</li>
@@ -99,7 +99,7 @@ BOX2 = {
         <li>Boxes have a default style, but <font style="color: red;">everything(!) can be changed</font> in the input code.</li>
         <li>Even the style of the box itself, like the background, can be altered.</li>
     </ul>
-}
+--BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
@@ -107,11 +107,11 @@ KIND = frame
 TEMPLATE = 01
 BACKGROUND = background-image: linear-gradient(to bottom right, rgba(var(--text), 1), rgba(var(--box), 1));
 
-BOXTITLE = {
+BOXTITLE--
     Different style options
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="color: white;"
     <ul class="large">
         <li>In general, boxes can contain anything from the HTML and CSS world.</li>
@@ -119,38 +119,38 @@ BOX1 = {
         <li>If you need more freedom, choose the template with the single, giant box and knock yourself out!</li>
         <li>The different templates are shown at the end of the presentation.</li>
     </ul>
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     style="background-color: rgba(255,255,255,0.4);"
     <ul class="large" style="text-align: right; list-style: none; ">
         <li>Btw, gradient backgrounds are possible, too!</li>
     </ul>
-}
+--BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
-BOXTITLE = {
+BOXTITLE--
     Equations with LaTeX
-}
+--BOXTITLE
 
-BOX1 = {
-    
-}
+BOX1--
 
-BOX2 = {
+--BOX1
+
+BOX2--
     style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
     <ul class="ultrawide large" style="margin: 30px 25px;">
         <li>Coming soon</li>
     </ul>
-}
+--BOX2
 
 <!-- FRAME ------------------------------------------------------------>
-BOXTITLE = {
+BOXTITLE--
     Frames and subframes
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
     <ul class="ultrawide large" style="margin: 30px 25px;">
         <li>
@@ -161,7 +161,7 @@ BOX1 = {
             from the previous slide.
         </li>
     </ul>
-}
+--BOX1
 
 
 <!-- FRAME ------------------------------------------------------------>
@@ -172,8 +172,8 @@ BOX1 = {
 -->
 KIND = subframe
 
-BOX1 = {
-    ADD
+BOX1--
+    ADD--
     <!--
         The leading ADD will make the content to be appended to that of
         the previous slide. Without it, the content will be overwritten.
@@ -185,83 +185,83 @@ BOX1 = {
             This function is really convenient for adding bullet points
             to a list!
         </li>
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     <img src="../pictures/testimage_02.jpg" style="width: 100%; border: 1px solid black; filter: saturate(50%); margin-top: 200px;">
     <br>
     <p style="width: 100%; text-align: center;">
         ... This image was added to prove our point!
     </p>
-}
+--BOX2
 
 
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 00
 
-BOXTITLE = {
+BOXTITLE--
     style="border: 3px solid black;"
     Template 00
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="border: 3px solid black;"
     BOX1
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     style="border: 3px solid black;"
     BOX2
-}
+--BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 01
 
-BOXTITLE = {
+BOXTITLE--
     style="border: 3px solid black;"
     Template 01
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="border: 3px solid black;"
     BOX1
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     style="border: 3px solid black;"
     BOX2
-}
+--BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 02
 
-BOXTITLE = {
+BOXTITLE--
     style="border: 3px solid black;"
     Template 02
-}
+--BOXTITLE
 
-BOX1 = {
+BOX1--
     style="border: 3px solid black;"
     BOX1
-}
+--BOX1
 
 
 <!-- FRAME ------------------------------------------------------------>
 BACKGROUND_COLOR = #dddddd
 
-BOXTITLE = {
+BOXTITLE--
     style="background-color: white; color: black;"
     Color palettes
-}
+--BOXTITLE
 
 FOOTER = {
     style="background-color: white; color: black;"
-}
+--FOOTER
 
-BOX1 = {
+BOX1--
     style="background-color: white;"
     <table style="talbe-layout: fixed;">
         <colgroup>
@@ -324,12 +324,12 @@ BOX1 = {
             </tr>
         </tbody>
     </table>
-}
+--BOX1
 
-BOX2 = {
+BOX2--
     style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
     <ul class="large ultrawide" style="margin-top: 30px;">
         <li>Set a color palette with the PALETTE key in the presentation meta info.</li>
         <li>Palettes are stored in the palettes.css file.</li>
     </ul>
-}
+--BOX2
