@@ -68,32 +68,32 @@ div.cell.BOXTITLE {
         align-items: center;
 }
 
-div.cell.BOX1 {
+div.cell.T00.BOX1 {
      float: left;
     height: calc(var(--totalheight) - 4 * var(--boxmargin));
 }
 
-div.cell.BOX2 {
+div.cell.T00.BOX2 {
          float: right;
         height: calc(var(--totalheight) - var(--titleheight) - 6 * var(--boxmargin));
     visibility: hidden;
 }
 
-div.cell.BOX3 {
+div.cell.T01.BOX1 {
          float: right;
          width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
         height: calc((var(--totalheight) - 7 * var(--boxmargin)) * 0.5);
     visibility: hidden;
 }
 
-div.cell.BOX4 {
+div.cell.T01.BOX2 {
          float: right;
          width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
         height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5);
     visibility: hidden;
 }
 
-div.cell.BOX5 {
+div.cell.T02.BOX1 {
          width: calc(var(--totalwidth) - 4 * var(--boxmargin));
         height: calc(var(--totalheight) - 4 * var(--boxmargin));
     visibility: hidden;
