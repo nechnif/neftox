@@ -130,20 +130,66 @@ BOX2--
 
 
 <!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 01
 BOXTITLE--
     Equations with LaTeX
 --BOXTITLE
 
-BOX1--
 
+BOX1--
+    <ul class="wide large" style="margin: 30px 25px;">
+        <li>
+            If you're familiar with LaTeX typesetting, you can use the
+            built-in TEX environment for mathematical expressions.
+        </li>
+        <li>
+            LaTeX expressions are rendered as images ...
+        </li>
+        <li>
+            <!--
+                You can enter the LaTeX world with the TEX tags,
+                like in the example below. Everything between those tags
+                will be interpreted as a LaTeX expression, and will throw
+                errors if not in line with the LaTeX syntax.
+            -->
+            ... so they might behave
+            TEX--
+                {\fontsize{30}{32}\selectfont
+                \textcolor{red}{a wee bit oddly}}
+            --TEX
+            when embedded into normal text.
+        </li>
+        <li>
+            Below is an example of a multiline equation:
+        </li>
+    </ul>
 --BOX1
 
 BOX2--
-    style="background-image: url(../pictures/torngrid_01.png);  background-position: bottom; background-size: cover;"
-    <ul class="ultrawide large" style="margin: 30px 25px;">
-        <li>Coming soon</li>
-    </ul>
+    style="background-color: white;"
+    <p style="text-align: center;">
+    <!-- Here is another LaTeX example: -->
+    TEX--
+        \fontsize{25}{27}\selectfont
+        This is a famous Lagrangian:\\
+        \renewcommand{\arraystretch}{1.5}
+        \[
+        \begin{array}{ccll}
+            \mathcal{L}_{\text{Sc}} & \supset & \left.\:\:\:\:\:\:\left(D_{\mu}\eta\right)\left(D^{\mu}\eta^{\dagger}\right)+\bar{N}\gamma_{\mu}\partial^{\mu}N\right. & \text{kinetic terms}\\
+             &  & \left.\:\:-\:\frac{m_{N_{i}}}{2}\bar{N}_{i}N_{i}\right. & \text{Majorana mass}\\
+             &  & \left.\:\:+\:y_{i\alpha}\left(\eta^{\dagger}L_{\alpha}\right)N_{i}+\text{h.c.}\right. & \text{Yukawa term}\\
+             &  & \left.
+             \begin{array}{l}
+                -\:m_{\phi}^{2}\phi^{\dagger}\phi-m_{\eta}^{2}\eta^{\dagger}\eta-\frac{\lambda_{1}}{2}\left(\phi^{\dagger}\phi\right)^{2}-\frac{\lambda_{2}}{2}\left(\eta^{\dagger}\eta\right)^{2}\\
+                -\:\lambda_{3}\left(\phi^{\dagger}\phi\right)\left(\eta^{\dagger}\eta\right)-\lambda_{4}\left(\phi^{\dagger}\eta\right)\left(\eta^{\dagger}\phi\right)\\
+                -\:\frac{\lambda_{5}}{2}\left[\left(\phi^{\dagger}\eta\right)^{2}+\left(\eta^{\dagger}\phi\right)^{2}\right]
+            \end{array}\right\}  & \text{scalar potential}
+        \end{array}
+        \]
+    --TEX
+    </p>
 --BOX2
+
 
 <!-- FRAME ------------------------------------------------------------>
 BOXTITLE--

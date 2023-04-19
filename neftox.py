@@ -6,7 +6,7 @@ import re
 import subprocess
 import copy
 import matplotlib.font_manager
-from PIL import ImageFont
+from PIL import Image, ImageFont
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -19,12 +19,18 @@ import img2pdf
 global inputdir, parsedir
 
 def MatchBetween(start, stop, string, len=1):
-
+    ## Grab the content between two custom tags.
     pattern = '(?<={})\s*(.*?)\s*(?={})'.format(start, stop)
     matches = re.findall(pattern, string, flags=re.S|re.M)
 
-    result = (matches if matches else [(None,)*len])
+    result = (matches if matches else ([] if len==None else[(None,)*len]))
     return result
+
+def DeleteBracket(start, stop, string, replace=''):
+    ## Deletes or replaces custom tags from a string.
+    string = string.replace(start, replace)
+    string = string.replace(stop, replace)
+    return string
 
 #-----------------------------------------------------------------------
 
@@ -444,7 +450,6 @@ class Box(object):
     re_style = '^\s*style *= *\"(.*)\" *\n'
     regex_li  = '\s*<li .*>((.|\s)*)<\/li>'
 
-
     def __init__(self, rawbox, template, framenumber):
         self.name     = rawbox[0]
         self.style    = ''
@@ -480,17 +485,30 @@ class Box(object):
 
     def ParseContent(self, rawcontent):
 
-        if rawcontent:
-            style_ = re.search(Box.re_style.format(self.name), rawcontent)
-            if style_:
-                self.SetStyle([style_.group(1)])
-                content = rawcontent.replace(style_.group(0), '')
-            else:
-                content = rawcontent
+        ## Check for ... well, content:
+        if not rawcontent:
+            self.content = ''
+            return
         else:
-            content = None
+            content = rawcontent
 
-        self.content = str(content or '')
+        ## Check for styles:
+        style_ = re.search(Box.re_style.format(self.name), rawcontent)
+        if style_:
+            self.SetStyle([style_.group(1)])
+            content = rawcontent.replace(style_.group(0), '')
+
+        ## Check for equations::
+        eqcount = 0
+        equs_ = MatchBetween(*Equation.re_brackets, content, None)
+        equs = []
+        for e in equs_:
+            equ = Equation(e, self.frame, self.name, eqcount)
+            content = content.replace(e, equ.HTML)
+            eqcount += 1
+
+        content = DeleteBracket(*Equation.re_brackets, content)
+        self.content = content
 
     def UpdateContent(self, newcontent, rev=False):
 
@@ -514,6 +532,80 @@ class Box(object):
         if self.style or self.content:
             self.SetStyle([('visibility', 'visible')])
 
+
+class Equation(object):
+
+    re_brackets = ('TEX--', '--TEX')
+
+    def __init__(self, rawtex, framenumber, boxname, count):
+
+        self.rawtex = rawtex
+
+        self.name   = '{:02d}-{}-{:02d}'.format(framenumber, boxname, count)
+        self.eqpath = '{}{}.png'.format(parsedir, self.name)
+
+        self.Eqtopng()
+        self.EqtoHTML()
+
+    def Eqtopng(self):
+        ## Converts latex expression to png image.
+
+        from sympy import preview
+
+        # preamble = (
+        #     # '\\documentclass[35pt]{article}\n'
+        #     '\\documentclass[tikz]{standalone}\n'
+        #     # '\\usepackage[fontsize=10.8pt]{fontsize}'
+        #     '\\usepackage{units}'
+        #     '\\usepackage{newpxtext}'
+        #     '\\usepackage{newpxmath}'
+        #     '\\usepackage{xcolor}'
+        #     '\\begin{document}'
+        # )
+
+        packages = (
+            'units',
+            'lmodern',
+            # 'newpxtext', 'newpxmath',
+            'xcolor',
+        )
+        ## Scale the image by a factor to get decent resolution:
+        scale = 4
+        dvioptions = [
+            '-D {}'.format(scale*100),
+            '-bg', 'rgb 20 20 20',
+            '-bd', '100', '--gamma', '10'
+        ]
+        preview(
+            self.rawtex, viewer='file', filename=self.eqpath,
+            dvioptions=dvioptions, euler=False,
+            packages=packages,
+            # preamble=preamble,
+        )
+        self.dims = np.array(Image.open(self.eqpath).size)/scale
+
+    def EqtoHTML(self):
+
+        re_subchars = r'\b(?<![\\|{])\w*[gjpqy]\w*\b'
+
+        subgreeks = [
+            'beta ', 'gamma ', 'zeta ', 'mu ', 'xi ', 'rho ', 'varrho ',
+            'varsigma ', 'phi ', 'varphi ', 'chi ', 'psi ',
+        ]
+
+        offset = ''
+        ## Check if expression is one-liner:
+        if self.dims[1] < 100:
+            ## Check if expression contains regular words with
+            ## descendent characters, or descendent greek symbols:
+            test1 = re.search(re_subchars, self.rawtex)
+            test2 = any('\\{}'.format(char) in self.rawtex for char in subgreeks)
+            if test1 or test2:
+                offset = 'margin-bottom: -{}px;'.format(self.dims[1]*0.24)
+
+        self.HTML = '<img src="{}" style="width:{}px; {}"/>\n'.format(
+            self.eqpath, self.dims[0], offset,
+        )
 
 
 #--- Parse arguments ---------------------------------------------------

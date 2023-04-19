@@ -13,6 +13,8 @@ This tool is designed to combine the best from two worlds: The freedom and flexi
 
 ### Prerequisites
 
+The following Python3 packages are required for neftox to work:
+
 ```
 numpy
 os
@@ -26,6 +28,13 @@ selenium
 img2pdf
 ```
 
+If you want to use LaTeX expressions in your presentation, you also need
+
+```
+sympy
+```
+
+as well as a working TeX Live installation. 
 
 ### Usage
 
