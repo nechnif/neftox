@@ -278,8 +278,6 @@ class Presentation(object):
         options.add_argument("--no-sandbox");
         options.add_argument("--disable-extensions");
         options.add_argument("--dns-prefetch-disable");
-        fmt = 'jpg'     # Default for screenshot quality is jpg.
-        self.fmt = fmt
 
         url = 'file:///{}parse/output.html'.format(self.inputdir)
         driver = webdriver.Firefox(options=options, service_log_path=os.path.devnull)
@@ -288,16 +286,22 @@ class Presentation(object):
         imgfiles = []
         scroll = windowsize[1]+scrolloffset
         for f in range(len(self.frames)):
-            png = '{}parse/output_{:02d}.{}'.format(self.inputdir, f, fmt)
-            imgfiles.append(png)
+            png = '{}parse/output_{:02d}.png'.format(self.inputdir, f)
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
             scroll += windowsize[1]+scrolloffset
             ## The following removes the alpha channels from the images,
             ## which is necessary for the pdf convert:
-            command = 'convert '+png+' -background white -alpha remove -alpha off '+png
+            command = 'convert {} -background white -alpha remove -alpha off {}'.format(png, png)
             call = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
             (output, error) = call.communicate()
+            ## Convert the images to jpg, which reduces size of output
+            ## PDF significantly:
+            jpg = png.replace('.png', '.jpg')
+            imgfiles.append(jpg)
+            Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
+            os.remove(png)
+
         driver.quit()
 
         self.imgfiles = list(np.sort(imgfiles))
@@ -310,10 +314,8 @@ class Presentation(object):
         with open(self.inputdir+outfile, 'wb') as f:
             f.write(img2pdf.convert(self.imgfiles))
 
-        for imgfile in os.listdir(self.parsedir):
-            if imgfile.endswith(self.fmt):
-                os.remove('{}{}'.format(self.parsedir, imgfile))
-
+        for imgfile in self.imgfiles:
+            os.remove(imgfile)
 
 class Template(object):
 
@@ -635,5 +637,4 @@ if sys.argv[2] in ['--html', '--HTML']:
 if sys.argv[2] in ['--preview']:
     pres.CreatePreview()
 if sys.argv[2] in ['--pdf', '--PDF']:
-# if (sys.argv[2] in ['--pdf', '--PDF']) or (not sys.argv[2]):
     pres.CreatePDF()
