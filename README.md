@@ -10,6 +10,8 @@ The neftox tools is text-editor based (it does not come with a graphical interfa
 
 This tool is designed to combine the best from two worlds: The freedom and flexibility of web designing, with the possibilities of scientific document typesetting tools.
 
+This is how it works: Basically, neftox creates a "website" (without being on the web of course) based on the user's input, see `tutorial/parse/output.html`. Then it takes screenshots of this website in the background, splitting it into individual images, see `tutorial/parse/output_<>.jpg`, which are then converted to a PDF, see `tutorial/tutorial.pdf`.
+
 
 ### Prerequisites
 
@@ -34,7 +36,16 @@ If you want to use LaTeX expressions in your presentation, you also need
 sympy
 ```
 
-as well as a working TeX Live installation. 
+as well as a working TeX Live installation.
+
+The process of taking screenshots with selenium currently only works with one browser:
+
+```
+Firefox
+```
+
+The goal is to have neftox select the user's default browser automatically; this is currently under development.
+
 
 ### Usage
 

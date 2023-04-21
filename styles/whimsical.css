@@ -9,8 +9,8 @@ html { box-sizing: border-box; }
 
 /* ### Widths and heights */
 :root {
-     --totalwidth: 1706px;
-    --totalheight: 960px;
+     --totalwidth: 1600px;
+    --totalheight: 900px;
     --titleheight: 120px;
     --footerwidth: 73px;
       --boxmargin: 8px;

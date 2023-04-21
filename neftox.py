@@ -266,30 +266,48 @@ class Presentation(object):
             pf.write(self.HTML)
 
     def CreatePreview(self):
-        ## Creating "screenshots" of the HTML preview pages using Selenium.
+        ## Creating "screenshots" of the HTML preview pages using
+        ## Selenium. Hoping to support different browers in the future.
 
-        windowsize   = (1706, 1040)
-        scrolloffset = -80
+        ## Determine window size:
+        windowsize = {
+            'width'  : int(self.styles['totalwidth']),
+            'height' : int(self.styles['totalheight']),
+        }
 
-
-
+        ## Initiate web driver:
         options = Options()
         options.headless = True
         options.add_argument("--no-sandbox");
         options.add_argument("--disable-extensions");
         options.add_argument("--dns-prefetch-disable");
+        driver = webdriver.Firefox(
+            options=options,
+            service_log_path=os.path.devnull
+        )
 
+        driver.set_window_size(windowsize['width'], windowsize['height'])
         url = 'file:///{}parse/output.html'.format(self.inputdir)
-        driver = webdriver.Firefox(options=options, service_log_path=os.path.devnull)
-        driver.set_window_size(windowsize[0], windowsize[1])
         driver.get(url)
+
+        # Create test image. This is necessary to determine the size of
+        # the nav bar/ overhead of the browser, which has to be taken
+        # into account in the screenshot size. I could not find a better
+        # way to solve this yet.
+        testfile = '{}parse/test.png'.format(self.inputdir)
+        driver.save_screenshot(testfile)
+        scrolloffset = Image.open(testfile).height - windowsize['height']
+        windowsize['height'] = windowsize['height']-scrolloffset
+        driver.set_window_size(windowsize['width'], windowsize['height'])
+        os.remove(testfile)
+
         imgfiles = []
-        scroll = windowsize[1]+scrolloffset
+        scroll = windowsize['height']+scrolloffset
         for f in range(len(self.frames)):
             png = '{}parse/output_{:02d}.png'.format(self.inputdir, f)
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
-            scroll += windowsize[1]+scrolloffset
+            scroll += windowsize['height']+scrolloffset
             ## The following removes the alpha channels from the images,
             ## which is necessary for the pdf convert:
             command = 'convert {} -background white -alpha remove -alpha off {}'.format(png, png)
@@ -303,7 +321,6 @@ class Presentation(object):
             os.remove(png)
 
         driver.quit()
-
         self.imgfiles = list(np.sort(imgfiles))
 
     def CreatePDF(self):
@@ -316,6 +333,7 @@ class Presentation(object):
 
         for imgfile in self.imgfiles:
             os.remove(imgfile)
+
 
 class Template(object):
 
