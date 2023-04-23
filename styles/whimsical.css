@@ -46,6 +46,7 @@ background-color: rgba(var(--back), 1);
 }
 
 div.cell {
+            position: relative;
               margin: var(--boxmargin);
              padding: var(--boxpadding);
      background-size: cover;
@@ -99,7 +100,7 @@ div.cell.T02.BOX1 {
     visibility: hidden;
 }
 
-div.cell.FOOTER {
+div.cell.BOXFOOTER {
            float: left;
            width: var(--footerwidth);
           height: calc(var(--totalheight) - 4 * var(--boxmargin));
@@ -107,7 +108,7 @@ div.cell.FOOTER {
 background-color: rgba(var(--box), 1);
            color: rgba(var(--text), 1);
 }
-div.FOOTER span.footer {
+div.BOXFOOTER span.footer {
              display: block;
             position: relative;
     transform-origin: top left;
@@ -121,7 +122,7 @@ div.FOOTER span.footer {
            font-size: calc(var(--basesize) - 7pt);
               /* border: 1px solid red; */
 }
-div.FOOTER span.page {
+div.BOXFOOTER span.page {
      display: block;
     position: relative;
  margin-left: calc(-1 * var(--boxpadding));
@@ -135,14 +136,14 @@ div.FOOTER span.page {
     /* border-radius: 50%; */
 }
 
-div.FOOTER span.date {
+div.BOXFOOTER span.date {
          position: absolute;
             right: 0;
     padding-right: calc(1.5 * var(--boxpadding));
     /* border: 1px solid red; */
 }
 
-div.FOOTER span.title {
+div.BOXFOOTER span.title {
      position: absolute;
         width: calc(var(--totalheight) * 0.5);
     font-size: calc(var(--basesize) - 5pt);

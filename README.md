@@ -44,7 +44,7 @@ The process of taking screenshots with selenium currently only works with one br
 Firefox
 ```
 
-The goal is to have neftox select the user's default browser automatically; this is currently under development.
+The goal is to have neftox select the user's default browser automatically; this is on the developer's list. 
 
 
 ### Usage
@@ -59,6 +59,9 @@ Available options:
 --preview     # Create a preview with JPG images
 --pdf         # Create PDF presentation
 ```
+
+For long presentations, it may take a minute to create the preview images and PDF, so it is recommended to use the `--html` option while working on the presentation.
+
 
 ### Example slides
 

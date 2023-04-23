@@ -16,7 +16,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import img2pdf
 
 #-- Global functions and variables -------------------------------------
-global inputdir, parsedir
+global inputdir, parsedir, equdir
 
 def MatchBetween(start, stop, string, len=1):
     ## Grab the content between two custom tags.
@@ -48,14 +48,18 @@ class Presentation(object):
             os.remove('styles/customs.css')
 
         ## Extract raw input content:
-        global inputdir, parsedir
+        global inputdir, parsedir, equdir
         inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
         parsedir = os.path.join('{}parse'.format(inputdir), '')
-        self.inputdir = inputdir
-        self.parsedir = parsedir
+        equdir = os.path.join(parsedir, 'equations', '')
+        if not os.path.isdir(parsedir):
+            os.mkdir(parsedir)
+        if os.path.isdir(equdir):
+            for equ in os.listdir(equdir):
+                os.remove(equdir+equ)
 
         addargs  = inputargs[2:]
-        with open(self.inputdir+'/input.html', 'r') as f:
+        with open(inputdir+'/input.html', 'r') as f:
             rawcontent = f.read()
         self.rawcontent = rawcontent
 
@@ -215,16 +219,17 @@ class Presentation(object):
     def GetFrames(self):
         ## Attributes that are being passed over to the frame class:
         passattr = [
-            ('inputdir',  self.inputdir),
+            ('inputdir',  inputdir),
             ('styles',    self.styles),
             ('fonts',     self.fonts),
             ('templates', self.templates),
+            ('OFFSET',    self.OFFSET),
         ]
 
         rawframes = self.rawcontent.split('<!-- FRAME ')[1:]
         frames    = {}
         for num, rf in enumerate(rawframes):
-            frame = Frame(num+int(self.OFFSET), rf, passattr)
+            frame = Frame(num, rf, passattr)
             frames[str(frame.number)] = frame
 
         self.frames = frames
@@ -236,6 +241,13 @@ class Presentation(object):
                 prevframe = self.frames[str(frame.number-1)]
                 subframe_ = copy.deepcopy(prevframe)
                 allowed = frame.templates[frame.TEMPLATE].allowed
+
+                ## Set meta information (if updated):
+                for key, value in frame.__dict__.items():
+                    if value and (key not in ['boxes']):
+                        setattr(subframe_, key, value)
+
+                ## Set content (if updated):
                 for a in allowed:
                     if ((not frame.boxes[a].content) and
                     (not frame.boxes[a].style)):
@@ -248,13 +260,10 @@ class Presentation(object):
                         subframe_.boxes[a] = frame.boxes[a]
 
                 frame.__dict__ = subframe_.__dict__.copy()
-                frame.number += 1
+            frame.ParseBackground()
             frame.InsertIntoTemplate()
 
     def CreateHTML(self):
-        parsedir = os.path.join(self.inputdir, 'parse', '')
-        if not os.path.isdir(parsedir):
-            os.mkdir(parsedir)
 
         HTML = ''
         for framenumber, frame in self.frames.items():
@@ -287,14 +296,14 @@ class Presentation(object):
         )
 
         driver.set_window_size(windowsize['width'], windowsize['height'])
-        url = 'file:///{}parse/output.html'.format(self.inputdir)
+        url = 'file:///{}parse/output.html'.format(inputdir)
         driver.get(url)
 
         # Create test image. This is necessary to determine the size of
         # the nav bar/ overhead of the browser, which has to be taken
         # into account in the screenshot size. I could not find a better
         # way to solve this yet.
-        testfile = '{}parse/test.png'.format(self.inputdir)
+        testfile = '{}parse/test.png'.format(inputdir)
         driver.save_screenshot(testfile)
         scrolloffset = Image.open(testfile).height - windowsize['height']
         windowsize['height'] = windowsize['height']-scrolloffset
@@ -304,7 +313,7 @@ class Presentation(object):
         imgfiles = []
         scroll = windowsize['height']+scrolloffset
         for f in range(len(self.frames)):
-            png = '{}parse/output_{:02d}.png'.format(self.inputdir, f)
+            png = '{}parse/output_{:02d}.png'.format(inputdir, f)
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
             scroll += windowsize['height']+scrolloffset
@@ -327,8 +336,8 @@ class Presentation(object):
         ## Convert images to PDF presentation, and delete preview.
         self.CreatePreview()
 
-        outfile = '{}.pdf'.format(os.path.basename(os.path.normpath(self.inputdir)))
-        with open(self.inputdir+outfile, 'wb') as f:
+        outfile = '{}.pdf'.format(os.path.basename(os.path.normpath(inputdir)))
+        with open(inputdir+outfile, 'wb') as f:
             f.write(img2pdf.convert(self.imgfiles))
 
         for imgfile in self.imgfiles:
@@ -387,6 +396,7 @@ class Frame(object):
 
         self.TEMPLATE = 'template_'+self.TEMPLATE
 
+        Frame.pagecount -= (int(self.OFFSET) if self.number==0 else 0)
         Frame.pagecount += (0 if self.KIND=='subframe' else 1)
         self.page = Frame.pagecount
 
@@ -397,8 +407,8 @@ class Frame(object):
         ## keywords BACKGROUND_COLOR or BACKGROUND_IMG.
         rules = [
             ('BACKGROUND',       '{}'),
-            ('BACKGROUND_COLOR', 'background-color: {}; '),
             ('BACKGROUND_IMG',   'background-image: url(../pictures/{}); '),
+            ('BACKGROUND_COLOR', 'background-color: {}; '),
         ]
         placeholder = '<div class="background" style="{background}"></div>\n'
         background  = placeholder.replace(' style="{background}"', '')
@@ -467,8 +477,8 @@ class Frame(object):
 
 class Box(object):
 
-    re_style = '^\s*style *= *\"(.*)\" *\n'
-    regex_li  = '\s*<li .*>((.|\s)*)<\/li>'
+    re_style = '^\s*style *= *\"(.*)\" *'
+    re_li    = '(<li((.|\s)*?)<\/li>)'
 
     def __init__(self, rawbox, template, framenumber):
         self.name     = rawbox[0]
@@ -528,6 +538,7 @@ class Box(object):
             eqcount += 1
 
         content = DeleteBracket(*Equation.re_brackets, content)
+        content = content.strip('\n').strip(' ')
         self.content = content
 
     def UpdateContent(self, newcontent, rev=False):
@@ -537,13 +548,17 @@ class Box(object):
         else:
             first, second = self.content, newcontent.replace('ADD--', '')
 
-        lis = re.search(Box.regex_li, second)
-        if lis and '</ul>' in first:
-            third = first.replace('</ul>', '{}\n</ul>'.format(lis[0]))
-        elif lis and '</ol>' in first:
-            third = first.replace('</ol>', '{}\n</ol>'.format(lis[0]))
+        lis = re.findall(Box.re_li, second)
+        liobj = ' '.join(li[0] for li in lis)
+        if lis and ('</ul>' in first):
+            third = first.replace('</ul>', '{}\n</ul>'.format(liobj))
+        elif lis and ('</ol>' in first):
+            third = first.replace('</ol>', '{}\n</ol>'.format(liobj))
         else:
             third = first + second
+
+          # li = s.rsplit(old, occurrence)
+          # return new.join(li)
 
         self.content = third
 
@@ -559,10 +574,12 @@ class Equation(object):
 
     def __init__(self, rawtex, framenumber, boxname, count):
 
-        self.rawtex = rawtex
+        if not os.path.isdir(equdir):
+            os.mkdir(equdir)
 
+        self.rawtex = rawtex
         self.name   = '{:02d}-{}-{:02d}'.format(framenumber, boxname, count)
-        self.eqpath = '{}{}.png'.format(parsedir, self.name)
+        self.eqpath = '{}{}.png'.format(equdir, self.name)
 
         self.Eqtopng()
         self.EqtoHTML()
@@ -653,6 +670,8 @@ pres = Presentation(sys.argv)
 if sys.argv[2] in ['--html', '--HTML']:
     pres.CreateHTML()
 if sys.argv[2] in ['--preview']:
+    pres.CreateHTML()
     pres.CreatePreview()
 if sys.argv[2] in ['--pdf', '--PDF']:
+    pres.CreateHTML()
     pres.CreatePDF()
