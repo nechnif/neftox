@@ -22,7 +22,7 @@ The Python3 modules that are required for neftox to work are listed in the `requ
 
 If you want to use LaTeX expressions in your presentation, you also need a working TeX Live installation.
 
-The process of taking screenshots with selenium **currently only works with the Mozilla Firefox browser.** The goal is to have neftox select the user's default browser automatically; this is on the developer's list.
+The process of taking screenshots with selenium uses the Mozilla Firefox browser by default, but Chromium or Google-Chrome work as well. Firefox comes with a web driver, but Chrome(ium) might require the separate installation of a driver (e.g. `chromium-chromedriver`); for more information refer to the [selenium driver website](https://www.selenium.dev/documentation/webdriver/getting_started/install_drivers/).
 
 
 

@@ -9,7 +9,6 @@ import matplotlib.font_manager
 from PIL import Image, ImageFont
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -76,6 +75,7 @@ class Presentation(object):
             'PALETTE' : 'tangerine',
             'FONT'    : 'nefcal',
             'FONTSIZE': '35px',
+            'BROWSER' : 'firefox',
         }
         ## Parse the user meta data:
         meta = re.findall(
@@ -285,15 +285,27 @@ class Presentation(object):
         }
 
         ## Initiate web driver:
-        options = Options()
-        options.headless = True
-        options.add_argument("--no-sandbox");
-        options.add_argument("--disable-extensions");
-        options.add_argument("--dns-prefetch-disable");
-        driver = webdriver.Firefox(
-            options=options,
-            service_log_path=os.path.devnull
-        )
+        if self.BROWSER in ['chrome', 'chromium']:
+            print('Initializing Chrome driver ...')
+            options = webdriver.chrome.options.Options()
+            options.headless = True
+            options.add_argument("--disable-extensions");
+            options.add_argument("--hide-scrollbars");
+            driver = webdriver.Chrome(
+                options=options,
+                # executable_path='/usr/bin/chromedriver'
+            )
+        else:
+            print('Initializing Firefox driver ...')
+            options = webdriver.firefox.options.Options()
+            options.headless = True
+            options.add_argument("--no-sandbox");
+            options.add_argument("--disable-extensions");
+            options.add_argument("--dns-prefetch-disable");
+            driver = webdriver.Firefox(
+                options=options,
+                service_log_path=os.path.devnull
+            )
 
         driver.set_window_size(windowsize['width'], windowsize['height'])
         url = 'file:///{}parse/output.html'.format(inputdir)
@@ -310,6 +322,7 @@ class Presentation(object):
         driver.set_window_size(windowsize['width'], windowsize['height'])
         os.remove(testfile)
 
+        print('Creating preview ...')
         imgfiles = []
         scroll = windowsize['height']+scrolloffset
         for f in range(len(self.frames)):
@@ -336,12 +349,16 @@ class Presentation(object):
         ## Convert images to PDF presentation, and delete preview.
         self.CreatePreview()
 
+        print('Converting to PDF ...')
+
         outfile = '{}.pdf'.format(os.path.basename(os.path.normpath(inputdir)))
         with open(inputdir+outfile, 'wb') as f:
             f.write(img2pdf.convert(self.imgfiles))
 
         for imgfile in self.imgfiles:
             os.remove(imgfile)
+
+        print('Done!')
 
 
 class Template(object):
@@ -487,7 +504,9 @@ class Box(object):
         self.frame    = framenumber
 
         self.ParseContent(rawbox[1])
-        self.Appear()
+
+        if not self.name=='BOXFOOTER':
+            self.Appear()
 
     def SetStyle(self, styles):
         ## Append new style commands to the existing style string.
