@@ -199,6 +199,13 @@ class Presentation(object):
             )
             self.FONT = self.defaultmeta['FONT']
 
+        ## The default font needs to be manually installed before first use:
+        if self.FONT==self.defaultmeta['FONT'] and fonts['regular'] == None:
+            print(
+                '\nDefault font not found. If this is your first use, please '
+                'install it from neftox/styles/fonts/\n.'
+            )
+
         fonts['bold'] = (fonts['regular'] if not fonts['bold'] else fonts['bold'])
 
         self.WriteStyle(':root', [
@@ -206,7 +213,7 @@ class Presentation(object):
             ('basesize', '{}px'.format(self.FONTSIZE)),
         ])
 
-        # ## Some fonts have to be enabled in the style sheet:
+        ## Some fonts have to be enabled in the style sheet:
         self.WriteStyle('@font-face', [
                 ('font-family', self.FONT),
                 ('src', 'url(\'{}\')'.format(fonts['path'])),
