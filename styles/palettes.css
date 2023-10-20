@@ -42,3 +42,13 @@
          --navy:  17,  45,  64;
       --glowlow: 228, 228, 228;
 }
+
+/* palette dark */
+:root {
+           --onyx:  50,  55,  59;
+       --platinum: 243, 245, 255;
+    --bittersweet: 200,  62,  77;
+      --jordiblue: 148, 194, 255;
+           --onyx:  50,  55,  59;
+
+}

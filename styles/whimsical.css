@@ -192,9 +192,10 @@ figure {
      padding: 0;
 }
 figcaption {
-            position: absolute;
+            /* position: absolute; */
              padding: 0 var(--boxpadding);
-    background-color: rgba(255,255,255,0.8);
+    /* background-color: rgba(255,255,255,0.8); */
+    /* font-size: calc(var(--basesize) - 10pt); } */
 }
 
 hr {
@@ -224,6 +225,12 @@ hr {
 .top    { vertical-align: top; }
 .bottom { vertical-align: bottom; }
 .middle { vertical-align: middle; }
+
+.box { color: rgba(var(--box), 1) !important;  }
+.text { color: rgba(var(--text), 1) !important;  }
+.color { color: rgba(var(--color), 1) !important;  }
+.highlight { color: rgba(var(--highlight), 1) !important;  }
+.back { color: rgba(var(--back), 1) !important;  }
 
 
 table {

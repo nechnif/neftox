@@ -41,13 +41,13 @@ For long presentations, it may take a minute to create the preview images and PD
 
 The following example slides have been created with the neftox tutorial:
 
-<img src="./tutorial/parse/output_00.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_01.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_02.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_03.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_04.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_05.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_06.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_07.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_08.jpg" alt="example slide" width="100%"/>
-<img src="./tutorial/parse/output_09.jpg" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_00.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_01.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_02.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_03.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_04.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_05.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_06.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_07.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_08.png" alt="example slide" width="100%"/>
+<img src="./tutorial/parse/output_09.png" alt="example slide" width="100%"/>
