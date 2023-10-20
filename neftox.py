@@ -295,7 +295,7 @@ class Presentation(object):
         if self.BROWSER in ['chrome', 'chromium']:
             print('Initializing Chrome driver ...')
             options = webdriver.chrome.options.Options()
-            options.headless = True
+            options.add_argument("--headless");
             options.add_argument("--disable-extensions");
             options.add_argument("--hide-scrollbars");
             driver = webdriver.Chrome(
@@ -305,13 +305,13 @@ class Presentation(object):
         else:
             print('Initializing Firefox driver ...')
             options = webdriver.firefox.options.Options()
-            options.headless = True
+            options.add_argument("--headless");
             options.add_argument("--no-sandbox");
             options.add_argument("--disable-extensions");
             options.add_argument("--dns-prefetch-disable");
             driver = webdriver.Firefox(
                 options=options,
-                service_log_path=os.path.devnull
+                # service_log_path=os.path.devnull
             )
 
         driver.set_window_size(windowsize['width'], windowsize['height'])
@@ -342,12 +342,13 @@ class Presentation(object):
             command = 'convert {} -background white -alpha remove -alpha off {}'.format(png, png)
             call = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
             (output, error) = call.communicate()
-            ## Convert the images to jpg, which reduces size of output
-            ## PDF significantly:
-            jpg = png.replace('.png', '.jpg')
-            imgfiles.append(jpg)
-            Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
-            os.remove(png)
+            # ## Convert the images to jpg, which reduces size of output
+            # ## PDF significantly:
+            # jpg = png.replace('.png', '.jpg')
+            # imgfiles.append(jpg)
+            # Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
+            # os.remove(png)
+            imgfiles.append(png)
 
         driver.quit()
         self.imgfiles = list(np.sort(imgfiles))
@@ -475,7 +476,8 @@ class Frame(object):
                 ' {} '.format(self.boxes['BOXTITLE'].content)
                 # ' {} '.format(self.boxes['BOXTITLE'].content)
             )
-            titlewidth += 2*int(self.styles['boxpadding'])
+            # titlewidth += 2*int(self.styles['boxpadding'])
+            titlewidth += 4*int(self.styles['boxpadding'])
             self.boxes['BOXTITLE'].SetStyle([('width', '{}px'.format(titlewidth))])
         else:
             titlewidth = 0
