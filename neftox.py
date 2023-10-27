@@ -70,7 +70,7 @@ class Presentation(object):
     def ParseMeta(self):
         ## Default meta data:
         self.defaultmeta = {
-            'STYLE'   : 'whimsical',
+            'STYLE'   : 'talk',
             'OFFSET'  : '0',
             'PALETTE' : 'tangerine',
             'FONT'    : 'nefcal',
@@ -123,7 +123,8 @@ class Presentation(object):
 
     def SetStyle(self):
         ## Read stylesheet:
-        stylefile = 'styles/'+self.STYLE+'.css'
+        stylefile = 'styles/{}/{}.css'.format(self.STYLE, self.STYLE)
+        # stylefile = 'styles/'+self.STYLE+'.css'
         with open(stylefile, 'r') as sf:
             stylesheet = sf.read()
 
@@ -146,14 +147,14 @@ class Presentation(object):
 
         ## Load the templates:
         templates = {}
-        for templatefile in os.listdir('styles/templates/'):
+        for templatefile in os.listdir('styles/{}/templates/'.format(self.STYLE)):
             if re.fullmatch(Presentation.regex_template, templatefile):
-                template = Template(templatefile)
+                template = Template(self.STYLE, templatefile)
                 templates[template.name] = template
 
         ## Insert style sheet and meta info into templates:
         rules = [
-            ('{STYLE}', '{}styles/{}.css'.format(self.dir, self.STYLE)),
+            ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE, self.STYLE)),
             ('{TITLE}',  self.TITLE),
             ('{AUTHOR}', self.AUTHOR),
             ('{DATE}',   self.DATE),
@@ -373,10 +374,10 @@ class Template(object):
 
     regex_boxdefs  = '<!-- (BOX.*) -->'
 
-    def __init__(self, filename):
+    def __init__(self, style, filename):
 
         ## Read the file:
-        with open('styles/templates/{}'.format(filename), 'r') as tf:
+        with open('styles/{}/templates/{}'.format(style, filename), 'r') as tf:
             content = tf.read()
 
         ## Identify possible content:

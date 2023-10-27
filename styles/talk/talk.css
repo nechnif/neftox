@@ -1,7 +1,7 @@
 /* stylesheet for nechnif's talks, STYLE: popular */
 
-@import url("palettes.css");
-@import url("customs.css");
+@import url("../palettes.css");
+@import url("../customs.css");
 
 /*### box behaviour */
 html { box-sizing: border-box; }
