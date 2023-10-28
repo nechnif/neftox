@@ -12,7 +12,9 @@ html { box-sizing: border-box; }
      --totalwidth: 1300px;
     --totalheight: 1600px;
     --titleheight: 120px;
-    --footerwidth: 73px;
+    --footerwidth: calc( var(--totalwidth) - 4 * var(--boxmargin) );
+   --footerheight: calc( 2 * var(--basesize) );
+   /* --footerheight: 100px; */
       --boxmargin: 8px;
      --boxpadding: 15px;
     --textpadding: 4px;
@@ -56,7 +58,7 @@ div.cell {
 
 div.cell.BOXTITLE {
              height: var(--titleheight);
-              float: right;
+              /* float: right; */
           font-size: var(--titlefontsize);
         font-weight: bold;
          text-align: center;
@@ -70,85 +72,72 @@ div.cell.BOXTITLE {
 }
 
 div.cell.T00.BOX1 {
-         width: calc(var(--totalwidth) - 4 * var(--boxmargin));
-        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+         width: calc( var(--totalwidth) - 4 * var(--boxmargin)  );
+        height: calc( var(--totalheight) - 4 * var(--boxmargin) );
     visibility: hidden;
 }
 
 div.cell.T01.BOX1 {
-     float: left;
-    height: calc(var(--totalheight) - 4 * var(--boxmargin));
+         float: left;
+        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+         width: calc( var(--totalwidth) / 2 - 6 * var(--boxmargin) );
+    visibility: hidden;
 }
 
 div.cell.T01.BOX2 {
          float: right;
-        height: calc(var(--totalheight) - var(--titleheight) - 6 * var(--boxmargin));
+        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+         width: calc( var(--totalwidth) / 2 );
     visibility: hidden;
 }
 
 div.cell.T02.BOX1 {
-         float: right;
-         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
-        height: calc((var(--totalheight) - 7 * var(--boxmargin)) * 0.5);
+         width: calc( var(--totalwidth) - 4 * var(--boxmargin) );
+        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
+        /* height: calc( var(--totalheight) / 2 - var(--footerheight) - 8 * var(--boxmargin) ); */
     visibility: hidden;
 }
 
 div.cell.T02.BOX2 {
-         float: right;
-         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
-        height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5);
+         width: calc( var(--totalwidth) - 4 * var(--boxmargin) );
+        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
     visibility: hidden;
 }
 
 div.cell.BOXFOOTER {
-           float: left;
+         display: inline-block;
            width: var(--footerwidth);
-          height: calc(var(--totalheight) - 4 * var(--boxmargin));
-       font-size: 20pt;
+          height: var(--footerheight);
+          margin: var(--boxmargin);
+       font-size: calc( var(--basesize) / 2 + 10px );
+     line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
 background-color: rgba(var(--box), 1);
            color: rgba(var(--text), 1);
 }
 div.BOXFOOTER span.footer {
-             display: block;
-            position: relative;
-    transform-origin: top left;
-                left: 0;
-                 top: 0;
-        padding-left: var(--boxpadding);
-           transform: rotate(-90deg) translateX(calc(-100% + 2 * var(--boxmargin))) translateY(calc(-2 * var(--boxmargin)));
-               width: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--footerwidth));
-              height: var(--footerwidth);
-         line-height: var(--footerwidth);
-           font-size: calc(var(--basesize) - 7pt);
-              /* border: 1px solid red; */
+      display: inline-block;
+        width: calc( var(--footerwidth) - 100px );
 }
 div.BOXFOOTER span.page {
-     display: block;
-    position: relative;
- margin-left: calc(-1 * var(--boxpadding));
-  margin-top: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--boxpadding) - 2 * var(--footerwidth));
-       width: var(--footerwidth);
-      height: var(--footerwidth);
-  text-align: center;
- line-height: var(--footerwidth);
- font-weight: bold;
+      display: inline-block;
+        width: 50px;
+  font-weight: bold;
+  text-align: right;
       /* border: 1px solid red; */
-    /* border-radius: 50%; */
-}
-
-div.BOXFOOTER span.date {
-         position: absolute;
-            right: 0;
-    padding-right: calc(1.5 * var(--boxpadding));
-    /* border: 1px solid red; */
+      /* border-radius: 50%; */
 }
 
 div.BOXFOOTER span.title {
-     position: absolute;
-        width: calc(var(--totalheight) * 0.5);
-    font-size: calc(var(--basesize) - 5pt);
+      display: inline-block;
+        width: calc( var(--footerwidth) - 50px - 300px );
+ padding-right: 125px;
    text-align: center;
   font-weight: bold;
+}
+
+div.BOXFOOTER span.author {
+    display: inline-block;
+      width: 200px;
 }
 
 

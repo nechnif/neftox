@@ -13,28 +13,24 @@
     <div class="frame">
 
 
+        <div class="cell T01 BOX1" {BOX1 style}>
+            <div class="cell BOXTITLE" {BOXTITLE style}>
+                {BOXTITLE}
+            </div>
+            {BOX1}
+        </div>
+
+        <div class="cell T01 BOX2" {BOX2 style}>
+            {BOX2}
+        </div>
+
         <div class="cell BOXFOOTER" {BOXFOOTER style}>
             <span class="footer">
                 <span class="author">{AUTHOR}</span>
                 <span class="title">{TITLE}</span>
-                <span class="date">{DATE}</span>
             </span>
             <span class="page">{page}</span>
         </div>
-
-        <div class="cell T01 BOX1" {BOX1 style}>
-            {BOX1 default} ('width', 'calc(var(--totalwidth) - {titlewidth}px - var(--footerwidth) - 8 * var(--boxmargin))')
-            {BOX1}
-        </div>
-
-        <!-- <div class="cell BOXTITLE" {BOXTITLE style}>
-            {BOXTITLE}
-        </div> -->
-        <div class="cell T01 BOX2" {BOX2 style}>
-            {BOX2 default} ('width', '{titlewidth}px')
-            {BOX2}
-        </div>
-
 
     </div>
 

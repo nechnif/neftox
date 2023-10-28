@@ -1,0 +1,118 @@
+<!-- meta -------------------------------------------------------------->
+TITLE    = Scrapbook Tutorial
+AUTHOR   = Raphdi McAuthor
+DATE     =
+STYLE    = scrapbook
+PALETTE  = plain blue
+OFFSET   = 1
+FONT     = nefcal
+FONTSIZE = 33px
+BROWSER  = firefox
+
+
+<!-- FRAME ------------------------------------------------------------>
+<!-- The line above marks the beginning of a new slide. -->
+
+<!--
+    What follows is the meta-section of the slide. First, you should
+    pick a TEMPLATE. Default is 00. The different templates are shown in
+    this tutorial presentation.
+-->
+TEMPLATE = 00
+<!--
+    The BACKGROUND keyword takes any CSS-viable argument, as you can see
+    below. The usual 'style = "..."' can be ommitted. This also works:
+    BACKGROUND_COLOR = <some color in RGBA, HEX, ... format>
+    BACKGROUND_IMG = <image from the 'pictures' folder in your
+    presentation directory>
+ -->
+BACKGROUND = background-image: url(../pictures/background.jpg); background-position: bottom; background-size: cover; filter: saturate(0%);
+BACKGROUND_COLOR = rgba(255, 255, 255, 0.8)
+
+<!--
+    The slide contents are organized in boxes:
+
+        BOXTITLE, BOX1, BOX2 for template 00,
+        BOXTITLE, BOX1, BOX2 for template 01,
+        BOXTITLE, BOX1       for template 02.
+
+    The content of the boxes can be anything from the HTML and CSS world.
+ -->
+BOX1--
+    style="border: 3px solid rgba(var(--text), 1);"
+    <p class="headline" style="margin-top: 230px;">
+        <!-- Scientific Presentations -->
+    </p>
+    <p class="subheadline">
+        <!-- and all you need is a text editor -->
+    </p>
+
+    <hr style="width: 98%; height: 1.5px; margin-top: 240px;">
+    <p style="width: 50%; float: left; padding: 0 0 20px 20px; color: rgba(var(--text),1); font-weight: bold;">
+        <!-- Presentation of important results<br>
+        from the latest craze in research<br>
+        on February 29th, 2020<br> -->
+    </p>
+    <p style="width: 50%; float: right; padding: 0 20px 20px 0; text-align: right; color: rgba(var(--text),1); font-weight: bold;">
+        <!-- Dr. Raphdi McAuthor<br>
+        Institute of Science and Technology<br>
+        Famous University, Planet Earth -->
+    </p>
+--BOX1
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 00
+
+BOXTITLE--
+    style="border: 3px solid black;"
+    Template 00
+--BOXTITLE
+
+BOX1--
+    style="border: 3px solid black;"
+    BOX1
+--BOX1
+
+BOX2--
+    style="border: 3px solid black;"
+    BOX2
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 01
+
+BOXTITLE--
+    style="border: 3px solid black;"
+    Template 01
+--BOXTITLE
+
+BOX1--
+    style="border: 3px solid black;"
+    BOX1
+--BOX1
+
+BOX2--
+    style="border: 3px solid black;"
+    BOX2
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 02
+
+BOXTITLE--
+    style="border: 3px solid black;"
+    Template 02
+--BOXTITLE
+
+BOX1--
+    style="border: 3px solid black;"
+    BOX1
+--BOX1
+
+BOX2--
+    style="border: 3px solid black;"
+    BOX2
+--BOX2
