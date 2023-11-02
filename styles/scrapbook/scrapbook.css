@@ -10,6 +10,7 @@ html { box-sizing: border-box; }
 /* ### Widths and heights */
 :root {
      --totalwidth: 1300px;
+  --bindingoffset: 80px;
     --totalheight: 1600px;
     --titleheight: 120px;
     --footerwidth: calc( var(--totalwidth) - 4 * var(--boxmargin) );
@@ -37,9 +38,15 @@ div.frame {
            overflow: hidden;
              /* border: 1px solid red; */
 }
+div.frame.even {
+    margin-left: var(--bindingoffset);
+}
+div.frame.odd {
+    margin-right: var(--bindingoffset);
+}
 
 div.background {
-           width: var(--totalwidth);
+           width: calc( var(--totalwidth) + var(--bindingoffset) );
           height: var(--totalheight);
         position: absolute;
 background-color: rgba(var(--back), 1);
@@ -113,14 +120,6 @@ div.BOXFOOTER span.footer {
       display: inline-block;
         width: calc( var(--footerwidth) - 100px );
 }
-div.BOXFOOTER span.page {
-      display: inline-block;
-        width: 50px;
-  font-weight: bold;
-  text-align: right;
-      /* border: 1px solid red; */
-      /* border-radius: 50%; */
-}
 
 div.BOXFOOTER span.title {
           display: inline-block;
@@ -133,6 +132,21 @@ div.BOXFOOTER span.title {
 div.BOXFOOTER span.author {
     display: inline-block;
       width: 200px;
+}
+div.BOXFOOTER span.page {
+      display: inline-block;
+        width: 50px;
+  font-weight: bold;
+      /* border: 1px solid red; */
+      /* border-radius: 50%; */
+}
+div.BOXFOOTER span.page.even {
+         float: right;
+    text-align: right;
+}
+div.BOXFOOTER span.page.odd {
+         float: left;
+    text-align: left;
 }
 
 

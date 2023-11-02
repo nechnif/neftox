@@ -133,6 +133,7 @@ class Presentation(object):
         elements = [
             ('fontfactor',    '--fontfactor: *(\d*.*\d*);'),
             ('totalwidth',    '--totalwidth: *(\d*)px;'),
+            ('bindingoffset', '--bindingoffset: *(\d*)px;'),
             ('totalheight',   '--totalheight: *(\d*)px;'),
             ('boxmargin',     '--boxmargin: *(\d*)px;'),
             ('boxpadding',    '--boxpadding: *(\d*)px;'),
@@ -288,9 +289,11 @@ class Presentation(object):
 
         ## Determine window size:
         windowsize = {
-            'width'  : int(self.styles['totalwidth']),
+            'width'  : int(self.styles['totalwidth'])+int(self.styles['bindingoffset']),
             'height' : int(self.styles['totalheight']),
         }
+        # print(self.styles['bindingoffset'])
+        # print(windowsize)
 
         ## Initiate web driver:
         if self.BROWSER in ['chrome', 'chromium']:
@@ -426,6 +429,8 @@ class Frame(object):
         Frame.pagecount += (0 if self.KIND=='subframe' else 1)
         self.page = Frame.pagecount
 
+        self.OE = ('even' if int(self.number)%2==0 else 'odd')
+
     def ParseBackground(self):
         ## The frame background can be specified as a css statement with
         ## the BACKGROUND meta key word. A plain color or an image in the
@@ -468,6 +473,7 @@ class Frame(object):
 
         HTML = self.templates[self.TEMPLATE].content
         ## Insert page number and background:
+        HTML = HTML.replace('{OE}',   '{}'.format(self.OE))
         HTML = HTML.replace('{page}', '{}'.format(self.page))
         HTML = HTML.replace('{background}', '{}'.format(self.background))
 
