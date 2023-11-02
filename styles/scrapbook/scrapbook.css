@@ -14,7 +14,6 @@ html { box-sizing: border-box; }
     --titleheight: 120px;
     --footerwidth: calc( var(--totalwidth) - 4 * var(--boxmargin) );
    --footerheight: calc( 2 * var(--basesize) );
-   /* --footerheight: 100px; */
       --boxmargin: 8px;
      --boxpadding: 15px;
     --textpadding: 4px;
@@ -53,22 +52,18 @@ div.cell {
              padding: var(--boxpadding);
      background-size: cover;
            font-size: var(--basesize);
+              color: rgba(var(--text), 1);
               /* border: 1px solid red; */
 }
 
 div.cell.BOXTITLE {
              height: var(--titleheight);
-              /* float: right; */
           font-size: var(--titlefontsize);
         font-weight: bold;
-         text-align: center;
-   background-color: rgba(var(--box), 1);
+         /* text-align: center; */
+   /* background-color: rgba(var(--box), 1); */
               color: rgba(var(--highlight), 1);
          visibility: hidden;
-             /* To vertically align the text: */
-            display: flex;
-    justify-content: center;
-        align-items: center;
 }
 
 div.cell.T00.BOX1 {
@@ -109,9 +104,9 @@ div.cell.BOXFOOTER {
            width: var(--footerwidth);
           height: var(--footerheight);
           margin: var(--boxmargin);
-       font-size: calc( var(--basesize) / 2 + 10px );
+       font-size: calc( var(--basesize) / 2 + 15px );
      line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
-background-color: rgba(var(--box), 1);
+/* background-color: rgba(var(--box), 1); */
            color: rgba(var(--text), 1);
 }
 div.BOXFOOTER span.footer {
@@ -128,11 +123,11 @@ div.BOXFOOTER span.page {
 }
 
 div.BOXFOOTER span.title {
-      display: inline-block;
-        width: calc( var(--footerwidth) - 50px - 300px );
- padding-right: 125px;
-   text-align: center;
-  font-weight: bold;
+          display: inline-block;
+            width: calc( var(--footerwidth) - 50px - 300px );
+    padding-right: 125px;
+       text-align: center;
+      font-weight: bold;
 }
 
 div.BOXFOOTER span.author {
@@ -175,22 +170,128 @@ p.caption {
       font-size: calc(var(--basesize) - 15pt);
 }
 
-figure {
-    position: absolute;
-      margin: 0;
-     padding: 0;
-}
-figcaption {
-            /* position: absolute; */
-             padding: 0 var(--boxpadding);
-    /* background-color: rgba(255,255,255,0.8); */
-    /* font-size: calc(var(--basesize) - 10pt); } */
+hr {
+    border: 0;
+    background-color: rgba(var(--text), 1);
 }
 
-hr {
-              border: 0;
-    background-color: black;
+/* Images */
+figure {
+    position: relative;
+      margin: 0;
+     padding: 0;
+  text-align: center;
 }
+figure.abs {
+    position: absolute;
+}
+figure.abs.top {
+    top: 0;
+}
+figure.abs.bottom {
+    bottom: calc( 0px - var(--footerheight) );
+}
+figcaption {
+    position: absolute;
+     padding: 0 var(--boxpadding);
+   font-size: calc(var(--basesize) - 5px);
+     z-index: 2;
+  text-align: center;
+       width: 90%;
+}
+figcaption.t {
+    top: 0;
+}
+figcaption.l {
+          top: 50%;
+        right: 55%;
+    transform: rotate(-90deg);
+}
+figcaption.r {
+          top: 50%;
+         left: 55%;
+    transform: rotate(-90deg);
+}
+img {
+           width: 100%;
+    border-color: rgba(var(--text), 1);
+}
+
+/* Images with masking tape */
+figure.tesa {
+     padding: 25px;
+     z-index: 1;
+}
+figure.tesa img {
+    position: relative;
+     z-index: 0;
+       width: 100%;
+  box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
+}
+/* figure.tesa figcaption {
+    position: absolute;
+    z-index: 2;
+} */
+figure.tesa::after {
+        position: absolute;
+             top: 0;
+           right: 0;
+          bottom: 0;
+            left: 0;
+         content: '';
+}
+figure.tesa.t::after {
+      border-top: 50px solid transparent;
+    border-image: url(../images/tesa_sides.png) 80 stretch;
+}
+figure.tesa.b::after {
+   border-bottom: 50px solid transparent;
+    border-image: url(../images/tesa_sides.png) 80 stretch;
+}
+figure.tesa.l::after {
+     border-left: 50px solid transparent;
+    border-image: url(../images/tesa_sides.png) 80 stretch;
+}
+figure.tesa.r::after {
+    border-right: 50px solid transparent;
+    border-image: url(../images/tesa_sides.png) 80 stretch;
+}
+figure.tesa.c::after {
+      border: 80px solid transparent;
+    border-image: url(../images/tesa_corners.png) 400 stretch;
+}
+
+/* Images with paper clip */
+/* figure.clip {
+    position: absolute;
+     padding: 5px;
+     z-index: 1;
+} */
+img.clip {
+    position: absolute;
+     z-index: 2;
+}
+img.clip.i {
+    content: url(../images/clip_i.png);
+}
+img.clip.o {
+    content: url(../images/clip_o.png);
+}
+img.clip.f {
+    content: url(../images/clip_f.png);
+}
+img.clip.t {
+    top: calc( 0px - 5 * var(--boxmargin) );
+}
+img.clip.b {
+    bottom: calc( 0px - 1.85 * var(--footerheight) );
+}
+img.clip.l {
+    left: 40px;
+}
+
+
+
 
 
 /* General text styles: */
@@ -202,7 +303,7 @@ hr {
 
 .shadow { text-shadow: 4px 4px 4px black; }
 .shadowwhite { text-shadow: 4px 4px 4px white; }
-.boxshadow { box-shadow: 8px 8px 8px black; }
+.boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
 .border { border: 5px solid white; }
 
 .none { list-style: none; }
