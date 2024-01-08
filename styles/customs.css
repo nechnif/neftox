@@ -1,15 +1,15 @@
 :root {
-    --box: 248, 248, 248;
-    --text:  17,  45,  64;
-    --color: 248, 248, 248;
-    --highlight:  17,  45,  64;
-    --back: 228, 228, 228;
+    --grad1: 219, 219, 219;
+    --grad2: 255, 248, 239;
+    --grad3: 255, 255, 255;
+    --text:  50,  55,  59;
+    --highlight: 255, 109,   0;
 }
 :root {
-    --fontfamily: nefcal;
-    --basesize: 33.0px;
+    --fontfamily: Gentium;
+    --basesize: 30.0px;
 }
 @font-face {
-    font-family: nefcal;
-    src: url('/home/nechnif/.local/share/fonts/nefcal-Regular.ttf');
+    font-family: Gentium;
+    src: url('/usr/share/fonts/truetype/gentium/Gentium-R.ttf');
 }

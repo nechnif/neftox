@@ -11,8 +11,9 @@ html { box-sizing: border-box; }
 :root {
      --totalwidth: 1600px;
     --totalheight: 900px;
-    --titleheight: 120px;
-    --footerwidth: 73px;
+  --bindingoffset: 0px;
+    --titleheight: 100px;
+    --footerwidth: 60px;
       --boxmargin: 8px;
      --boxpadding: 15px;
     --textpadding: 4px;
@@ -25,6 +26,7 @@ body {
        padding: 0;
     background: white;
    font-family: var(--fontfamily);
+         color: rgba(var(--text), 1);
 }
 
 /*### Specify the frame containers. */
@@ -60,8 +62,7 @@ div.cell.BOXTITLE {
           font-size: var(--titlefontsize);
         font-weight: bold;
          text-align: center;
-   background-color: rgba(var(--box), 1);
-              color: rgba(var(--highlight), 1);
+              color: rgba(var(--text), 1);
          visibility: hidden;
              /* To vertically align the text: */
             display: flex;
@@ -70,33 +71,37 @@ div.cell.BOXTITLE {
 }
 
 div.cell.T00.BOX1 {
-     float: left;
-    height: calc(var(--totalheight) - 4 * var(--boxmargin));
-}
-
-div.cell.T00.BOX2 {
-         float: right;
-        height: calc(var(--totalheight) - var(--titleheight) - 6 * var(--boxmargin));
+         width: calc(var(--totalwidth) - 4 * var(--boxmargin));
+        height: calc(var(--totalheight) - 4 * var(--boxmargin));
     visibility: hidden;
 }
 
 div.cell.T01.BOX1 {
-         float: right;
-         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
-        height: calc((var(--totalheight) - 7 * var(--boxmargin)) * 0.5);
-    visibility: hidden;
+     float: left;
+    height: calc(var(--totalheight) - 4 * var(--boxmargin));
+     width: calc( 50% - 6 * var(--boxmargin) - var(--footerwidth) );
+     /* border: 1px solid black; */
 }
 
 div.cell.T01.BOX2 {
          float: right;
-         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
-        height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5);
+        height: calc(var(--totalheight) - var(--titleheight) - 6 * var(--boxmargin));
+         width: 50%;
     visibility: hidden;
 }
 
 div.cell.T02.BOX1 {
-         width: calc(var(--totalwidth) - 4 * var(--boxmargin));
-        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
+        height: calc( ( var(--totalheight) / 2 ) - 4 * var(--boxmargin) - var(--boxpadding));
+    visibility: hidden;
+}
+
+div.cell.T02.BOX2 {
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerwidth) - 6 * var(--boxmargin));
+        /* height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5); */
+        height: calc( var(--totalheight) / 2 );
     visibility: hidden;
 }
 
@@ -105,8 +110,7 @@ div.cell.BOXFOOTER {
            width: var(--footerwidth);
           height: calc(var(--totalheight) - 4 * var(--boxmargin));
        font-size: 20pt;
-background-color: rgba(var(--box), 1);
-           color: rgba(var(--text), 1);
+           color: rgba(var(--text), 0.7);
 }
 div.BOXFOOTER span.footer {
              display: block;
@@ -119,7 +123,7 @@ div.BOXFOOTER span.footer {
                width: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--footerwidth));
               height: var(--footerwidth);
          line-height: var(--footerwidth);
-           font-size: calc(var(--basesize) - 7pt);
+           font-size: calc(var(--basesize) - 4pt);
               /* border: 1px solid red; */
 }
 div.BOXFOOTER span.page {
@@ -146,7 +150,7 @@ div.BOXFOOTER span.date {
 div.BOXFOOTER span.title {
      position: absolute;
         width: calc(var(--totalheight) * 0.5);
-    font-size: calc(var(--basesize) - 5pt);
+    font-size: calc(var(--basesize) - 2pt);
    text-align: center;
   font-weight: bold;
 }
@@ -169,13 +173,13 @@ p {
    padding: var(--textpadding) 0;
 }
 p.headline {
-     font-size: 100px;
+     font-size: 80px;
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
 }
 p.subheadline {
-     font-size: 70px;
+     font-size: 50px;
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
@@ -237,4 +241,17 @@ table {
          width: 100%;
     text-align: center;
         /* border: 1px solid black; */
+}
+
+table.colortable {
+    border-collapse: collapse;
+}
+table.colortable td {
+             width: calc( 100% / 5 );
+            height: calc( var(--totalheight) - 260px );
+            /* height: calc(var(--totalheight) - var(--titleheight) - 8 * var(--boxmargin) - var(--boxpadding)); */
+    vertical-align: bottom;
+    padding-bottom: 20px;
+       font-weight: bold;
+            border: 1.5px solid rgba(var(--text), 1);
 }

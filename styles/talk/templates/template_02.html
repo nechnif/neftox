@@ -1,4 +1,4 @@
-<!-- BOXTITLE, BOX1 -->
+<!-- BOXTITLE, BOX1, BOX2, BOXFOOTER -->
 
 <!DOCTYPE html>
 <html>
@@ -12,9 +12,22 @@
 
     <div class="frame">
 
+        <div class="cell BOXFOOTER" {BOXFOOTER style}>
+            <span class="footer">
+                <span class="author">{AUTHOR}</span>
+                <span class="title">{TITLE}</span>
+                <span class="date">{DATE}</span>
+            </span>
+            <span class="page">{page}</span>
+        </div>
+
         <div class="cell T02 BOX1" {BOX1 style}>
             <div class="cell BOXTITLE" {BOXTITLE style}>{BOXTITLE}</div>
             {BOX1}
+        </div>
+
+        <div class="cell T02 BOX2" {BOX2 style}>
+            {BOX2}
         </div>
 
     </div>

@@ -70,11 +70,11 @@ class Presentation(object):
     def ParseMeta(self):
         ## Default meta data:
         self.defaultmeta = {
-            'STYLE'   : 'talk',
+            'STYLE'   : 'talk:simple',
             'OFFSET'  : '0',
-            'PALETTE' : 'tangerine',
-            'FONT'    : 'nefcal',
-            'FONTSIZE': '35px',
+            'PALETTE' : 'beach',
+            'FONT'    : 'Gentium',
+            'FONTSIZE': '30px',
             'BROWSER' : 'firefox',
         }
         ## Parse the user meta data:
@@ -105,7 +105,8 @@ class Presentation(object):
 
         colors = []
         for name, color in zip(
-            ['box', 'text', 'color', 'highlight', 'back'],
+            # ['box', 'text', 'color', 'highlight', 'back'],
+            ['grad1', 'grad2', 'grad3', 'text', 'highlight'],
             palette.split('--')[1:]
         ):
             colors.append((name, color.split(': ')[1].split(';')[0]))
@@ -123,8 +124,7 @@ class Presentation(object):
 
     def SetStyle(self):
         ## Read stylesheet:
-        stylefile = 'styles/{}/{}.css'.format(self.STYLE, self.STYLE)
-        # stylefile = 'styles/'+self.STYLE+'.css'
+        stylefile = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
         with open(stylefile, 'r') as sf:
             stylesheet = sf.read()
 
@@ -148,14 +148,14 @@ class Presentation(object):
 
         ## Load the templates:
         templates = {}
-        for templatefile in os.listdir('styles/{}/templates/'.format(self.STYLE)):
+        for templatefile in os.listdir('styles/{}/templates/'.format(self.STYLE.split(':')[0])):
             if re.fullmatch(Presentation.regex_template, templatefile):
-                template = Template(self.STYLE, templatefile)
+                template = Template(self.STYLE.split(':')[0], templatefile)
                 templates[template.name] = template
 
         ## Insert style sheet and meta info into templates:
         rules = [
-            ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE, self.STYLE)),
+            ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1])),
             ('{TITLE}',  self.TITLE),
             ('{AUTHOR}', self.AUTHOR),
             ('{DATE}',   self.DATE),
@@ -247,28 +247,27 @@ class Presentation(object):
         ## from the previous frame, and update the rest:
         for framenumber, frame in self.frames.items():
             if frame.KIND == 'subframe':
-                prevframe = self.frames[str(frame.number-1)]
-                subframe_ = copy.deepcopy(prevframe)
-                allowed = frame.templates[frame.TEMPLATE].allowed
 
-                ## Set meta information (if updated):
-                for key, value in frame.__dict__.items():
-                    if value and (key not in ['boxes']):
-                        setattr(subframe_, key, value)
+                prevframe = self.frames[str(frame.number-1)]
+                tmpframe_ = copy.deepcopy(frame)
+                allowed = prevframe.templates[prevframe.TEMPLATE].allowed
+
+                for key, value in prevframe.__dict__.items():
+                    setattr(frame, key, value)
 
                 ## Set content (if updated):
                 for a in allowed:
-                    if ((not frame.boxes[a].content) and
-                    (not frame.boxes[a].style)):
+                    if ((not tmpframe_.boxes[a].content) and
+                    (not tmpframe_.boxes[a].style)):
                         pass
-                    elif 'ADD--' in frame.boxes[a].content:
-                        subframe_.boxes[a].UpdateContent(
-                            frame.boxes[a].content
+                    elif 'ADD--' in tmpframe_.boxes[a].content:
+                        print('add')
+                        frame.boxes[a].UpdateContent(
+                            tmpframe_.boxes[a].content
                         )
                     else:
-                        subframe_.boxes[a] = frame.boxes[a]
+                        frame.boxes[a] = tmpframe_.boxes[a]
 
-                frame.__dict__ = subframe_.__dict__.copy()
             frame.ParseBackground()
             frame.InsertIntoTemplate()
 
@@ -415,9 +414,10 @@ class Frame(object):
         self.rawframe = re.sub(Frame.regex_comment, '', self.rawframe)
 
     def ParseMeta(self):
-        ## Set default meta data:
+        ## Set default meta data. Default template has to be the one with the
+        ## most allowed elements (boxes):
         self.KIND     = 'frame'
-        self.TEMPLATE = '00'
+        self.TEMPLATE = '01'
         ## Parse the user meta data:
         meta = re.findall(Frame.regex_meta, self.rawframe)
         for item in meta:
@@ -587,13 +587,12 @@ class Box(object):
         liobj = ' '.join(li[0] for li in lis)
         if lis and ('</ul>' in first):
             third = first.replace('</ul>', '{}\n</ul>'.format(liobj))
+            third += second.replace(liobj, '')
         elif lis and ('</ol>' in first):
             third = first.replace('</ol>', '{}\n</ol>'.format(liobj))
+            third += second.replace(liobj, '')
         else:
             third = first + second
-
-          # li = s.rsplit(old, occurrence)
-          # return new.join(li)
 
         self.content = third
 

@@ -1,54 +1,62 @@
-/* palette tangerine */
+/* palette light */
 :root {
-    --moonstone:  92, 158, 173;
-       --paynes:  40,  83,  98;
-    --tangerine: 227, 151, 116;
-         --glow: 248, 248, 248;
-      --glowlow: 238, 238, 238;
+    --lightgrey: 219, 219, 219;
+    --whitesand: 255, 248, 239;
+        --white: 255, 255, 255;
+         --onyx:  50,  55,  59;
+     --orangine: 255, 109,   0;
 }
 
-/* palette sailor */
+/* palette black */
 :root {
-    --steelblue:  53, 129, 184;
-         --navy:  17,  45,  64;
-   --sandybrown: 252, 176, 126;
-    --mintcream: 243, 248, 242;
-    --alabaster: 222, 226, 214;
+        --black:   0,   0,   0;
+        --black:   0,   0,   0;
+        --black:   0,   0,   0;
+    --alabaster: 255, 250, 241;
+    --jordiblue: 148, 194, 255;
 }
 
-/* palette cherry cake */
+/* palette beach */
 :root {
-   --battleship: 156, 153, 144;
-     --eggplant:  75,  59,  71;
-     --lavender: 132, 103, 125;
-      --dimgray: 230, 230, 230;
-        --blush: 222,  213, 213;
+        --ocean: 130, 190, 255;
+         --sand: 255, 236, 207;
+        --white: 255, 255, 255;
+         --onyx:  50,  55,  59;
+    --tangerine: 255, 109,   0;
 }
 
-/* palette forest */
+/* palette antarctica */
 :root {
-     --viridian:  76, 133, 119;
-       --walnut:  64,  55,  41;
-   --aquamarine: 143, 219, 192;
-      --tiffany: 219, 255, 250;
-    --alabaster: 222, 226, 214;
+      --opensea:  68, 125, 187;
+      --iceberg: 172, 218, 255;
+         --bone: 238, 238, 238;
+     --darkonyx:  40,  45,  49;
+    --tangerine: 255, 109,   0;
 }
 
-/* palette plain blue */
+/* palette tacky */
 :root {
-         --glow: 248, 248, 248;
-         --navy:  17,  45,  64;
-         --glow: 248, 248, 248;
-         --navy:  17,  45,  64;
-      --glowlow: 228, 228, 228;
+     --spray: 134, 254, 255;
+ --pinkapple: 237, 191, 230;
+    --pollen: 255, 222, 152;
+      --onyx:  50,  55,  59;
+      --cake: 255,  65, 179;
 }
 
-/* palette dark */
+/* palette aurora australis */
 :root {
-           --onyx:  50,  55,  59;
-       --platinum: 243, 245, 255;
-    --bittersweet: 200,  62,  77;
-      --jordiblue: 148, 194, 255;
-           --onyx:  50,  55,  59;
+     --night:  85, 130, 173;
+   --eoxygen: 255, 227, 227;
+   --moxygen: 195, 255, 236;
+      --onyx:  50,  55,  59;
+     --apple: 255,  65,  80;
+}
 
+/* palette summer */
+:root {
+     --lemon: 255, 238, 134;
+     --peach: 237, 191, 179;
+   --moxygen: 195, 255, 236;
+      --onyx:  50,  55,  59;
+     --apple: 255,  65,  80;
 }

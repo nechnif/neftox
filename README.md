@@ -34,6 +34,7 @@ Available options:
 ```
 
 For long presentations, it may take a minute to create the preview images and PDF, so it is recommended to use the `--html` option while working on the presentation.
+If this is your first time using neftox, it is recommended to use the tutorial as a starting point.
 
 
 
@@ -46,8 +47,3 @@ The following example slides have been created with the neftox talk tutorial:
 <img src="./tutorials/talk/parse/output_02.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_03.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_04.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_05.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_06.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_07.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_08.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_09.png" alt="example slide" width="100%"/>
