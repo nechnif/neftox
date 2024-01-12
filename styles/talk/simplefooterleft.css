@@ -43,7 +43,7 @@ div.background {
            width: var(--totalwidth);
           height: var(--totalheight);
         position: absolute;
-background-color: rgba(var(--back), 1);
+      /* background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%); */
  background-size: cover;
 }
 
@@ -57,6 +57,7 @@ div.cell {
 }
 
 div.cell.BOXTITLE {
+              width: 50%;
              height: var(--titleheight);
               float: right;
           font-size: var(--titlefontsize);
@@ -64,10 +65,11 @@ div.cell.BOXTITLE {
          text-align: center;
               color: rgba(var(--text), 1);
          visibility: hidden;
+        white-space: nowrap;
              /* To vertically align the text: */
             display: flex;
     justify-content: center;
-        align-items: center;
+        /* align-items: center; */
 }
 
 div.cell.T00.BOX1 {
@@ -80,7 +82,6 @@ div.cell.T01.BOX1 {
      float: left;
     height: calc(var(--totalheight) - 4 * var(--boxmargin));
      width: calc( 50% - 6 * var(--boxmargin) - var(--footerwidth) );
-     /* border: 1px solid black; */
 }
 
 div.cell.T01.BOX2 {
@@ -164,9 +165,9 @@ ul, ol {
     /* list-style-type: circle; */
 }
 li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.5); }
-ul.ultrawide  li:not(:last-child) { margin-bottom: calc(var(--basesize) * 1.5); }
-ul.wide       li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.8); }
-ul.tight      li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.3); }
+ul.ultrawide li:not(:last-child) { margin-bottom: calc(var(--basesize) * 1.5); }
+ul.wide      li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.8); }
+ul.tight     li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.3); }
 
 p {
     margin: 0;

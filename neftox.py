@@ -255,13 +255,20 @@ class Presentation(object):
                 for key, value in prevframe.__dict__.items():
                     setattr(frame, key, value)
 
+                # for key, value in tmpframe_.__dict__.items():
+                #     setattr(frame, key, value)
+
+                 ## Set meta information (if updated):
+                for key, value in tmpframe_.__dict__.items():
+                    if value and (key not in ['boxes']):
+                        setattr(frame, key, value)
+
                 ## Set content (if updated):
                 for a in allowed:
                     if ((not tmpframe_.boxes[a].content) and
                     (not tmpframe_.boxes[a].style)):
                         pass
                     elif 'ADD--' in tmpframe_.boxes[a].content:
-                        print('add')
                         frame.boxes[a].UpdateContent(
                             tmpframe_.boxes[a].content
                         )
@@ -418,6 +425,8 @@ class Frame(object):
         ## most allowed elements (boxes):
         self.KIND     = 'frame'
         self.TEMPLATE = '01'
+        # self.BACKGROUND = 'background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);'
+
         ## Parse the user meta data:
         meta = re.findall(Frame.regex_meta, self.rawframe)
         for item in meta:
@@ -443,11 +452,12 @@ class Frame(object):
         ]
         placeholder = '<div class="background" style="{background}"></div>\n'
         background  = placeholder.replace(' style="{background}"', '')
+        default_background = 'background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);'
+        background += placeholder.replace('{background}', default_background)
         for key, value in rules:
             if key in dir(self):
                 background += placeholder.replace(
-                    '{background}',
-                    value.format(getattr(self, key))
+                    '{background}', value.format(getattr(self, key))
                 )
         self.background = background
 
@@ -485,7 +495,7 @@ class Frame(object):
             )
             # titlewidth += 2*int(self.styles['boxpadding'])
             titlewidth += 4*int(self.styles['boxpadding'])
-            self.boxes['BOXTITLE'].SetStyle([('width', '{}px'.format(titlewidth))])
+            # self.boxes['BOXTITLE'].SetStyle([('width', '{}px'.format(titlewidth))])
         else:
             titlewidth = 0
         HTML = HTML.replace('{titlewidth}', '{}'.format(titlewidth))
@@ -585,12 +595,17 @@ class Box(object):
 
         lis = re.findall(Box.re_li, second)
         liobj = ' '.join(li[0] for li in lis)
+
+        if first and (len(lis) > 0):
+            for li in lis:
+                second = second.replace(li[0], '')
+
         if lis and ('</ul>' in first):
             third = first.replace('</ul>', '{}\n</ul>'.format(liobj))
-            third += second.replace(liobj, '')
+            third += second
         elif lis and ('</ol>' in first):
             third = first.replace('</ol>', '{}\n</ol>'.format(liobj))
-            third += second.replace(liobj, '')
+            third += second
         else:
             third = first + second
 
