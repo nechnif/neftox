@@ -1,81 +1,171 @@
 <!-- meta -------------------------------------------------------------->
-TITLE    = Scrapbook Tutorial
-AUTHOR   = Raphdi McAuthor
-DATE     =
-STYLE    = scrapbook
-PALETTE  = plain blue
-OFFSET   = 1
-FONT     = nefcal
-FONTSIZE = 33px
-BROWSER  = firefox
+<!--
+    Fill in all the meta information of your scrapbook here. The TITLE
+    will appear in the footer.
 
+    STYLE and PALETTE set the overall appearance. There is currently only
+    one style available, "simple-A4".
+    The different color palettes are shown at the end of this tutorial.
+
+    Set PAGENUMBEROFFSET to 0 if you do not have a title page. Default is 1.
+    If you want to print your scrapbook later, it might be useful to set
+    the BINDINGOFFSET parameter, e.g. to 80px.
+
+    The default browser for taking selenium screenshots is firefox.
+    Specify BROWER=chrome if you prefer.
+
+    Specify FONT and the base FONTSIZE. Btw, this tool comes with its own font
+    called nefcal (install it from the styles/fonts/ directory).
+-->
+TITLE            = Scrapbook Tutorial
+STYLE            = scrapbook:simple-A4
+PALETTE          = light
+PAGENUMBEROFFSET = 1
+BINDINGOFFSET    = 0px
+FONT             = Gentium
+FONTSIZE         = 33px
+BROWSER          = firefox
+
+
+<!-- Custom style classes can go here -->
+CUSTOMSTYLES--
+
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+--CUSTOMSTYLES
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- The line above marks the beginning of a new slide. -->
-
-<!--
-    What follows is the meta-section of the slide. First, you should
-    pick a TEMPLATE. Default is 00. The different templates are shown in
-    this tutorial presentation.
--->
 TEMPLATE = 00
-<!--
-    The BACKGROUND keyword takes any CSS-viable argument, as you can see
-    below. The usual 'style = "..."' can be ommitted. This also works:
-    BACKGROUND_COLOR = <some color in RGBA, HEX, ... format>
-    BACKGROUND_IMG = <image from the 'pictures' folder in your
-    presentation directory>
- -->
-BACKGROUND = background-image: url(../pictures/background.jpg); background-position: bottom; background-size: cover; filter: saturate(0%);
-BACKGROUND_COLOR = rgba(255, 255, 255, 0.8)
+BACKGROUND = background-image: url(../../../styles/images/pergament_02.jpg); filter: saturate(70%);
+<!-- BACKGROUND_COLOR = rgba(255, 255, 255, 0.8) -->
 
-<!--
-    The slide contents are organized in boxes:
-
-        BOXTITLE, BOX1, BOX2 for template 00,
-        BOXTITLE, BOX1, BOX2 for template 01,
-        BOXTITLE, BOX1       for template 02.
-
-    The content of the boxes can be anything from the HTML and CSS world.
- -->
 BOX1--
-    style="border: 3px solid rgba(var(--text), 1);"
-    <p class="headline" style="margin-top: 230px;">
-        <!-- Scientific Presentations -->
+    style="border: 25px solid transparent; border-image: url(../../../styles/images/border_wavy.png) 70 round; border-image-outset: 3px 6px 0px 3px;"
+
+    <figure class="abs" style=" top: -30px; left: 120px; transform: rotate(45deg);">
+        <img src="../../../styles/images/flowers_fern.png" style="width: 100px;">
+    </figure>
+    <figure class="abs" style=" top: -20px; right: 120px; transform: rotate(-45deg);">
+        <img src="../../../styles/images/flowers_aaron.png" style="width: 100px;">
+    </figure>
+
+    <figure style="margin-top: 100px;">
+        <img src="../pictures/testimage_00.jpg" style="width: 90%; border-width: 8px; border-style: double; border-radius: 50%; filter: saturate(50%) sepia(50%);">
+    </figure>
+
+    <p class="headline" style="margin-top: 50px;">
+        Scrapbook Tutorial
     </p>
-    <p class="subheadline">
-        <!-- and all you need is a text editor -->
+    <!-- <hr style="width: 98%; height: 1.5px; margin-top: 80px;"> -->
+    <p class="subheadline" style="margin-top: 80px; font-size: 40pt;">
+        Creating digital scrapbooks<br>with neftox
     </p>
 
-    <hr style="width: 98%; height: 1.5px; margin-top: 240px;">
-    <p style="width: 50%; float: left; padding: 0 0 20px 20px; color: rgba(var(--text),1); font-weight: bold;">
-        <!-- Presentation of important results<br>
-        from the latest craze in research<br>
-        on February 29th, 2020<br> -->
-    </p>
-    <p style="width: 50%; float: right; padding: 0 20px 20px 0; text-align: right; color: rgba(var(--text),1); font-weight: bold;">
-        <!-- Dr. Raphdi McAuthor<br>
-        Institute of Science and Technology<br>
-        Famous University, Planet Earth -->
-    </p>
+    <figure class="abs bottom" style="bottom: 0px; left: -10px; transform: scaleX(-1);">
+        <img src="../../../styles/images/flowers_clover.png" style="width: 210px;">
+    </figure>
+    <figure class="abs bottom" style="right: 0; bottom: 0;">
+        <img src="../../../styles/images/flowers_wheat.png" style="width: 180px;">
+    </figure>
+
 --BOX1
 
 
 <!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 00
+TEMPLATE = 01
+BACKGROUND = background-image: url(../../../styles/images/pergament_01.jpg); filter: saturate(70%);
 
 BOXTITLE--
-    style="border: 3px solid black;"
-    Template 00
 --BOXTITLE
 
 BOX1--
-    style="border: 3px solid black;"
-    BOX1
+    <p><b>Creating digital scrapbooks with neftox</b></p>
+    <p style="font-size: 25px;">07. April 2024</p>
+    <br>
+
+    <p>
+    Scrapbooks work very similar to talks, so it is recommended to look at the
+    talk tutorial where all the basics of neftox are explained.
+    </p>
+    <br>
+
+    <p>
+    Content creation happens within templates and boxes, just like for
+    presentation slides. You can view the different templates at the end of the
+    tutorial.
+    </p>
+    <br>
+
+    <figure class="tesa c" style="margin-left: -5px; transform: rotate(-1.5deg); width: 105%">
+        <img src="../pictures/testimage_01.jpg" style="width: 100%;">
+        <figcaption>This is a figure caption.</figcaption>
+    </figure>
+    <br>
+
+    <p>
+    You can add text and images and style them in any way you want using HTML
+    and CSS. LaTeX expressions are possible too (see talk tutorial).
+    </p>
+    <br>
+
+    <figure style="margin-left: -50px; margin-top: -30px;">
+        <img src="../pictures/testimage_04.png" style="width: 75%; border-radius: 50%; box-shadow: 5px 5px 5px black;">
+        <figcaption class="r" style="left: 42%; top: 20%; transform: rotate(65deg);">
+            Another caption.
+        </figcaption>
+    </figure>
+    <img class="clip i l" style="width: 80px; bottom: 70px; left: 35px; transform: rotate(-80deg);">
 --BOX1
 
 BOX2--
-    style="border: 3px solid black;"
+    <figure class="cborder plain" style="margin-top: 10px;">
+        <img src="../pictures/testimage_03.png" style="width: 98%;">
+    </figure>
+    <br>
+
+    <p>
+    The tool comes with a variety of style elements you can add to your scrapbook,
+    like plain and wavy borders, masking tape strips, paper clips, stamps,
+    artsy backgrounds, ...
+    which are located in the tool's styles/images/ directory. Have a look at the
+    input code of this tutorial on how to use them!
+    </p>
+    <br>
+
+    <figure class="tesa t" style="margin-right: -80px; margin-top: 10px; transform: rotate(2deg);">
+        <img src="../pictures/testimage_02.jpg" style="width: 100%;">
+    </figure>
+    <br>
+
+    <p>
+    You can of course add your own photos and style elements,
+    like dried flowers or movie theater tickets — or images of them, at least.
+    A handwriting font might look cool, too!
+    </p>
+    <br>
+
+    <p style="font-size: 20px;">
+    The technical drawings used as example images are taken from my<br>own publication:<br>
+    https://www.uni-muenster.de/imperia/md/content/physik_kp/agkappes/abschlussarbeiten/doktorarbeiten/doktorarbeit_raffaela.pdf
+    </p>
+    <br>
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 00
+
+BOX1--
+    style="border: 1px solid black;"
+    BOX1
+    <p style="float: right;"><b>Template 00</b></p>
+--BOX1
+
+BOX2--
+    style="border: 1px solid black;"
     BOX2
 --BOX2
 
@@ -83,36 +173,28 @@ BOX2--
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 01
 
-BOXTITLE--
-    style="border: 3px solid black;"
-    Template 01
---BOXTITLE
-
 BOX1--
-    style="border: 3px solid black;"
+    style="border: 1px solid black;"
     BOX1
 --BOX1
 
 BOX2--
-    style="border: 3px solid black;"
+    style="border: 1px solid black;"
     BOX2
+    <p style="float: right;"><b>Template 01</b></p>
 --BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 02
 
-BOXTITLE--
-    style="border: 3px solid black;"
-    Template 02
---BOXTITLE
-
 BOX1--
-    style="border: 3px solid black;"
+    style="border: 1px solid black;"
     BOX1
+    <p style="float: right;"><b>Template 02</b></p>
 --BOX1
 
 BOX2--
-    style="border: 3px solid black;"
+    style="border: 1px solid black;"
     BOX2
 --BOX2

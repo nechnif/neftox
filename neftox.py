@@ -70,6 +70,9 @@ class Presentation(object):
     def ParseMeta(self):
         ## Default meta data:
         self.defaultmeta = {
+            'TITLE'             : '',
+            'AUTHOR'            : '',
+            'DATE'              : '',
             'STYLE'             : 'talk:simple',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
