@@ -1,15 +1,20 @@
 :root {
-    --grad1:   0,   0,   0;
-    --grad2:   0,   0,   0;
-    --grad3:   0,   0,   0;
-    --text: 255, 250, 241;
-    --highlight: 148, 194, 255;
+    --grad1: 219, 219, 219;
+    --grad2: 255, 248, 239;
+    --grad3: 255, 255, 255;
+    --text:  50,  55,  59;
+    --highlight: 255, 109,   0;
 }
 :root {
     --fontfamily: Gentium;
-    --basesize: 36.0px;
+    --basesize: 30.0px;
+    --bindingoffset: 0px;
 }
 @font-face {
     font-family: Gentium;
     src: url('/usr/share/fonts/truetype/gentium/Gentium-R.ttf');
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
 }

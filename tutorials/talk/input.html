@@ -15,15 +15,26 @@
     Specify FONT and the base FONTSIZE. Btw, this tool comes with its own font
     called nefcal (install it from the styles/fonts/ directory).
 -->
-TITLE    = Presentation Title
-AUTHOR   = Author
-DATE     = 04.01.2024
-STYLE    = talk:simplefooterleft
-PALETTE  = light
-OFFSET   = 1
-FONT     = Gentium
-FONTSIZE = 30px
-BROWSER  = firefox
+TITLE            = Presentation Title
+AUTHOR           = Author
+DATE             = 07.04.2024
+STYLE            = talk:simplefooterleft
+PALETTE          = light
+PAGENUMBEROFFSET = 1
+FONT             = Gentium
+FONTSIZE         = 30px
+BROWSER          = firefox
+
+
+<!-- Custom style classes can go here -->
+CUSTOMSTYLES--
+
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+--CUSTOMSTYLES
 
 
 <!-- FRAME ------------------------------------------------------------>
@@ -59,14 +70,14 @@ BOX1--
         Presentation Slides
     </p>
     <p class="subheadline">
-        can be created with any text editor
+        created with a simple text editor
     </p>
 
     <hr style="width: 98%; height: 1.5px; margin-top: 310px;">
     <p style="width: 50%; float: left; padding: 0 0 20px 20px; color: rgba(var(--text),1); font-weight: bold;">
         If you want your very own slide design<br>
-        combined with scientific typesetting<br>
-        then <i>neftox</i> is for you!<br>
+        combined with scientific typesetting,<br>
+        then <i>neftox</i> may be for you!<br>
     </p>
     <p style="width: 50%; float: right; padding: 0 20px 20px 0; text-align: right; color: rgba(var(--text),1); font-weight: bold;">
         All you need is basic knowledge in<br>
@@ -81,15 +92,77 @@ TEMPLATE = 01
 BACKGROUND = background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%,  rgba(var(--grad2), 1) 70%,  rgba(var(--grad3), 1) 100%);
 
 BOXTITLE--
+    Welcome to neftox!
+--BOXTITLE
+
+BOX1--
+    <p style="text-align: justify;">
+        This is a tool for creating highly-personalized, scientific and visually appealing presentation slides in a text editor.
+    </p>
+    <br>
+
+    <p style="text-align: justify;">
+        In principle, neftox creates an HTML file (a website if you will)  based on the user's input, takes screenshots of it in the background, which are then converted to a PDF. This allows for easy and flexible content creation without a resource- and overhead-heavy graphical interface.
+    </p>
+    <br>
+
+    <p style="text-align: justify;">
+        No special programming skills are required. This tutorial serves as a copy-and-paste resource and provides enough examples for a simple presentation. For more complex presentations, some basic knowledge of HTML and CSS scripting languages is recommended. The tool can also understand LaTeX expressions for the creation of scientific content.
+    </p>
+    <br>
+
+    <p style="text-align: justify; border: 2px solid black; padding: 10px 15px;">
+        The following slides explain how content is created with the neftox tool. The input code of this tutorial is the best starting point for your first presentation.
+    </p>
+    <br>
+--BOX1
+
+BOX2--
+    style="background-image: url(../pictures/torngrid_01.png); background-position: bottom; background-size: 95%; background-repeat: no-repeat; padding: 20px 50px;"
+    <!--
+        You can specify a style (e.g. a custom background) at the
+        very first line within each box, as done above.
+    -->
+    <p style="text-align: justify;">
+        <b>Templates</b>
+    </p>
+    <br>
+
+    <p style="text-align: justify;">
+        For each slide, you can choose a template that helps with element placement:
+    </p>
+    <ul class="medium wide" style="margin: 30px 25px;">
+        <li>
+            One plain template
+            for maximum design freedom (used here as the title slide),
+        </li>
+        <li>
+            one for next-to-next vertical layout (this slide),
+        </li>
+        <li>
+            and one for horizontal layout (slide number 5).
+        </li>
+    </ul>
+    <p style="text-align: justify; margin-top: 20px;">
+        You find an overview of the different templates at the end of the presentation.
+        Advanced users can also store their individual layouts in new templates.
+    </p>
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 01
+BACKGROUND = background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%,  rgba(var(--grad2), 1) 70%,  rgba(var(--grad3), 1) 100%);
+
+BOXTITLE--
     Creating slide content
 --BOXTITLE
 
 BOX1--
     <p style="text-align: justify;">
-        In general, boxes can contain anything from the HTML and CSS world,
-        like paragraphs, images, lists, plain text, etc.
-        If you need more freedom, choose the template with the single, giant box and knock yourself out!
-        The different templates are shown at the end of the presentation.
+        The contents go into "boxes". Boxes can contain anything from the HTML and CSS world,
+        like paragraphs, images, lists, plain text, etc. This slide, for instance, has two
+        side-by-side boxes as you can see in the input code.
         <br><br>
         Below is an example for an image.
     </p>
@@ -100,13 +173,9 @@ BOX1--
 
 BOX2--
     style="background-image: url(../pictures/torngrid_01.png); background-position: bottom; background-size: 95%; background-repeat: no-repeat;"
-    <!--
-        You can specify a style (e.g. a custom background) at the
-        very first line within each box, as done above.
-    -->
+
     <ul class="medium" style="margin: 30px 25px;">
         <li>
-            The contents go into boxes like this one.
             Boxes have a default style, but
             <font style="color: rgba(var(--highlight), 1);">everything(!)</font>
             (e.g. the background) can be changed in the input code.
@@ -159,7 +228,7 @@ TEMPLATE = 01
 BACKGROUND = background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%,  rgba(var(--grad2), 1) 70%,  rgba(var(--grad3), 1) 100%);
 
 BOXTITLE--
-    Subframes and input templates
+    Subframes
 --BOXTITLE
 
 BOX1--
@@ -206,24 +275,8 @@ BOX1--
 --BOX1
 
 BOX2--
-    <p style="text-align: justify;">
-        There are three templates for each presentation style:
-    </p>
-    <ul class="medium wide" style="margin: 30px 25px;">
-        <li>
-            One plain template
-            for maximum design freedom (used here as the title slide),
-        </li>
-        <li>
-            one for vertical layout (this and the previous slides),
-        </li>
-        <li>
-            and one for horizontal layout (next slide).
-        </li>
-    </ul>
-    <p style="text-align: justify; margin-top: 20px;">
-        The templates provide some guidance for element placement. You can store
-        your individual layouts in new templates.
+    <p style="width: 100%; height: 100%; border: 2px solid black; text-align: center; line-height: 500px;">
+        Something else could go here!
     </p>
 --BOX2
 
@@ -281,4 +334,48 @@ BOX2--
             </tr>
         </tbody>
     </table>
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 00
+
+BOXTITLE--
+    Template 00
+--BOXTITLE
+
+BOX1--
+    style="border: 1px solid black;"
+--BOX1
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 01
+
+BOXTITLE--
+    Template 01
+--BOXTITLE
+
+BOX1--
+    style="border: 1px solid black;"
+--BOX1
+
+BOX2--
+    style="border: 1px solid black;"
+--BOX2
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = 02
+
+BOXTITLE--
+    Template 02
+--BOXTITLE
+
+BOX1--
+    style="border: 1px solid black;"
+--BOX1
+
+BOX2--
+    style="border: 1px solid black;"
 --BOX2

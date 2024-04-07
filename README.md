@@ -29,7 +29,7 @@ Last but not least, a text editor is required for content creation. Any text edi
 Available options:
 ```
 --html        # Create browser output
---preview     # Create a preview with JPG images
+--preview     # Create a preview with PNG images
 --pdf         # Create PDF presentation
 ```
 
@@ -47,3 +47,7 @@ The following example slides have been created with the neftox talk tutorial:
 <img src="./tutorials/talk/parse/output_02.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_03.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_04.png" alt="example slide" width="100%"/>
+<img src="./tutorials/talk/parse/output_05.png" alt="example slide" width="100%"/>
+<img src="./tutorials/talk/parse/output_06.png" alt="example slide" width="100%"/>
+<img src="./tutorials/talk/parse/output_07.png" alt="example slide" width="100%"/>
+<img src="./tutorials/talk/parse/output_08.png" alt="example slide" width="100%"/>

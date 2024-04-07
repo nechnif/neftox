@@ -35,9 +35,9 @@ def DeleteBracket(start, stop, string, replace=''):
 
 class Presentation(object):
 
-    regex_meta     = '([A-Z]*) *= *(.*)\n|\r'
-    regex_style    = '\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
-    regex_template = 'template_\d\d.html'
+    regex_meta         = '([A-Z]*) *= *(.*)\n|\r'
+    regex_style        = '\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
+    regex_template     = 'template_\d\d.html'
 
     def __init__(self, inputargs):
 
@@ -70,13 +70,15 @@ class Presentation(object):
     def ParseMeta(self):
         ## Default meta data:
         self.defaultmeta = {
-            'STYLE'   : 'talk:simple',
-            'OFFSET'  : '0',
-            'PALETTE' : 'beach',
-            'FONT'    : 'Gentium',
-            'FONTSIZE': '30px',
-            'BROWSER' : 'firefox',
+            'STYLE'             : 'talk:simple',
+            'PAGENUMBEROFFSET'  : '0',
+            'BINDINGOFFSET'     : '0px',
+            'PALETTE'           : 'beach',
+            'FONT'              : 'Gentium',
+            'FONTSIZE'          : '30px',
+            'BROWSER'           : 'firefox',
         }
+
         ## Parse the user meta data:
         meta = re.findall(
             Presentation.regex_meta,
@@ -88,6 +90,14 @@ class Presentation(object):
             setattr(self, key, value)
 
         self.FONTSIZE = float(self.FONTSIZE.rstrip('px'))
+
+        ## Parse additional style classes:
+        match_ = MatchBetween('CUSTOMSTYLES--', '--CUSTOMSTYLES', self.rawcontent)
+        if match_[0]:
+            customstyles = match_[0]
+        else:
+            customstyles = ''
+        self.customstyles = customstyles
 
     def SetPalette(self):
         ## Writes the user-defined style options from the input file meta
@@ -124,16 +134,18 @@ class Presentation(object):
 
     def SetStyle(self):
         ## Read stylesheet:
-        stylefile = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
+        stylefile       = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
+        customstylefile = 'styles/customs.css'
         with open(stylefile, 'r') as sf:
             stylesheet = sf.read()
+        with open(customstylefile, 'r') as cf:
+            customstylesheet = cf.read()
 
         ## Extract style elements that are relevant for the frame layout
         ## on script level:
         elements = [
             ('fontfactor',    '--fontfactor: *(\d*.*\d*);'),
             ('totalwidth',    '--totalwidth: *(\d*)px;'),
-            ('bindingoffset', '--bindingoffset: *(\d*)px;'),
             ('totalheight',   '--totalheight: *(\d*)px;'),
             ('boxmargin',     '--boxmargin: *(\d*)px;'),
             ('boxpadding',    '--boxpadding: *(\d*)px;'),
@@ -165,6 +177,11 @@ class Presentation(object):
                 template.content = template.content.replace(rule[0], rule[1])
 
         self.templates = templates
+
+        ## Set custom styles:
+        with open('styles/customs.css', 'a') as f:
+            f.write(self.customstyles)
+            f.write('\n')
 
     def FindFont(self):
         ## Locate chosen font, and revert to default if not found:
@@ -204,8 +221,9 @@ class Presentation(object):
         ## The default font needs to be manually installed before first use:
         if self.FONT==self.defaultmeta['FONT'] and fonts['regular'] == None:
             print(
-                '\nDefault font not found. If this is your first use, please '
-                'install it from neftox/styles/fonts/\n.'
+                '\nDefault font not found.'
+                # 'If this is your first use, please '
+                # 'install it from neftox/styles/fonts/\n.'
             )
 
         fonts['bold'] = (fonts['regular'] if not fonts['bold'] else fonts['bold'])
@@ -213,6 +231,7 @@ class Presentation(object):
         self.WriteStyle(':root', [
             ('fontfamily', self.FONT),
             ('basesize', '{}px'.format(self.FONTSIZE)),
+            ('bindingoffset', self.BINDINGOFFSET),
         ])
 
         ## Some fonts have to be enabled in the style sheet:
@@ -228,11 +247,11 @@ class Presentation(object):
     def GetFrames(self):
         ## Attributes that are being passed over to the frame class:
         passattr = [
-            ('inputdir',  inputdir),
-            ('styles',    self.styles),
-            ('fonts',     self.fonts),
-            ('templates', self.templates),
-            ('OFFSET',    self.OFFSET),
+            ('inputdir',         inputdir),
+            ('styles',           self.styles),
+            ('fonts',            self.fonts),
+            ('templates',        self.templates),
+            ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
         ]
 
         rawframes = self.rawcontent.split('<!-- FRAME ')[1:]
@@ -295,11 +314,9 @@ class Presentation(object):
 
         ## Determine window size:
         windowsize = {
-            'width'  : int(self.styles['totalwidth'])+int(self.styles['bindingoffset']),
+            'width'  : int(self.styles['totalwidth'])+int(self.BINDINGOFFSET.split('px')[0]),
             'height' : int(self.styles['totalheight']),
         }
-        # print(self.styles['bindingoffset'])
-        # print(windowsize)
 
         ## Initiate web driver:
         if self.BROWSER in ['chrome', 'chromium']:
@@ -434,7 +451,7 @@ class Frame(object):
 
         self.TEMPLATE = 'template_'+self.TEMPLATE
 
-        Frame.pagecount -= (int(self.OFFSET) if self.number==0 else 0)
+        Frame.pagecount -= (int(self.PAGENUMBEROFFSET) if self.number==0 else 0)
         Frame.pagecount += (0 if self.KIND=='subframe' else 1)
         self.page = Frame.pagecount
 
