@@ -6,6 +6,7 @@ In principle, neftox creates an HTML file (a website if you will)  based on the 
 
 No special programming skills are required. The tool comes with a tutorial which serves as a copy-and-paste resource and provides enough examples for a simple presentation. For more complex presentations, some basic knowledge of HTML and CSS scripting languages is recommended. The tool can also understand LaTeX expressions for the creation of scientific content.
 
+**NEW:** You can now create digital scrapbooks with neftox! See example pages below.
 
 
 ### Prerequisites
@@ -48,6 +49,9 @@ The following example slides have been created with the neftox talk tutorial:
 <img src="./tutorials/talk/parse/output_03.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_04.png" alt="example slide" width="100%"/>
 <img src="./tutorials/talk/parse/output_05.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_06.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_07.png" alt="example slide" width="100%"/>
-<img src="./tutorials/talk/parse/output_08.png" alt="example slide" width="100%"/>
+
+
+The following example pages have been created with the neftox scrapbook tutorial:
+
+<img src="./tutorials/scrapbook/parse/output_00.png" alt="example slide" width="50%"/>
+<img src="./tutorials/scrapbook/parse/output_01.png" alt="example slide" width="50%"/>
