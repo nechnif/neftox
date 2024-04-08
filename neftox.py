@@ -80,6 +80,7 @@ class Presentation(object):
             'FONT'              : 'Gentium',
             'FONTSIZE'          : '30px',
             'BROWSER'           : 'firefox',
+            'QUALITY'           : '1.0',
         }
 
         ## Parse the user meta data:
@@ -315,10 +316,13 @@ class Presentation(object):
         ## Creating "screenshots" of the HTML preview pages using
         ## Selenium. Hoping to support different browers in the future.
 
-        ## Determine window size:
+        ## Determine window size. Get browser zoom factor from quality setting.
+        zf = float(self.QUALITY)
         windowsize = {
-            'width'  : int(self.styles['totalwidth'])+int(self.BINDINGOFFSET.split('px')[0]),
-            'height' : int(self.styles['totalheight']),
+            # 'width'  : int(self.styles['totalwidth'])+int(self.BINDINGOFFSET.split('px')[0]),
+            # 'height' : int(self.styles['totalheight']),
+            'width'  : int(self.styles['totalwidth'])*zf,
+            'height' : int(self.styles['totalheight'])*zf,
         }
 
         ## Initiate web driver:
@@ -353,6 +357,7 @@ class Presentation(object):
         # into account in the screenshot size. I could not find a better
         # way to solve this yet.
         testfile = '{}parse/test.png'.format(inputdir)
+
         driver.save_screenshot(testfile)
         scrolloffset = Image.open(testfile).height - windowsize['height']
         windowsize['height'] = windowsize['height']-scrolloffset
@@ -364,6 +369,11 @@ class Presentation(object):
         scroll = windowsize['height']+scrolloffset
         for f in range(len(self.frames)):
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
+
+            # driver.execute_script('document.body.style.zoom = "{}"'.format(zf))
+            driver.execute_script('document.body.style.MozTransform = "scale({})";'.format(zf))
+            driver.execute_script('document.body.style.MozTransformOrigin = "0 0";')
+
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
             scroll += windowsize['height']+scrolloffset
