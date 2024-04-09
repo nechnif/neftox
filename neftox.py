@@ -15,7 +15,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import img2pdf
 
 #-- Global functions and variables -------------------------------------
-global inputdir, parsedir, equdir
+global neftoxdir, inputdir, parsedir, equdir
 
 def MatchBetween(start, stop, string, len=1):
     ## Grab the content between two custom tags.
@@ -42,6 +42,8 @@ class Presentation(object):
     def __init__(self, inputargs):
 
         self.dir = os.path.join(os.path.abspath(os.getcwd()), '')
+        global neftoxdir
+        neftoxdir = self.dir
         ## Re-start custom style file:
         if 'customs.css' in os.listdir('styles'):
             os.remove('styles/customs.css')
@@ -379,9 +381,6 @@ class Presentation(object):
 
             for zoomstring in zoomstrings:
                 driver.execute_script(zoomstring)
-            # driver.execute_script('document.body.style.zoom = "{}"'.format(zf))
-            # driver.execute_script('document.body.style.MozTransform = "scale({})";'.format(zf))
-            # driver.execute_script('document.body.style.MozTransformOrigin = "0 0";')
 
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
@@ -553,6 +552,9 @@ class Frame(object):
         for boxname, box in self.boxes.items():
             HTML = HTML.replace('{{{} style}}'.format(box.name), box.style)
             HTML = HTML.replace('{{{}}}'.format(box.name), box.content)
+
+        ## Further replacements:
+        HTML = HTML.replace('$NEFTOX', neftoxdir)
 
         self.HTML = HTML
 
