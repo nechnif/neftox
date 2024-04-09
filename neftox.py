@@ -578,19 +578,21 @@ class Box(object):
     def SetStyle(self, styles):
         ## Append new style commands to the existing style string.
 
-        newstyles = set()
+        newstyles = []
         ## The styles argument can be passed as a tuple of a css keyword
         ## and value (clean) or as a string (dirty). The string has to
         ## be tuple'd first, this happens below:
         for s_ in styles:
             if isinstance(s_, tuple):
-                newstyles.add(s_)
+                newstyles.append(s_)
             elif isinstance(s_, str):
                 list_ = list(filter(None, s_.split(';')))
                 for l in list_:
-                    newstyles.add(tuple(l.split(':')))
+                    newstyles.append(tuple(l.split(':')))
             else:
-                newstyles.add((None,))
+                newstyles.append((None,))
+
+        print(newstyles)
 
         result = self.style.lstrip('style="').rstrip('"')
         for key, value in newstyles:
