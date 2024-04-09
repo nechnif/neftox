@@ -336,6 +336,9 @@ class Presentation(object):
                 options=options,
                 # executable_path='/usr/bin/chromedriver'
             )
+            zoomstrings = [
+                'document.body.style.zoom = "scale({})";'.format(zf)
+            ]
         else:
             print('Initializing Firefox driver ...')
             options = webdriver.firefox.options.Options()
@@ -347,6 +350,10 @@ class Presentation(object):
                 options=options,
                 # service_log_path=os.path.devnull
             )
+            zoomstrings = [
+                'document.body.style.MozTransform = "scale({})";'.format(zf),
+                'document.body.style.MozTransformOrigin = "0 0";'
+            ]
 
         driver.set_window_size(windowsize['width'], windowsize['height'])
         url = 'file:///{}parse/output.html'.format(inputdir)
@@ -370,9 +377,11 @@ class Presentation(object):
         for f in range(len(self.frames)):
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
 
+            for zoomstring in zoomstrings:
+                driver.execute_script(zoomstring)
             # driver.execute_script('document.body.style.zoom = "{}"'.format(zf))
-            driver.execute_script('document.body.style.MozTransform = "scale({})";'.format(zf))
-            driver.execute_script('document.body.style.MozTransformOrigin = "0 0";')
+            # driver.execute_script('document.body.style.MozTransform = "scale({})";'.format(zf))
+            # driver.execute_script('document.body.style.MozTransformOrigin = "0 0";')
 
             driver.save_screenshot(png)
             driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
