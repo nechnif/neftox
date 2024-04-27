@@ -194,8 +194,8 @@ class Presentation(object):
 
         def LocateFontFile(fontname, size):
 
-            regex_reg  = '{}([-_]*[rR](egular)*)*\.ttf'.format(fontname)
-            regex_bold = '{}[-_]*[bB](old)*\.ttf'.format(fontname)
+            regex_reg  = '{}([-_]*[rR](egular)*)*\.[ot]tf'.format(fontname)
+            regex_bold = '{}[-_]*[bB](old)*\.[ot]tf'.format(fontname)
 
             systemfonts = matplotlib.font_manager.findSystemFonts()
             fontlist = [f for f in systemfonts if fontname in f]
@@ -591,8 +591,6 @@ class Box(object):
                     newstyles.append(tuple(l.split(':')))
             else:
                 newstyles.append((None,))
-
-        print(newstyles)
 
         result = self.style.lstrip('style="').rstrip('"')
         for key, value in newstyles:
