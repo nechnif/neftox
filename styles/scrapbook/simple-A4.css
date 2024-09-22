@@ -1,13 +1,16 @@
-/* stylesheet for nechnif's talks, STYLE: popular */
+/* stylesheet for neftox scrapbooks, STYLE: simple-A4 */
 
 @import url("../palettes.css");
 @import url("../customs.css");
 
-/*### box behaviour */
+
+/* --- PAGE SETUP ----------------------------------------------------------- */
+
+/* box behaviour */
 html { box-sizing: border-box; }
 *, ::before, ::after { box-sizing: inherit; }
 
-/* ### Widths and heights */
+/* Widths and heights */
 :root {
      --totalwidth: 1300px;
     --totalheight: 1839px;
@@ -28,7 +31,7 @@ body {
    font-family: var(--fontfamily);
 }
 
-/*### Specify the frame containers. */
+/* Specify the frame containers. */
 div.frame {
               /* width: var(--totalwidth); */
               width: calc(var(--totalwidth) - var(--bindingoffset));
@@ -49,7 +52,6 @@ div.background {
            width: var(--totalwidth);
           height: var(--totalheight);
         position: absolute;
-background-color: rgba(var(--back), 1);
  background-size: cover;
 }
 
@@ -130,7 +132,7 @@ span.footer.page.odd {
 }
 
 
-/*--- General content classes and specifications ----------------------- */
+/*--- TEXT STYLES ----------------------------------------------------------- */
 
 /* Classes for list item separation: */
 ul, ol {
@@ -169,7 +171,31 @@ hr {
     background-color: rgba(var(--text), 1);
 }
 
-/* Images */
+/* General text styles: */
+.large { font-size: calc(var(--basesize) + 5pt); }
+.small { font-size: calc(var(--basesize) - 5pt); }
+.tiny { font-size: calc(var(--basesize) - 10pt); }
+.bold { font-weight: bold; }
+.tty { font-family: monospace; }
+
+.shadow { text-shadow: 4px 4px 4px black; }
+.shadowwhite { text-shadow: 4px 4px 4px white; }
+.boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
+.border { border: 5px solid white; }
+
+.none { list-style: none; }
+/* Classes for horizontal alignment: */
+.left   { text-align: left; }
+.right  { text-align: right; }
+.center { text-align: center; }
+/* Classes for vertical alignment: */
+.top    { vertical-align: top; }
+.bottom { vertical-align: bottom; }
+.middle { vertical-align: middle; }
+
+
+/*--- IMAGES AND BORDERS ---------------------------------------------------- */
+
 figure {
     position: relative;
       margin: 0;
@@ -209,6 +235,9 @@ figcaption.r {
 img {
            width: 100%;
     border-color: rgba(var(--text), 1);
+}
+figure img {
+    vertical-align: top;
 }
 
 /* Images with masking tape */
@@ -255,30 +284,62 @@ figure.tesa.c::after {
     border-image: url(../images/tesa_corners.png) 400 stretch;
 }
 
-/* Other custom borders: */
-figure.cborder img { box-shadow: 3px 3px 3px rgba(50, 50, 50, 1); }
-figure.cborder.plain {
+/* Drawn borders: */
+figure.dborder img { box-shadow: 3px 3px 3px rgba(50, 50, 50, 1); }
+figure.dborder.plain {
                  border: 12px solid transparent;
            border-image: url(../images/border_plain.png) 35 stretch;
     border-image-outset: 3px 7px 0px 3px;
 }
-figure.cborder.stamp {
+figure.dborder.stamp {
                  border: 25px solid transparent;
            border-image: url(../images/border_stamp.png) 10% round;
     border-image-outset: 3px 7px 0px 3px;
 }
-figure.cborder.wavy {
+figure.dborder.wavy {
                  border: 25px solid transparent;
            border-image: url(../images/border_wavy.png) 70 round;
     border-image-outset: 3px 6px 0px 3px;
 }
 
-/* Images with paper clip */
-/* figure.clip {
-    position: absolute;
-     padding: 5px;
-     z-index: 1;
-} */
+/* Fabric borders */
+figure.fborder {
+    box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
+}
+figure.fborder img {
+    box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
+}
+figure.fborder.kloeppel {
+                 border: 70px solid transparent;
+           border-image: url(../images/kloeppel_01.png) 90 round;
+    border-image-outset: 10px 6px 15px 3px;
+             box-sizing: border-box;
+       background-color: #fff9f3;
+}
+
+/* Passepartouts */
+figure.passepartout {
+      box-shadow: 0px 0px 12px 4px black inset;
+          border: 10px solid rgba(0, 0, 0, .1);
+      border-top: 10px solid rgba(0, 0, 0, .2);
+    border-right: 10px solid rgba(0, 0, 0, .2);
+}
+figure.passepartout img {
+    vertical-align: top;
+          position: relative;
+           z-index: -1;
+}
+figure.passepartout.oval {
+    border-radius: 50%;
+           border: 12px solid rgba(0, 0, 0, .1);
+       border-top: 12px solid rgba(0, 0, 0, .1);
+     border-right: 12px solid rgba(0, 0, 0, .1);
+}
+figure.passepartout.oval img {
+    border-radius: 50%;
+}
+
+/* Paper clips */
 img.clip {
     position: absolute;
      z-index: 2;
@@ -300,43 +361,4 @@ img.clip.b {
 }
 img.clip.l {
     left: 40px;
-}
-
-
-
-
-
-/* General text styles: */
-.large { font-size: calc(var(--basesize) + 5pt); }
-.small { font-size: calc(var(--basesize) - 5pt); }
-.tiny { font-size: calc(var(--basesize) - 10pt); }
-.bold { font-weight: bold; }
-.tty { font-family: monospace; }
-
-.shadow { text-shadow: 4px 4px 4px black; }
-.shadowwhite { text-shadow: 4px 4px 4px white; }
-.boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
-.border { border: 5px solid white; }
-
-.none { list-style: none; }
-/* Classes for horizontal alignment: */
-.left   { text-align: left; }
-.right  { text-align: right; }
-.center { text-align: center; }
-/* Classes for vertical alignment: */
-.top    { vertical-align: top; }
-.bottom { vertical-align: bottom; }
-.middle { vertical-align: middle; }
-
-.box { color: rgba(var(--box), 1) !important;  }
-.text { color: rgba(var(--text), 1) !important;  }
-.color { color: rgba(var(--color), 1) !important;  }
-.highlight { color: rgba(var(--highlight), 1) !important;  }
-.back { color: rgba(var(--back), 1) !important;  }
-
-
-table {
-         width: 100%;
-    text-align: center;
-        /* border: 1px solid black; */
 }

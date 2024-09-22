@@ -185,9 +185,11 @@ class Presentation(object):
         self.templates = templates
 
         ## Set custom styles:
-        with open('styles/customs.css', 'a') as f:
-            f.write(self.customstyles)
-            f.write('\n')
+        for _loc in ['styles/customs.css', '{}/custom.css'.format(parsedir)]:
+            with open(_loc, 'a') as f:
+                f.write(self.customstyles)
+                f.write('\n')
+
 
     def FindFont(self):
         ## Locate chosen font, and revert to default if not found:
@@ -490,8 +492,6 @@ class Frame(object):
         ]
         placeholder = '<div class="background" style="{background}"></div>\n'
         background  = placeholder.replace(' style="{background}"', '')
-        default_background = 'background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);'
-        background += placeholder.replace('{background}', default_background)
         for key, value in rules:
             if key in dir(self):
                 background += placeholder.replace(
