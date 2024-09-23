@@ -4,7 +4,7 @@
     will appear in the footer.
 
     STYLE and PALETTE set the overall appearance. There is currently only
-    one style available, "simple-A4".
+    one style available, "simple".
     The different color palettes are shown at the end of this tutorial.
 
     Set PAGENUMBEROFFSET to 0 if you do not have a title page. Default is 1.
@@ -21,7 +21,7 @@
     the output.
 -->
 TITLE            = Scrapbook Tutorial
-STYLE            = scrapbook:simple-A4
+STYLE            = scrapbook:simple:A4-portrait
 PALETTE          = light
 PAGENUMBEROFFSET = 1
 BINDINGOFFSET    = 0px
@@ -39,22 +39,26 @@ div.custom {
    border: 1px solid red;
 }
 
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+
 --CUSTOMSTYLES
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 00
-BACKGROUND = background-image: url($NEFTOX/styles/images/paper-01-A4.jpg); filter: saturate(70%);
+BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
 <!-- BACKGROUND_COLOR = rgba(255, 255, 255, 0.8) -->
 
 BOX1--
-    style="border: 25px solid transparent; border-image: url(../../../styles/images/border_wavy.png) 70 round; border-image-outset: 3px 6px 0px 3px;"
+    style="border: 25px solid transparent; border-image: url(../../../styles/images/borders/border_wavy.png) 70 round; border-image-outset: 3px 6px 0px 3px;"
 
     <figure class="abs" style=" top: -30px; left: 120px; transform: rotate(45deg);">
         <!-- $NEFTOX is translated to the local tool path. -->
-        <img src="$NEFTOX/styles/images/flowers_fern.png" style="width: 100px;">
+        <img src="$NEFTOX/styles/images/elements/flowers-03.png" style="width: 100px;">
     </figure>
     <figure class="abs" style=" top: -20px; right: 120px; transform: rotate(-45deg);">
-        <img src="$NEFTOX/styles/images/flowers_aaron.png" style="width: 100px;">
+        <img src="$NEFTOX/styles/images/elements/flowers-01.png" style="width: 100px;">
     </figure>
 
     <figure style="margin-top: 100px;">
@@ -70,10 +74,10 @@ BOX1--
     </p>
 
     <figure class="abs bottom" style="bottom: 0px; left: -10px; transform: scaleX(-1);">
-        <img src="$NEFTOX/styles/images/flowers_clover.png" style="width: 210px;">
+        <img src="$NEFTOX/styles/images/elements/flowers-04.png" style="width: 210px;">
     </figure>
     <figure class="abs bottom" style="right: 0; bottom: 0;">
-        <img src="$NEFTOX/styles/images/flowers_wheat.png" style="width: 180px;">
+        <img src="$NEFTOX/styles/images/elements/flowers-06.png" style="width: 180px;">
     </figure>
 
 --BOX1
@@ -81,7 +85,7 @@ BOX1--
 
 <!-- FRAME ------------------------------------------------------------>
 TEMPLATE = 01
-BACKGROUND = background-image: url($NEFTOX/styles/images/paper-01-A4.jpg); filter: saturate(70%);
+BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
 
 BOXTITLE--
 --BOXTITLE

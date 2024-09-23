@@ -1,0 +1,7 @@
+/* --- PAGE SETUP for square ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1500px;
+    --totalheight: 1500px;
+}

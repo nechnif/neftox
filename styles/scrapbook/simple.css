@@ -12,8 +12,6 @@ html { box-sizing: border-box; }
 
 /* Widths and heights */
 :root {
-     --totalwidth: 1300px;
-    --totalheight: 1839px;
     --titleheight: 120px;
     --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) - 4 * var(--boxmargin) );
    --footerheight: calc( 2 * var(--basesize) );
@@ -239,8 +237,20 @@ img {
 figure img {
     vertical-align: top;
 }
+.oval, .oval img {
+    border-radius: 50%;
+}
 
-/* Images with masking tape */
+/* Simple frames with shadow */
+figure.framing {
+    box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
+    padding: 90px;
+}
+figure.framing img {
+    box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
+}
+
+/* Masking tape */
 figure.tesa {
      padding: 25px;
      z-index: 1;
@@ -330,14 +340,11 @@ figure.passepartout img {
            z-index: -1;
 }
 figure.passepartout.oval {
-    border-radius: 50%;
            border: 12px solid rgba(0, 0, 0, .1);
        border-top: 12px solid rgba(0, 0, 0, .1);
      border-right: 12px solid rgba(0, 0, 0, .1);
 }
-figure.passepartout.oval img {
-    border-radius: 50%;
-}
+
 
 /* Paper clips */
 img.clip {

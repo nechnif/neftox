@@ -75,7 +75,7 @@ class Presentation(object):
             'TITLE'             : '',
             'AUTHOR'            : '',
             'DATE'              : '',
-            'STYLE'             : 'talk:simple',
+            'STYLE'             : 'talk:simple:16x9-landscape',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
             'PALETTE'           : 'beach',
@@ -141,11 +141,16 @@ class Presentation(object):
     def SetStyle(self):
         ## Read stylesheet:
         stylefile       = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
+        formatfile      = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[2])
         customstylefile = 'styles/customs.css'
         with open(stylefile, 'r') as sf:
             stylesheet = sf.read()
+        with open(formatfile, 'r') as sf:
+            formatsheet = sf.read()
         with open(customstylefile, 'r') as cf:
             customstylesheet = cf.read()
+
+        # self.WriteStyle(':root', formatsheet)
 
         ## Extract style elements that are relevant for the frame layout
         ## on script level:
@@ -187,6 +192,7 @@ class Presentation(object):
         ## Set custom styles:
         for _loc in ['styles/customs.css', '{}/custom.css'.format(parsedir)]:
             with open(_loc, 'a') as f:
+                f.write(formatsheet)
                 f.write(self.customstyles)
                 f.write('\n')
 

@@ -1,0 +1,90 @@
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+    --totalheight: 1300px;
+     --totalwidth: 1839px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1300px;
+    --totalheight: 1839px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1300px;
+    --totalheight: 1839px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1300px;
+    --totalheight: 1839px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1500px;
+    --totalheight: 1500px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
+
+/* Widths and heights */
+:root {
+     --totalwidth: 1300px;
+    --totalheight: 1839px;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+}
