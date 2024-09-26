@@ -164,6 +164,8 @@ class Presentation(object):
         styles = {}
         for el, regex in elements:
             el_ = re.search(regex, stylesheet)
+            if not el_:
+                el_ = re.search(regex, formatsheet)
             styles[el] = (el_.group(1) if el_ else '')
 
         self.styles = styles
