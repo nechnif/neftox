@@ -37,7 +37,7 @@ div.frame {
             padding: calc(var(--boxpadding) / 2);
           clip-path: border-box;
            overflow: hidden;
-             /* border: 1px solid red; */
+             border: 1px solid red;
 }
 div.frame.even {
     margin-left: var(--bindingoffset);
@@ -176,9 +176,11 @@ hr {
 .bold { font-weight: bold; }
 .tty { font-family: monospace; }
 
-.shadow { text-shadow: 4px 4px 4px black; }
+.shadow { text-shadow: 4px 4px 4px rgba(var(--text), 1); }
 .shadowwhite { text-shadow: 4px 4px 4px white; }
 .boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
+.fshadow { filter: drop-shadow(5px 5px 5px rgba(var(--text), 1)); }
+.engraving { filter: drop-shadow(0px 0px 0.5px rgba(var(--text), 1)); }
 .border { border: 5px solid white; }
 
 .none { list-style: none; }
@@ -243,11 +245,24 @@ figure img {
 
 /* Simple frames with shadow */
 figure.framing {
-    box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
-    padding: 90px;
+          box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
+             padding: 4%;
+    background-color: white;
 }
 figure.framing img {
     box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
+}
+
+/* Polaroid effect */
+figure.polaroid {
+          box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
+             padding: 3%;
+      padding-bottom: 8%;
+    background-color: white;
+}
+figure.polaroid figcaption {
+    position: absolute;
+         top: 90%;
 }
 
 /* Masking tape */
@@ -275,45 +290,45 @@ figure.tesa::after {
 }
 figure.tesa.t::after {
       border-top: 50px solid transparent;
-    border-image: url(../images/tesa_sides.png) 80 stretch;
+    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
 figure.tesa.b::after {
    border-bottom: 50px solid transparent;
-    border-image: url(../images/tesa_sides.png) 80 stretch;
+    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
 figure.tesa.l::after {
      border-left: 50px solid transparent;
-    border-image: url(../images/tesa_sides.png) 80 stretch;
+    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
 figure.tesa.r::after {
     border-right: 50px solid transparent;
-    border-image: url(../images/tesa_sides.png) 80 stretch;
+    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
 figure.tesa.c::after {
       border: 80px solid transparent;
-    border-image: url(../images/tesa_corners.png) 400 stretch;
+    border-image: url(../images/borders/tesa_corners.png) 400 stretch;
 }
 
 /* Drawn borders: */
 figure.dborder img { box-shadow: 3px 3px 3px rgba(50, 50, 50, 1); }
 figure.dborder.plain {
                  border: 12px solid transparent;
-           border-image: url(../images/border_plain.png) 35 stretch;
+           border-image: url(../images/borders/border_plain.png) 35 stretch;
     border-image-outset: 3px 7px 0px 3px;
 }
 figure.dborder.stamp {
                  border: 25px solid transparent;
-           border-image: url(../images/border_stamp.png) 10% round;
+           border-image: url(../images/borders/border_stamp.png) 10% round;
     border-image-outset: 3px 7px 0px 3px;
 }
 figure.dborder.wavy {
                  border: 25px solid transparent;
-           border-image: url(../images/border_wavy.png) 70 round;
+           border-image: url(../images/borders/border_wavy.png) 70 round;
     border-image-outset: 3px 6px 0px 3px;
 }
 
 /* Fabric borders */
-figure.fborder {
+/* figure.fborder {
     box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
 }
 figure.fborder img {
@@ -321,11 +336,11 @@ figure.fborder img {
 }
 figure.fborder.kloeppel {
                  border: 70px solid transparent;
-           border-image: url(../images/kloeppel_01.png) 90 round;
+           border-image: url(../images/borders/kloeppel_01.png) 90 round;
     border-image-outset: 10px 6px 15px 3px;
              box-sizing: border-box;
        background-color: #fff9f3;
-}
+} */
 
 /* Passepartouts */
 figure.passepartout {
@@ -347,25 +362,61 @@ figure.passepartout.oval {
 
 
 /* Paper clips */
-img.clip {
-    position: absolute;
-     z-index: 2;
+figure.clip {
+    padding: 5%;
 }
-img.clip.i {
-    content: url(../images/clip_i.png);
+figure.clip img {
+    box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
 }
-img.clip.o {
-    content: url(../images/clip_o.png);
+figure.clip.t::after {
+            position: absolute;
+             content: '';
+    background-image: url(../images/elements/clip_o.png);
+   background-repeat: no-repeat;
+     background-size: 70px;
+    transform-origin: 0% 0%;
+           transform: rotate(4deg);
+               width: 100%;
+              height: 100%;
+                 top: -4%;
+                left: 75%;
 }
-img.clip.f {
-    content: url(../images/clip_f.png);
+figure.clip.b::after {
+            position: absolute;
+             content: '';
+    background-image: url(../images/elements/clip_i.png);
+   background-repeat: no-repeat;
+     background-size: 70px;
+    transform-origin: 0% 0%;
+           transform: rotate(180deg);
+               width: 100%;
+              height: 100%;
+                 top: 103%;
+                left: 30%;
 }
-img.clip.t {
-    top: calc( 0px - 5 * var(--boxmargin) );
+figure.clip.l::after {
+            position: absolute;
+             content: '';
+    background-image: url(../images/elements/clip_o.png);
+   background-repeat: no-repeat;
+     background-size: 70px;
+    transform-origin: 0% 0%;
+           transform: rotate(-95deg);
+               width: 100%;
+              height: 100%;
+                 top: 85%;
+                left: -2%;
 }
-img.clip.b {
-    bottom: calc( 0px - 1.85 * var(--footerheight) );
-}
-img.clip.l {
-    left: 40px;
+figure.clip.r::after {
+            position: absolute;
+             content: '';
+    background-image: url(../images/elements/clip_i.png);
+   background-repeat: no-repeat;
+     background-size: 70px;
+    transform-origin: 0% 0%;
+           transform: rotate(62deg);
+               width: 100%;
+              height: 100%;
+                 top: 50%;
+                left: 99%;
 }
