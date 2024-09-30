@@ -180,7 +180,7 @@ class Presentation(object):
 
         ## Insert style sheet and meta info into templates:
         rules = [
-            ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1])),
+            # ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1])),
             ('{TITLE}',  self.TITLE),
             ('{AUTHOR}', self.AUTHOR),
             ('{DATE}',   self.DATE),
@@ -197,7 +197,6 @@ class Presentation(object):
                 f.write(formatsheet)
                 f.write(self.customstyles)
                 f.write('\n')
-
 
     def FindFont(self):
         ## Locate chosen font, and revert to default if not found:
@@ -315,9 +314,29 @@ class Presentation(object):
 
     def CreateHTML(self):
 
-        HTML = ''
+        # HTML = ''
+        HTML = (
+            '<!DOCTYPE html>\n'
+            '<html>\n'
+            '<head>\n'
+            '    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />\n'
+            '    <link rel="stylesheet" type="text/css" href="{STYLE}">\n'
+            '</head>\n'
+            '<body>\n'
+        )
+
+        HTML = HTML.replace('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1]))
+
         for framenumber, frame in self.frames.items():
+            # print(framenumber)
+            HTML += '\n<!-- FRAME #{} -->\n'.format(str(framenumber))
             HTML += frame.HTML
+
+        HTML += (
+            '\n'
+            '</body>\n'
+            '</html>\n'
+        )
 
         self.HTML = HTML
 
