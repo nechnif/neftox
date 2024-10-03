@@ -27,17 +27,18 @@ body {
        padding: 0;
     background: white;
    font-family: var(--fontfamily);
+     min-width: calc(var(--totalwidth) * var(--layflat));
+     /* border: 1px solid blue; */
 }
+
 
 /* Specify the frame containers. */
 div.frame {
-              /* width: var(--totalwidth); */
-              width: calc(var(--totalwidth) - var(--bindingoffset));
-             height: var(--totalheight);
-            padding: calc(var(--boxpadding) / 2);
-          clip-path: border-box;
-           overflow: hidden;
-             border: 1px solid red;
+        width: calc(var(--totalwidth) - var(--bindingoffset));
+       height: var(--totalheight);
+      padding: calc(var(--boxpadding) / 2);
+    clip-path: border-box;
+       /* border: 1px solid red; */
 }
 div.frame.even {
     margin-left: var(--bindingoffset);
@@ -45,13 +46,28 @@ div.frame.even {
 div.frame.odd {
     margin-right: var(--bindingoffset);
 }
+div.frame.layflat {
+       display: inline-block;
+     clip-path: none;
+    overflow-y: clip;
+}
+div.frame.layflat.even {
+         float: left;
+    overflow-x: visible;
+}
+
 
 div.background {
-           width: var(--totalwidth);
-          height: var(--totalheight);
         position: absolute;
+           width: calc( var(--totalwidth) * var(--layflat) ) ;
+           /* width: var(--totalwidth); */
+          height: var(--totalheight);
+      /* margin-top: calc(var(--boxpadding) / -2);;
+     margin-left: calc(var(--boxpadding) / -2);; */
  background-size: cover;
+         z-index: -100;
 }
+
 
 div.cell {
             position: relative;

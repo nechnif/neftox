@@ -78,6 +78,7 @@ class Presentation(object):
             'STYLE'             : 'talk:simple:16x9-landscape',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
+            'LAYFLAT'           : 'false',
             'PALETTE'           : 'beach',
             'FONT'              : 'Gentium',
             'FONTSIZE'          : '30px',
@@ -141,7 +142,7 @@ class Presentation(object):
     def SetStyle(self):
         ## Read stylesheet:
         stylefile       = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
-        formatfile      = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[2])
+        formatfile      = 'styles/formats/{}.css'.format(self.STYLE.split(':')[2])
         customstylefile = 'styles/customs.css'
         with open(stylefile, 'r') as sf:
             stylesheet = sf.read()
@@ -150,7 +151,16 @@ class Presentation(object):
         with open(customstylefile, 'r') as cf:
             customstylesheet = cf.read()
 
-        # self.WriteStyle(':root', formatsheet)
+        ## Determine whether format is a layflat (meaning the binding technique
+        ## common for modern photo books, essentially doubles the page width)
+        ## or not:
+        if self.LAYFLAT.lower() in ['true', 'yes']:
+            layflat = 2
+            self.LAYFLAT = True
+        else:
+            layflat = 1
+            self.LAYFLAT = False
+        self.WriteStyle(':root', [('layflat', layflat)])
 
         ## Extract style elements that are relevant for the frame layout
         ## on script level:
@@ -267,6 +277,7 @@ class Presentation(object):
             ('fonts',            self.fonts),
             ('templates',        self.templates),
             ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
+            ('LAYFLAT',          self.LAYFLAT),
         ]
 
         rawframes = self.rawcontent.split('<!-- FRAME ')[1:]
@@ -348,11 +359,12 @@ class Presentation(object):
         ## Selenium. Hoping to support different browers in the future.
 
         ## Determine window size. Get browser zoom factor from quality setting.
+        ## The layflat setting doubles the window width.
         zf = float(self.QUALITY)
+        df = (2 if self.LAYFLAT else 1)
         windowsize = {
-            # 'width'  : int(self.styles['totalwidth'])+int(self.BINDINGOFFSET.split('px')[0]),
-            # 'height' : int(self.styles['totalheight']),
-            'width'  : int(self.styles['totalwidth'])*zf,
+            # 'width'  : int(self.styles['totalwidth'])*zf,
+            'width'  : int(self.styles['totalwidth'])*df*zf,
             'height' : int(self.styles['totalheight'])*zf,
         }
 
@@ -406,6 +418,10 @@ class Presentation(object):
         imgfiles = []
         scroll = windowsize['height']+scrolloffset
         for f in range(len(self.frames)):
+            ## Skip every other page for layflat formats:
+            if self.LAYFLAT and f%2==0:
+                continue
+
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
 
             for zoomstring in zoomstrings:
@@ -513,16 +529,17 @@ class Frame(object):
         ## default image folder can also be specified with the shortcut
         ## keywords BACKGROUND_COLOR or BACKGROUND_IMG.
         rules = [
-            ('BACKGROUND',       '{}'),
-            ('BACKGROUND_IMG',   'background-image: url(../pictures/{}); '),
-            ('BACKGROUND_COLOR', 'background-color: {}; '),
+            ('BACKGROUND',       '{}; z-index: {}; '),
+            ('BACKGROUND_IMG',   'background-image: url(../pictures/{}); z-index: {}; '),
+            ('BACKGROUND_COLOR', 'background-color: {}; z-index: {}; '),
         ]
         placeholder = '<div class="background" style="{background}"></div>\n'
+        # placeholder = ' style="{background}"'
         background  = placeholder.replace(' style="{background}"', '')
-        for key, value in rules:
+        for i, (key, value) in enumerate(rules):
             if key in dir(self):
                 background += placeholder.replace(
-                    '{background}', value.format(getattr(self, key))
+                    '{background}', value.format(getattr(self, key), -3+i)
                 )
         self.background = background
 
@@ -582,6 +599,8 @@ class Frame(object):
 
         ## Further replacements:
         HTML = HTML.replace('$NEFTOX', neftoxdir)
+        if self.LAYFLAT:
+            HTML = HTML.replace('<div class="frame ', '<div class="frame layflat ')
 
         self.HTML = HTML
 
