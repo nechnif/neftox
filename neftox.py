@@ -484,7 +484,8 @@ class Template(object):
 class Frame(object):
 
     regex_comment      = '(<!--\s[\s\S]*?\s-->)'
-    regex_meta         = '([A-Z|_]+) *= *(#?\w+.*)\s'
+    # regex_meta         = '([A-Z|_]+) *= *(#?\w+.*)\s'
+    regex_meta         = '([A-Z|_]+) *= *(#?\S+.*)\s'
     regex_defaultstyle = '({(\w*) default} *(.*)\s)'
 
     pagecount = 0
@@ -530,7 +531,7 @@ class Frame(object):
         ## keywords BACKGROUND_COLOR or BACKGROUND_IMG.
         rules = [
             ('BACKGROUND',       '{}; z-index: {}; '),
-            ('BACKGROUND_IMG',   'background-image: url(../pictures/{}); z-index: {}; '),
+            ('BACKGROUND_IMG',   'background-image: url({}); z-index: {}; '),
             ('BACKGROUND_COLOR', 'background-color: {}; z-index: {}; '),
         ]
         placeholder = '<div class="background" style="{background}"></div>\n'
