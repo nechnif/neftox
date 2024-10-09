@@ -46,10 +46,12 @@ div.frame.even {
 div.frame.odd {
     margin-right: var(--bindingoffset);
 }
+
 div.frame.layflat {
        display: inline-block;
      clip-path: none;
     overflow-y: clip;
+    margin-bottom: calc(var(--boxmargin) / -2);
 }
 div.frame.layflat.even {
          float: left;
@@ -59,13 +61,12 @@ div.frame.layflat.even {
 
 div.background {
         position: absolute;
+        /* width: var(--totalwidth); */
            width: calc( var(--totalwidth) * var(--layflat) ) ;
-           /* width: var(--totalwidth); */
           height: var(--totalheight);
-      /* margin-top: calc(var(--boxpadding) / -2);;
-     margin-left: calc(var(--boxpadding) / -2);; */
  background-size: cover;
          z-index: -100;
+         /* border: 1px solid green; */
 }
 
 
