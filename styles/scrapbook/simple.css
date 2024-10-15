@@ -48,23 +48,25 @@ div.frame.odd {
 }
 
 div.frame.layflat {
-       display: inline-block;
-     clip-path: none;
-    overflow-y: clip;
+          display: inline-block;
+        clip-path: none;
+       overflow-y: clip;
     margin-bottom: calc(var(--boxmargin) / -2);
 }
 div.frame.layflat.even {
          float: left;
     overflow-x: visible;
 }
+div.frame.layflat.odd {
+    overflow-x: hidden;
+}
 
 
 div.background {
         position: absolute;
-        /* width: var(--totalwidth); */
            width: calc( var(--totalwidth) * var(--layflat) ) ;
           height: var(--totalheight);
- background-size: cover;
+ /* background-size: cover; */
          z-index: -100;
          /* border: 1px solid green; */
 }
@@ -179,6 +181,10 @@ p.caption {
        position: absolute;
     font-family: sans-serif;
       font-size: calc(var(--basesize) - 15pt);
+}
+p.abs {
+    position: absolute;
+    width: 100%;
 }
 
 hr {
@@ -390,7 +396,7 @@ figure.clip.t::after {
              content: '';
     background-image: url(../images/elements/clip_o.png);
    background-repeat: no-repeat;
-     background-size: 70px;
+     background-size: 60px;
     transform-origin: 0% 0%;
            transform: rotate(4deg);
                width: 100%;
@@ -403,7 +409,7 @@ figure.clip.b::after {
              content: '';
     background-image: url(../images/elements/clip_i.png);
    background-repeat: no-repeat;
-     background-size: 70px;
+     background-size: 60px;
     transform-origin: 0% 0%;
            transform: rotate(180deg);
                width: 100%;
@@ -416,7 +422,7 @@ figure.clip.l::after {
              content: '';
     background-image: url(../images/elements/clip_o.png);
    background-repeat: no-repeat;
-     background-size: 70px;
+     background-size: 60px;
     transform-origin: 0% 0%;
            transform: rotate(-95deg);
                width: 100%;
@@ -429,11 +435,35 @@ figure.clip.r::after {
              content: '';
     background-image: url(../images/elements/clip_i.png);
    background-repeat: no-repeat;
-     background-size: 70px;
+     background-size: 60px;
     transform-origin: 0% 0%;
            transform: rotate(62deg);
                width: 100%;
               height: 100%;
                  top: 50%;
                 left: 99%;
+}
+
+
+/* Stickers and scraps */
+figure.scraps img {
+    filter: drop-shadow(2px 2px 2px rgba(var(--text), 1));
+}
+
+
+/* Centering text over images */
+figure.arrow figcaption, figure.scraps figcaption {
+              width: 100%;
+             height: 100%;
+            display: flex;
+    justify-content: center;
+        align-items: center;
+                top: 50%;
+               left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 50px;
+}
+
+figure.scraps figcaption {
+    filter: blur(0.5px);
 }
