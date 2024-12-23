@@ -19,7 +19,7 @@ global neftoxdir, inputdir, parsedir, equdir
 
 def MatchBetween(start, stop, string, len=1):
     ## Grab the content between two custom tags.
-    pattern = '(?<={})\s*(.*?)\s*(?={})'.format(start, stop)
+    pattern = r'(?<={})\s*(.*?)\s*(?={})'.format(start, stop)
     matches = re.findall(pattern, string, flags=re.S|re.M)
 
     result = (matches if matches else ([] if len==None else[(None,)*len]))
@@ -35,9 +35,9 @@ def DeleteBracket(start, stop, string, replace=''):
 
 class Presentation(object):
 
-    regex_meta         = '([A-Z]*) *= *(.*)\n|\r'
-    regex_style        = '\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
-    regex_template     = 'template_\d\d.html'
+    regex_meta         = r'([A-Z]*) *= *(.*)\n|\r'
+    regex_style        = r'\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
+    regex_template     = r'template_\d\d.html'
 
     def __init__(self, inputargs):
 
@@ -165,11 +165,11 @@ class Presentation(object):
         ## Extract style elements that are relevant for the frame layout
         ## on script level:
         elements = [
-            ('fontfactor',    '--fontfactor: *(\d*.*\d*);'),
-            ('totalwidth',    '--totalwidth: *(\d*)px;'),
-            ('totalheight',   '--totalheight: *(\d*)px;'),
-            ('boxmargin',     '--boxmargin: *(\d*)px;'),
-            ('boxpadding',    '--boxpadding: *(\d*)px;'),
+            ('fontfactor',    r'--fontfactor: *(\d*.*\d*);'),
+            ('totalwidth',    r'--totalwidth: *(\d*)px;'),
+            ('totalheight',   r'--totalheight: *(\d*)px;'),
+            ('boxmargin',     r'--boxmargin: *(\d*)px;'),
+            ('boxpadding',    r'--boxpadding: *(\d*)px;'),
         ]
         styles = {}
         for el, regex in elements:
@@ -213,8 +213,8 @@ class Presentation(object):
 
         def LocateFontFile(fontname, size):
 
-            regex_reg  = '{}([-_]*[rR](egular)*)*\.[ot]tf'.format(fontname)
-            regex_bold = '{}[-_]*[bB](old)*\.[ot]tf'.format(fontname)
+            regex_reg  = r'{}([-_]*[rR](egular)*)*\.[ot]tf'.format(fontname)
+            regex_bold = r'{}[-_]*[bB](old)*\.[ot]tf'.format(fontname)
 
             systemfonts = matplotlib.font_manager.findSystemFonts()
             fontlist = [f for f in systemfonts if fontname in f]
@@ -483,10 +483,10 @@ class Template(object):
 
 class Frame(object):
 
-    regex_comment      = '(<!--\s[\s\S]*?\s-->)'
-    # regex_meta         = '([A-Z|_]+) *= *(#?\w+.*)\s'
-    regex_meta         = '([A-Z|_]+) *= *(#?\S+.*)\s'
-    regex_defaultstyle = '({(\w*) default} *(.*)\s)'
+    regex_comment      = r'(<!--\s[\s\S]*?\s-->)'
+    # regex_meta         = r'([A-Z|_]+) *= *(#?\w+.*)\s'
+    regex_meta         = r'([A-Z|_]+) *= *(#?\S+.*)\s'
+    regex_defaultstyle = r'({(\w*) default} *(.*)\s)'
 
     pagecount = 0
 
@@ -608,8 +608,8 @@ class Frame(object):
 
 class Box(object):
 
-    re_style = '^\s*style *= *\"(.*)\" *'
-    re_li    = '(<li((.|\s)*?)<\/li>)'
+    re_style = r'^\s*style *= *\"(.*)\" *'
+    re_li    = r'(<li((.|\s)*?)<\/li>)'
 
     def __init__(self, rawbox, template, framenumber):
         self.name     = rawbox[0]
