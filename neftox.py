@@ -371,27 +371,31 @@ class Presentation(object):
         ## Initiate web driver:
         if self.BROWSER in ['chrome', 'chromium']:
             print('Initializing Chrome driver ...')
+            service = webdriver.ChromeService(executable_path='/snap/bin/chromium.chromedriver')
             options = webdriver.chrome.options.Options()
             options.add_argument("--headless");
             options.add_argument("--disable-extensions");
             options.add_argument("--hide-scrollbars");
             driver = webdriver.Chrome(
+                service=service,
                 options=options,
-                # executable_path='/usr/bin/chromedriver'
+                # executable_path='/usr/bin/chromedriver',
             )
             zoomstrings = [
                 'document.body.style.zoom = "scale({})";'.format(zf)
             ]
         else:
             print('Initializing Firefox driver ...')
+            service = webdriver.FirefoxService(executable_path='/snap/bin/geckodriver')
             options = webdriver.firefox.options.Options()
             options.add_argument("--headless");
             options.add_argument("--no-sandbox");
             options.add_argument("--disable-extensions");
             options.add_argument("--dns-prefetch-disable");
             driver = webdriver.Firefox(
+                service=service,
                 options=options,
-                # service_log_path=os.path.devnull
+                # service_log_path=os.path.devnull,
             )
             zoomstrings = [
                 'document.body.style.MozTransform = "scale({})";'.format(zf),
