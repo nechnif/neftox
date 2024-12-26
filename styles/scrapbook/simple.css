@@ -58,7 +58,7 @@ div.frame.layflat.even {
     overflow-x: visible;
 }
 div.frame.layflat.odd {
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 
@@ -121,7 +121,7 @@ div.cell.BOXFOOTER {
           margin: var(--boxmargin);
        font-size: calc( var(--basesize) / 2 + 15px );
      line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
-           color: rgba(var(--text), 1);
+           /* color: rgba(var(--text), 1); */
       text-align: center;
 }
 span.footer.title {
@@ -203,6 +203,7 @@ hr {
 .shadowwhite { text-shadow: 4px 4px 4px white; }
 .boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
 .fshadow { filter: drop-shadow(5px 5px 5px rgba(var(--text), 1)); }
+.fshadowlight { filter: drop-shadow(2px 2px 2px rgba(var(--text), 1)); }
 .engraving { filter: drop-shadow(0px 0px 0.5px rgba(var(--text), 1)); }
 .border { border: 5px solid white; }
 
@@ -240,7 +241,7 @@ figcaption {
    font-size: calc(var(--basesize) - 5px);
      z-index: 2;
   text-align: center;
-       width: 90%;
+       width: 100%;
 }
 figcaption.t {
     top: 0;
@@ -255,6 +256,18 @@ figcaption.r {
          left: 55%;
     transform: rotate(-90deg);
 }
+figcaption.centered {
+              width: 100%;
+             height: 100%;
+            display: flex;
+    justify-content: center;
+        align-items: center;
+                top: 50%;
+               left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 50px;
+}
+
 img {
            width: 100%;
     border-color: rgba(var(--text), 1);
@@ -276,60 +289,98 @@ figure.framing img {
     box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
 }
 
-/* Polaroid effect */
-figure.polaroid {
-          box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
-             padding: 3%;
-      padding-bottom: 8%;
-    background-color: white;
-}
-figure.polaroid figcaption {
-    position: absolute;
-         top: 90%;
-}
+
 
 /* Masking tape */
-figure.tesa {
-     padding: 25px;
-     z-index: 1;
+figure.tape {
+         padding: 25px;
+         z-index: 1;
+          /* border: 1px solid red; */
 }
-figure.tesa img {
+figure.tape img {
     position: relative;
      z-index: 0;
        width: 100%;
   box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
 }
-/* figure.tesa figcaption {
-    position: absolute;
-    z-index: 2;
-} */
-figure.tesa::after {
+figure.tape::after {
         position: absolute;
              top: 0;
            right: 0;
           bottom: 0;
             left: 0;
          content: '';
+    border-image: url(../images/borders/tape_sides.png) 80 stretch;
 }
-figure.tesa.t::after {
+figure.tape.dots::after {
+    border-image: url(../images/borders/tape_sides_dots.png) 80 stretch;
+}
+figure.tape.stripes::after {
+    border-image: url(../images/borders/tape_sides_stripes.png) 80 stretch;
+}
+figure.tape.stripes45::after {
+    border-image: url(../images/borders/tape_sides_stripes45.png) 80 stretch;
+}
+figure.tape.c.dots::after {
+    border-image: url(../images/borders/tape_corners_dots.png) 400 stretch;
+}
+figure.tape.c.stripes::after {
+    border-image: url(../images/borders/tape_corners_stripes.png) 400 stretch;
+}
+figure.tape.c.stripes45::after {
+    border-image: url(../images/borders/tape_corners_stripes45.png) 400 stretch;
+}
+figure.tape.t::after {
       border-top: 50px solid transparent;
-    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
-figure.tesa.b::after {
+figure.tape.b::after {
    border-bottom: 50px solid transparent;
-    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
-figure.tesa.l::after {
+figure.tape.l::after {
      border-left: 50px solid transparent;
-    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
-figure.tesa.r::after {
+figure.tape.r::after {
     border-right: 50px solid transparent;
-    border-image: url(../images/borders/tesa_sides.png) 80 stretch;
 }
-figure.tesa.c::after {
-      border: 80px solid transparent;
-    border-image: url(../images/borders/tesa_corners.png) 400 stretch;
+figure.tape.c::after {
+          border: 80px solid transparent;
+    border-image: url(../images/borders/tape_corners.png) 400 stretch;
+}
+/* Colors of tapes: */
+figure.tape.red::after    { filter: hue-rotate(0deg); }
+figure.tape.orange::after { filter: hue-rotate(30deg); }
+figure.tape.yellow::after { filter: hue-rotate(50deg); }
+figure.tape.green::after  { filter: hue-rotate(130deg); }
+figure.tape.teal::after   { filter: hue-rotate(180deg); }
+figure.tape.blue::after   { filter: hue-rotate(-160deg); }
+figure.tape.pink::after   { filter: hue-rotate(-50deg); }
+figure.tape.violet::after { filter: hue-rotate(-100deg); }
+
+
+/* Polaroid effect */
+figure.polaroid {
+               width: 500px;
+             padding: 30px;
+      padding-bottom: 0;
+    background-color: white;
+          box-shadow: 1px 3px 3px 1px rgba(50, 50, 50, 0.5);
+          /* border: 1px solid green; */
+}
+figure.polaroid img {
+        filter: saturate(70%) sepia(20%) blur(0.8px);
+    box-shadow: 0 0 0;
+}
+figure.polaroid figcaption {
+          /* position: absolute; */
+            /* height: calc( var(--polpadding) * 5 - var(--polpadding) ); */
+            height: 110px;
+           display: flex;
+              left: 0;
+    justify-content: center;
+        align-items: center;
+   background-color: white;
+         box-shadow: 1px 4px 3px 1px rgba(50, 50, 50, 0.5);
+         margin-top: -3px;
 }
 
 /* Drawn borders: */
@@ -383,6 +434,10 @@ figure.passepartout.oval {
      border-right: 12px solid rgba(0, 0, 0, .1);
 }
 
+/* Rubber stamps */
+figure.stamp img {
+    filter: opacity(80%);
+}
 
 /* Paper clips */
 figure.clip {
