@@ -58,7 +58,7 @@ div.frame.layflat.even {
     overflow-x: visible;
 }
 div.frame.layflat.odd {
-    /* overflow-x: hidden; */
+    overflow-x: hidden;
 }
 
 
@@ -92,6 +92,7 @@ div.cell.T01.BOX1 {
          float: left;
          width: calc( 50% - 2 * var(--boxmargin) );
         height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+        /* height: calc( var(--totalheight) - 2 * var(--boxmargin)); */
     visibility: hidden;
 }
 
@@ -99,6 +100,7 @@ div.cell.T01.BOX2 {
          float: right;
          width: calc( 50% - 2 * var(--boxmargin) );
         height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+        /* height: calc( var(--totalheight) - 2 * var(--boxmargin)); */
     visibility: hidden;
 }
 
@@ -121,8 +123,7 @@ div.cell.BOXFOOTER {
           margin: var(--boxmargin);
        font-size: calc( var(--basesize) / 2 + 15px );
      line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
-           /* color: rgba(var(--text), 1); */
-      text-align: center;
+     text-align: center;
 }
 span.footer.title {
          width: 80%;
@@ -367,7 +368,7 @@ figure.polaroid {
           /* border: 1px solid green; */
 }
 figure.polaroid img {
-        filter: saturate(70%) sepia(20%) blur(0.8px);
+        filter: saturate(70%) sepia(20%) blur(0.6px);
     box-shadow: 0 0 0;
 }
 figure.polaroid figcaption {
