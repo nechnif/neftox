@@ -421,9 +421,10 @@ class Presentation(object):
         print('Creating preview ...')
         imgfiles = []
         scroll = windowsize['height']+scrolloffset
+
         for f in range(len(self.frames)):
             ## Skip every other page for layflat formats:
-            if self.LAYFLAT and f%2==0:
+            if self.LAYFLAT and f%2!=0:
                 continue
 
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
@@ -431,9 +432,14 @@ class Presentation(object):
             for zoomstring in zoomstrings:
                 driver.execute_script(zoomstring)
 
+            newframe = driver.find_element("id", 'frame-{}'.format(f))
+            driver.execute_script('arguments[0].scrollIntoView();', newframe)
+            # print('frame-{}'.format(f))
+            # driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
+            # scroll += windowsize['height']+scrolloffset
+
             driver.save_screenshot(png)
-            driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
-            scroll += windowsize['height']+scrolloffset
+
             ## The following removes the alpha channels from the images,
             ## which is necessary for the pdf convert:
             command = 'convert {} -background white -alpha remove -alpha off {}'.format(png, png)
@@ -569,7 +575,8 @@ class Frame(object):
     def InsertIntoTemplate(self):
 
         HTML = self.templates[self.TEMPLATE].content
-        ## Insert page number and background:
+        ## Insert page number, background, etc.:
+        HTML = HTML.replace('{#}',   '{}'.format(self.page))
         HTML = HTML.replace('{OE}',   '{}'.format(self.OE))
         HTML = HTML.replace('{page}', '{}'.format(self.page))
         HTML = HTML.replace('{background}', '{}'.format(self.background))
