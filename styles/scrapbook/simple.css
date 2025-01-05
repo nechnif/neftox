@@ -289,6 +289,11 @@ figure.framing {
 figure.framing img {
     box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
 }
+figure.framing figcaption {
+    position: absolute;
+         top: 102%;
+
+}
 
 
 
@@ -368,7 +373,7 @@ figure.polaroid {
           /* border: 1px solid green; */
 }
 figure.polaroid img {
-        filter: saturate(70%) sepia(20%) blur(0.6px);
+        filter: saturate(70%) sepia(20%) blur(0.3px);
     box-shadow: 0 0 0;
 }
 figure.polaroid figcaption {
