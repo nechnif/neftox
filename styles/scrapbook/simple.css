@@ -34,11 +34,12 @@ body {
 
 /* Specify the frame containers. */
 div.frame {
-        width: calc(var(--totalwidth) - var(--bindingoffset));
-       height: var(--totalheight);
-      padding: calc(var(--boxpadding) / 2);
-    clip-path: border-box;
-       /* border: 1px solid red; */
+            width: calc(var(--totalwidth) - var(--bindingoffset));
+           height: var(--totalheight);
+          padding: calc(var(--boxpadding) / 2);
+        clip-path: border-box;
+    margin-bottom: 1px;
+           /* border: 1px solid red; */
 }
 div.frame.even {
     margin-left: var(--bindingoffset);
@@ -51,7 +52,7 @@ div.frame.layflat {
           display: inline-block;
         clip-path: none;
        overflow-y: clip;
-    margin-bottom: calc(var(--boxmargin) / -2);
+    /* margin-bottom: calc(var(--boxmargin) / -2); */
 }
 div.frame.layflat.even {
          float: left;
