@@ -1,10 +1,10 @@
-<!-- BOXTITLE, BOX1, BOX2, BOXFOOTER -->
+<!-- BOX1, BOX2, BOXFOOTER -->
 
     {background}
 
     <div class="frame" id="frame-{#}">
 
-        <div class="cell BOXFOOTER" {BOXFOOTER style}>
+        <div class="cell BOXFOOTER-left" {BOXFOOTER style}>
             <span class="footer">
                 <span class="author">{AUTHOR}</span>
                 <span class="title">{TITLE}</span>
@@ -13,16 +13,12 @@
             <span class="page">{page}</span>
         </div>
 
-        <div class="cell T01 BOX1" {BOX1 style}>
+        <div class="cell rows-fleft BOX1" {BOX1 style}>
             {BOX1}
         </div>
 
-        <div class="cell BOXTITLE" {BOXTITLE style}>
-            {BOXTITLE}
-        </div>
-        <div class="cell T01 BOX2" {BOX2 style}>
+        <div class="cell rows-fleft BOX2" {BOX2 style}>
             {BOX2}
         </div>
-
 
     </div>

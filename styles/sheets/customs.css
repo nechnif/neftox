@@ -6,22 +6,29 @@
     --highlight: 255, 109,   0;
 }
 :root {
+    --layflat: 1;
+}
+:root {
     --fontfamily: Gentium;
-    --basesize: 30.0px;
+    --basesize: 33.0px;
     --bindingoffset: 0px;
 }
 @font-face {
     font-family: Gentium;
     src: url('/usr/share/fonts/truetype/gentium/Gentium-R.ttf');
 }
-/* --- PAGE SETUP for A4 landscape ----------------------------------------------
+/* --- PAGE SETUP for A4 portrait ----------------------------------------------
 
 /* Widths and heights */
 :root {
-    --totalwidth: 1600px;
-   --totalheight: 900px;
+     --totalwidth: 1300px;
+    --totalheight: 1839px;
 }
 div.custom {
     width: 50%;
    border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 1plain%);
 }

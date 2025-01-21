@@ -1,8 +1,8 @@
 /* stylesheet for neftox scrapbooks, STYLE: simple-A4 */
 
-@import url("../palettes.css");
-@import url("../customs.css");
-
+@import url("./palettes.css");
+@import url("./customs.css");
+@import url("../layouts/layouts.css");
 
 /* --- PAGE SETUP ----------------------------------------------------------- */
 
@@ -38,7 +38,7 @@ div.frame {
            height: var(--totalheight);
           padding: calc(var(--boxpadding) / 2);
         clip-path: border-box;
-    margin-bottom: 1px;
+    margin-bottom: 5px;
            /* border: 1px solid red; */
 }
 div.frame.even {
@@ -72,83 +72,6 @@ div.background {
          /* border: 1px solid green; */
 }
 
-
-div.cell {
-            position: relative;
-              margin: var(--boxmargin);
-             padding: var(--boxpadding);
-     background-size: cover;
-           font-size: var(--basesize);
-              color: rgba(var(--text), 1);
-              /* border: 1px solid red; */
-}
-
-div.cell.T00.BOX1 {
-         width: calc( 100% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) - 4 * var(--boxmargin) );
-    visibility: hidden;
-}
-
-div.cell.T01.BOX1 {
-         float: left;
-         width: calc( 50% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
-        /* height: calc( var(--totalheight) - 2 * var(--boxmargin)); */
-    visibility: hidden;
-}
-
-div.cell.T01.BOX2 {
-         float: right;
-         width: calc( 50% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
-        /* height: calc( var(--totalheight) - 2 * var(--boxmargin)); */
-    visibility: hidden;
-}
-
-div.cell.T02.BOX1 {
-         width: calc( 100% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
-    visibility: hidden;
-}
-
-div.cell.T02.BOX2 {
-         width: calc( 100% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
-    visibility: hidden;
-}
-
-div.cell.BOXFOOTER {
-         display: inline-block;
-           width: var(--footerwidth);
-          height: var(--footerheight);
-          margin: var(--boxmargin);
-       font-size: calc( var(--basesize) / 2 + 15px );
-     line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
-     text-align: center;
-}
-span.footer.title {
-         width: 80%;
-}
-span.footer.float {
-    width: 10%;
-}
-span.footer.float.even {
-    float: left;
-}
-span.footer.float.odd {
-    float: right;
-}
-span.footer.page {
-    width: 10%;
-}
-span.footer.page.even {
-         float: right;
-    text-align: right;
-}
-span.footer.page.odd {
-         float: left;
-    text-align: left;
-}
 
 
 /*--- TEXT STYLES ----------------------------------------------------------- */
@@ -204,8 +127,9 @@ hr {
 .shadow { text-shadow: 4px 4px 4px rgba(var(--text), 1); }
 .shadowwhite { text-shadow: 4px 4px 4px white; }
 .boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
+.minshadow { box-shadow: 2px 2px 2px rgba(var(--text), 1); }
 .fshadow { filter: drop-shadow(5px 5px 5px rgba(var(--text), 1)); }
-.fshadowlight { filter: drop-shadow(2px 2px 2px rgba(var(--text), 1)); }
+.minfshadow { filter: drop-shadow(2px 2px 2px rgba(var(--text), 1)); }
 .engraving { filter: drop-shadow(0px 0px 0.5px rgba(var(--text), 1)); }
 .border { border: 5px solid white; }
 
@@ -295,7 +219,6 @@ figure.framing figcaption {
          top: 102%;
 
 }
-
 
 
 /* Masking tape */
@@ -423,6 +346,7 @@ figure.fborder.kloeppel {
        background-color: #fff9f3;
 } */
 
+
 /* Passepartouts */
 figure.passepartout {
       box-shadow: 0px 0px 12px 4px black inset;
@@ -441,10 +365,12 @@ figure.passepartout.oval {
      border-right: 12px solid rgba(0, 0, 0, .1);
 }
 
+
 /* Rubber stamps */
 figure.stamp img {
     filter: opacity(80%);
 }
+
 
 /* Paper clips */
 figure.clip {
@@ -511,6 +437,13 @@ figure.clip.r::after {
 figure.scraps img {
     filter: drop-shadow(2px 2px 2px rgba(var(--text), 1));
 }
+
+
+/* Dried pressed flowers */
+figure.flowers {
+    position: absolute;
+}
+
 
 
 /* Centering text over images */

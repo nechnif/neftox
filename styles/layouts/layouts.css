@@ -1,0 +1,160 @@
+
+div.cell {
+            position: relative;
+              margin: var(--boxmargin);
+             padding: var(--boxpadding);
+     background-size: cover;
+           font-size: var(--basesize);
+              color: rgba(var(--text), 1);
+              /* border: 1px solid red; */
+}
+
+div.cell.plain.BOX1 {
+         width: calc( 100% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) - 4 * var(--boxmargin) );
+    visibility: hidden;
+}
+
+div.cell.onebox.BOX1 {
+         width: calc( 100% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin) );
+    visibility: hidden;
+}
+
+div.cell.columns.BOX1 {
+         float: left;
+         width: calc( 50% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+    visibility: hidden;
+}
+
+div.cell.columns.BOX2 {
+         float: right;
+         width: calc( 50% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin));
+    visibility: hidden;
+}
+
+div.cell.rows.BOX1 {
+         width: calc( 100% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
+    visibility: hidden;
+}
+
+div.cell.rows.BOX2 {
+         width: calc( 100% - 2 * var(--boxmargin) );
+        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
+    visibility: hidden;
+}
+
+div.cell.BOXFOOTER {
+         display: inline-block;
+           width: var(--footerwidth);
+          height: var(--footerheight);
+          margin: var(--boxmargin);
+       font-size: calc( var(--basesize) / 2 + 15px );
+     line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
+     text-align: center;
+}
+
+
+span.footer.title {
+         width: 80%;
+}
+span.footer.float {
+    width: 10%;
+}
+span.footer.float.even {
+    float: left;
+}
+span.footer.float.odd {
+    float: right;
+}
+span.footer.page {
+    width: 10%;
+}
+span.footer.page.even {
+         float: right;
+    text-align: right;
+}
+span.footer.page.odd {
+         float: left;
+    text-align: left;
+}
+
+
+div.cell.columns-fleft.BOX1 {
+         float: left;
+         width: calc( 50% - 6 * var(--boxmargin) - var(--footerheight) );
+        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+    visibility: hidden;
+}
+
+div.cell.columns-fleft.BOX2 {
+         float: right;
+         width: calc( 50% - 2 * var(--boxmargin) );
+        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+    visibility: hidden;
+}
+div.cell.rows-fleft.BOX1 {
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerheight) - 6 * var(--boxmargin));
+        height: calc( ( var(--totalheight) / 2 ) - 4 * var(--boxmargin) - var(--boxpadding));
+    visibility: hidden;
+}
+div.cell.rows-fleft.BOX2 {
+         float: right;
+         width: calc(var(--totalwidth) - var(--footerheight) - 6 * var(--boxmargin));
+        /* height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5); */
+        height: calc( var(--totalheight) / 2 );
+    visibility: hidden;
+}
+
+div.cell.BOXFOOTER-left {
+           float: left;
+           width: var(--footerheight);
+          /* height: calc(var(--totalheight) - 4 * var(--boxmargin)); */
+       font-size: 20pt;
+           color: rgba(var(--text), 0.7);
+}
+
+div.BOXFOOTER-left span.footer {
+             display: block;
+            position: relative;
+    transform-origin: top left;
+                left: 0;
+                 top: 0;
+        padding-left: var(--boxpadding);
+           transform: rotate(-90deg) translateX(calc(-100% + 2 * var(--boxmargin))) translateY(calc(-2 * var(--boxmargin)));
+               width: calc(var(--totalheight) - 4 * var(--boxmargin));
+              height: var(--footerheight);
+         line-height: var(--footerheight);
+           font-size: calc(var(--basesize) - 4pt);
+              /* border: 1px solid red; */
+}
+div.BOXFOOTER-left span.page {
+     display: block;
+    position: relative;
+ margin-left: calc(-1 * var(--boxpadding));
+  margin-top: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--boxpadding) - 2 * var(--footerwidth));
+       width: var(--footerwidth);
+      height: var(--footerwidth);
+  text-align: center;
+ line-height: var(--footerwidth);
+ font-weight: bold;
+}
+
+div.BOXFOOTER-left span.date {
+         position: absolute;
+            right: 0;
+    padding-right: calc(1.5 * var(--boxpadding));
+    /* border: 1px solid red; */
+}
+
+div.BOXFOOTER-left span.title {
+     position: absolute;
+        width: calc(var(--totalheight) * 0.5);
+    font-size: calc(var(--basesize) - 2pt);
+   text-align: center;
+  font-weight: bold;
+}

@@ -37,16 +37,18 @@ class Presentation(object):
 
     regex_meta         = r'([A-Z]*) *= *(.*)\n|\r'
     regex_style        = r'\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
-    regex_template     = r'template_\d\d.html'
+    regex_layout       = r'layout_.*\.html'
 
     def __init__(self, inputargs):
 
         self.dir = os.path.join(os.path.abspath(os.getcwd()), '')
         global neftoxdir
         neftoxdir = self.dir
+
         ## Re-start custom style file:
-        if 'customs.css' in os.listdir('styles'):
-            os.remove('styles/customs.css')
+        self.customstylefile = 'styles/sheets/customs.css'
+        if 'customs.css' in os.listdir('styles/sheets/'):
+            os.remove(self.customstylefile)
 
         ## Extract raw input content:
         global inputdir, parsedir, equdir
@@ -66,6 +68,10 @@ class Presentation(object):
 
         self.ParseMeta()
         self.SetPalette()
+
+        self.stylefile  = 'styles/sheets/{}.css'.format(self.STYLE)
+        self.formatfile = 'styles/formats/{}.css'.format(self.FORMAT)
+
         self.SetStyle()
         self.GetFrames()
 
@@ -75,7 +81,8 @@ class Presentation(object):
             'TITLE'             : '',
             'AUTHOR'            : '',
             'DATE'              : '',
-            'STYLE'             : 'talk:simple:16x9-landscape',
+            'STYLE'             : 'simple',
+            'FOMRAT'            : '16x9-landscape',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
             'LAYFLAT'           : 'false',
@@ -113,7 +120,7 @@ class Presentation(object):
         ## Set palette. This copies the colors of the respective palette
         ## from palettes.css into customs.css and renames them, so that
         ## the stylesheet can call them without being messed with.
-        with open('styles/palettes.css', 'r') as pf:
+        with open('styles/sheets/palettes.css', 'r') as pf:
             palettes = pf.read()
         palette = re.search(
             Presentation.regex_style.replace('PALETTE', self.PALETTE),
@@ -133,7 +140,7 @@ class Presentation(object):
     def WriteStyle(self, bracket, styles, prefix='--'):
         ## Writes user-defined styles into a custom style sheet.
         placeholder = '    {}{}: {};\n'
-        with open('styles/customs.css', 'a') as f:
+        with open('styles/sheets/customs.css', 'a') as f:
             f.write('{} {{\n'.format(bracket))
             for name, value in styles:
                 f.write(placeholder.format(prefix, name, value))
@@ -141,14 +148,11 @@ class Presentation(object):
 
     def SetStyle(self):
         ## Read stylesheet:
-        stylefile       = 'styles/{}/{}.css'.format(self.STYLE.split(':')[0], self.STYLE.split(':')[1])
-        formatfile      = 'styles/formats/{}.css'.format(self.STYLE.split(':')[2])
-        customstylefile = 'styles/customs.css'
-        with open(stylefile, 'r') as sf:
+        with open(self.stylefile, 'r') as sf:
             stylesheet = sf.read()
-        with open(formatfile, 'r') as sf:
+        with open(self.formatfile, 'r') as sf:
             formatsheet = sf.read()
-        with open(customstylefile, 'r') as cf:
+        with open(self.customstylefile, 'r') as cf:
             customstylesheet = cf.read()
 
         ## Determine whether format is a layflat (meaning the binding technique
@@ -181,28 +185,29 @@ class Presentation(object):
         self.styles = styles
         self.FindFont()
 
-        ## Load the templates:
-        templates = {}
-        for templatefile in os.listdir('styles/{}/templates/'.format(self.STYLE.split(':')[0])):
-            if re.fullmatch(Presentation.regex_template, templatefile):
-                template = Template(self.STYLE.split(':')[0], templatefile)
-                templates[template.name] = template
+        ## Load the layouts:
+        layouts = {}
+        for layoutfile in os.listdir('styles/layouts/'):
+            if re.fullmatch(Presentation.regex_layout, layoutfile):
+                # print(re.fullmatch(Presentation.regex_layout, layoutfile))
+                layout = Layout(self.STYLE.split(':')[0], layoutfile)
+                layouts[layout.name] = layout
 
-        ## Insert style sheet and meta info into templates:
+        ## Insert style sheet and meta info into layouts:
         rules = [
             # ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1])),
             ('{TITLE}',  self.TITLE),
             ('{AUTHOR}', self.AUTHOR),
             ('{DATE}',   self.DATE),
         ]
-        for name, template in templates.items():
+        for name, layout in layouts.items():
             for rule in rules:
-                template.content = template.content.replace(rule[0], rule[1])
+                layout.content = layout.content.replace(rule[0], rule[1])
 
-        self.templates = templates
+        self.layouts = layouts
 
         ## Set custom styles:
-        for _loc in ['styles/customs.css', '{}/custom.css'.format(parsedir)]:
+        for _loc in [self.customstylefile, '{}/custom.css'.format(parsedir)]:
             with open(_loc, 'a') as f:
                 f.write(formatsheet)
                 f.write(self.customstyles)
@@ -275,7 +280,7 @@ class Presentation(object):
             ('inputdir',         inputdir),
             ('styles',           self.styles),
             ('fonts',            self.fonts),
-            ('templates',        self.templates),
+            ('layouts',          self.layouts),
             ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
             ('LAYFLAT',          self.LAYFLAT),
         ]
@@ -295,7 +300,7 @@ class Presentation(object):
 
                 prevframe = self.frames[str(frame.number-1)]
                 tmpframe_ = copy.deepcopy(frame)
-                allowed = prevframe.templates[prevframe.TEMPLATE].allowed
+                allowed = prevframe.layouts[prevframe.LAYOUT].allowed
 
                 for key, value in prevframe.__dict__.items():
                     setattr(frame, key, value)
@@ -321,7 +326,7 @@ class Presentation(object):
                         frame.boxes[a] = tmpframe_.boxes[a]
 
             frame.ParseBackground()
-            frame.InsertIntoTemplate()
+            frame.InsertIntoLayout()
 
     def CreateHTML(self):
 
@@ -336,10 +341,9 @@ class Presentation(object):
             '<body>\n'
         )
 
-        HTML = HTML.replace('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1]))
+        HTML = HTML.replace('{STYLE}', '{}styles/sheets/{}.css'.format(self.dir, self.STYLE.split(':')[0]))
 
         for framenumber, frame in self.frames.items():
-            # print(framenumber)
             HTML += '\n<!-- FRAME #{} -->\n'.format(str(framenumber))
             HTML += frame.HTML
 
@@ -472,21 +476,21 @@ class Presentation(object):
         print('Done!')
 
 
-class Template(object):
+class Layout(object):
 
     regex_boxdefs  = '<!-- (BOX.*) -->'
 
     def __init__(self, style, filename):
 
         ## Read the file:
-        with open('styles/{}/templates/{}'.format(style, filename), 'r') as tf:
+        with open('styles/layouts/{}'.format(filename), 'r') as tf:
             content = tf.read()
 
         ## Identify possible content:
-        boxes = re.search(Template.regex_boxdefs, content)
+        boxes = re.search(Layout.regex_boxdefs, content)
         boxes = boxes[1].split(', ')
 
-        self.name    = filename.rstrip('.html')
+        self.name    = filename.replace('.html', '')
         self.content = content
         self.allowed = boxes
 
@@ -515,10 +519,10 @@ class Frame(object):
         self.rawframe = re.sub(Frame.regex_comment, '', self.rawframe)
 
     def ParseMeta(self):
-        ## Set default meta data. Default template has to be the one with the
+        ## Set default meta data. Default layout has to be the one with the
         ## most allowed elements (boxes):
         self.KIND     = 'frame'
-        self.TEMPLATE = '01'
+        self.LAYOUT   = 'plain'
         # self.BACKGROUND = 'background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);'
 
         ## Parse the user meta data:
@@ -526,7 +530,8 @@ class Frame(object):
         for item in meta:
             setattr(self, item[0], item[1])
 
-        self.TEMPLATE = 'template_'+self.TEMPLATE
+        # print(self.layouts)
+        self.LAYOUT = 'layout_'+self.LAYOUT
 
         Frame.pagecount -= (int(self.PAGENUMBEROFFSET) if self.number==0 else 0)
         Frame.pagecount += (0 if self.KIND=='subframe' else 1)
@@ -558,7 +563,7 @@ class Frame(object):
         ## Extract content information for each frame:
 
         boxes = {}
-        for a in self.templates[self.TEMPLATE].allowed:
+        for a in self.layouts[self.LAYOUT].allowed:
             match_ = MatchBetween(
                 '({})--'.format(a), '--{}'.format(a), self.rawframe, 2
             )[0]
@@ -567,21 +572,21 @@ class Frame(object):
             else:
                 rawbox = [a, match_[1]]
             boxes[a] = Box(
-                rawbox, self.templates[self.TEMPLATE], self.number
+                rawbox, self.layouts[self.LAYOUT], self.number
             )
 
         self.boxes = boxes
 
-    def InsertIntoTemplate(self):
+    def InsertIntoLayout(self):
 
-        HTML = self.templates[self.TEMPLATE].content
+        HTML = self.layouts[self.LAYOUT].content
         ## Insert page number, background, etc.:
-        HTML = HTML.replace('{#}',   '{}'.format(self.page))
+        HTML = HTML.replace('{#}',    '{}'.format(self.number))
         HTML = HTML.replace('{OE}',   '{}'.format(self.OE))
         HTML = HTML.replace('{page}', '{}'.format(self.page))
         HTML = HTML.replace('{background}', '{}'.format(self.background))
 
-        ## Determine width of title (used in some templates):
+        ## Determine width of title (used in some layouts):
         if 'BOXTITLE' in self.boxes.keys():
             titlewidth = self.fonts['bold'].getlength(
                 ' {} '.format(self.boxes['BOXTITLE'].content)
@@ -622,10 +627,10 @@ class Box(object):
     re_style = r'^\s*style *= *\"(.*)\" *'
     re_li    = r'(<li((.|\s)*?)<\/li>)'
 
-    def __init__(self, rawbox, template, framenumber):
+    def __init__(self, rawbox, layout, framenumber):
         self.name     = rawbox[0]
         self.style    = ''
-        self.template = template
+        self.layout   = layout
         self.frame    = framenumber
 
         self.ParseContent(rawbox[1])

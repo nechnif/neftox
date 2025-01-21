@@ -21,7 +21,8 @@
     the output.
 -->
 TITLE            = Scrapbook Tutorial
-STYLE            = scrapbook:simple:A4-portrait
+STYLE            = simple
+FORMAT           = A4-portrait
 PALETTE          = light
 PAGENUMBEROFFSET = 1
 BINDINGOFFSET    = 0px
@@ -41,13 +42,13 @@ div.custom {
 }
 
 div.background {
-    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);
+    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 1plain%);
 }
 
 --CUSTOMSTYLES
 
 <!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 00
+LAYOUT = plain
 BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
 <!-- BACKGROUND_COLOR = rgba(255, 255, 255, 0.8) -->
 
@@ -56,14 +57,14 @@ BOX1--
 
     <figure class="abs" style=" top: -30px; left: 120px; transform: rotate(45deg);">
         <!-- $NEFTOX is translated to the local tool path. -->
-        <img src="$NEFTOX/styles/images/stamps/flowers-03.png" style="width: 100px;">
+        <img src="$NEFTOX/styles/images/stamps/flowers-03.png" style="width: 1plainpx;">
     </figure>
     <figure class="abs" style=" top: -20px; right: 120px; transform: rotate(-45deg);">
-        <img src="$NEFTOX/styles/images/stamps/flowers-01.png" style="width: 100px;">
+        <img src="$NEFTOX/styles/images/stamps/flowers-01.png" style="width: 1plainpx;">
     </figure>
 
-    <figure style="margin-top: 100px;">
-        <img src="../pictures/testimage_00.jpg" style="width: 90%; border-width: 8px; border-style: double; border-radius: 50%; filter: saturate(50%) sepia(50%);">
+    <figure style="margin-top: 1plainpx;">
+        <img src="../pictures/testimage_plain.jpg" style="width: 90%; border-width: 8px; border-style: double; border-radius: 50%; filter: saturate(50%) sepia(50%);">
     </figure>
 
     <p class="headline" style="margin-top: 50px;">
@@ -85,7 +86,7 @@ BOX1--
 
 
 <!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 01
+LAYOUT = columns
 BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
 
 BOXTITLE--
@@ -110,7 +111,7 @@ BOX1--
     <br>
 
     <figure class="tesa c" style="margin-left: -5px; transform: rotate(-1.5deg); width: 105%">
-        <img src="../pictures/testimage_01.jpg" style="width: 100%;">
+        <img src="../pictures/testimage_01.jpg" style="width: 1plain%;">
         <figcaption>This is a figure caption.</figcaption>
     </figure>
     <br>
@@ -146,7 +147,7 @@ BOX2--
     <br>
 
     <figure class="tesa t" style="margin-right: -80px; margin-top: 10px; transform: rotate(2deg);">
-        <img src="../pictures/testimage_02.jpg" style="width: 100%;">
+        <img src="../pictures/testimage_02.jpg" style="width: 1plain%;">
     </figure>
     <br>
 
@@ -166,42 +167,47 @@ BOX2--
 
 
 <!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 00
+LAYOUT = plain
 
 BOX1--
     style="border: 1px solid black;"
     BOX1
-    <p style="float: right;"><b>Template 00</b></p>
+    <p style="float: right;"><b>Layout: plain</b></p>
+--BOX1
+
+
+<!-- FRAME ------------------------------------------------------------>
+LAYOUT = onebox
+
+BOX1--
+    style="border: 1px solid black;"
+    BOX1
+    <p style="float: right;"><b>Layout: onebox</b></p>
+--BOX1
+
+
+<!-- FRAME ------------------------------------------------------------>
+LAYOUT = columns
+
+BOX1--
+    style="border: 1px solid black;"
+    BOX1
 --BOX1
 
 BOX2--
     style="border: 1px solid black;"
     BOX2
+    <p style="float: right;"><b>Layout: columns</b></p>
 --BOX2
 
 
 <!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 01
+LAYOUT = rows
 
 BOX1--
     style="border: 1px solid black;"
     BOX1
---BOX1
-
-BOX2--
-    style="border: 1px solid black;"
-    BOX2
-    <p style="float: right;"><b>Template 01</b></p>
---BOX2
-
-
-<!-- FRAME ------------------------------------------------------------>
-TEMPLATE = 02
-
-BOX1--
-    style="border: 1px solid black;"
-    BOX1
-    <p style="float: right;"><b>Template 02</b></p>
+    <p style="float: right;"><b>Layout: rows</b></p>
 --BOX1
 
 BOX2--
