@@ -1,3 +1,71 @@
+/* --- PAGE SETUP ----------------------------------------------------------- */
+
+/* box behaviour */
+html { box-sizing: border-box; }
+*, ::before, ::after { box-sizing: inherit; }
+
+/* Widths and heights */
+:root {
+    --titleheight: 120px;
+    --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) - 4 * var(--boxmargin) );
+   --footerheight: calc( 2 * var(--basesize) );
+      --boxmargin: 8px;
+     --boxpadding: 15px;
+    --textpadding: 4px;
+}
+
+body {
+        margin: 0;
+       padding: 0;
+    background: white;
+   font-family: var(--fontfamily);
+     min-width: calc(var(--totalwidth) * var(--layflat));
+     /* border: 1px solid blue; */
+}
+
+
+/* Specify the frame containers. */
+div.frame {
+            width: calc(var(--totalwidth) - var(--bindingoffset));
+           height: var(--totalheight);
+          padding: calc(var(--boxpadding) / 2);
+        clip-path: border-box;
+    margin-bottom: 5px;
+           /* border: 1px solid red; */
+}
+div.frame.even {
+    margin-left: var(--bindingoffset);
+}
+div.frame.odd {
+    margin-right: var(--bindingoffset);
+}
+
+div.frame.layflat {
+          display: inline-block;
+        clip-path: none;
+       overflow-y: clip;
+    /* margin-bottom: calc(var(--boxmargin) / -2); */
+}
+div.frame.layflat.even {
+         float: left;
+    overflow-x: visible;
+}
+div.frame.layflat.odd {
+    overflow-x: hidden;
+}
+
+
+div.background {
+        position: absolute;
+           width: calc( var(--totalwidth) * var(--layflat) ) ;
+          height: var(--totalheight);
+ /* background-size: cover; */
+         z-index: -100;
+         /* border: 1px solid green; */
+}
+
+
+/* --- CELLS ---------------------------------------------------------------- */
 
 div.cell {
             position: relative;

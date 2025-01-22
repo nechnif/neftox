@@ -169,7 +169,7 @@ class Presentation(object):
         ## Extract style elements that are relevant for the frame layout
         ## on script level:
         elements = [
-            ('fontfactor',    r'--fontfactor: *(\d*.*\d*);'),
+            # ('fontfactor',    r'--fontfactor: *(\d*.*\d*);'),
             ('totalwidth',    r'--totalwidth: *(\d*)px;'),
             ('totalheight',   r'--totalheight: *(\d*)px;'),
             ('boxmargin',     r'--boxmargin: *(\d*)px;'),
@@ -235,16 +235,16 @@ class Presentation(object):
             return fonts
 
         fonts = LocateFontFile(
-            self.FONT,
-            int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
+            # self.FONT, int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
+            self.FONT, int(float(self.FONTSIZE))
         )
         try:
             assert fonts['regular'].getname()
         except:
             print('FONT not found, reverting to default font.')
             fonts = LocateFontFile(
-                self.defaultmeta['FONT'],
-                int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
+                # self.defaultmeta['FONT'], int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
+                self.defaultmeta['FONT'], int(float(self.FONTSIZE))
             )
             self.FONT = self.defaultmeta['FONT']
 
