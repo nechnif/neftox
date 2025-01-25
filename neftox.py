@@ -103,7 +103,11 @@ class Presentation(object):
         for key, value in meta:
             setattr(self, key, value)
 
-        self.FONTSIZE = float(self.FONTSIZE.rstrip('px'))
+        if 'pt' in self.FONTSIZE:
+            self.FONTSIZE = float(self.FONTSIZE.rstrip('pt'))*96./72.
+        else:
+            self.FONTSIZE = float(self.FONTSIZE.rstrip('px'))
+
 
         ## Parse additional style classes:
         match_ = MatchBetween('CUSTOMSTYLES--', '--CUSTOMSTYLES', self.rawcontent)
