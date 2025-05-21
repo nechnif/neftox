@@ -132,3 +132,4 @@ dmypy.json
 # Ignore these files:
 s_commit-ideas
 s_regex-cheatsheet
+scripts/_confetti.html
