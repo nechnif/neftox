@@ -1,36 +1,25 @@
-<!-- meta -------------------------------------------------------------->
-<!--
-    Fill in all the meta information of your scrapbook here. The TITLE
-    will appear in the footer.
-
-    STYLE and PALETTE set the overall appearance. There is currently only
-    one style available, "simple".
-    The different color palettes are shown at the end of this tutorial.
-
-    Set PAGENUMBEROFFSET to 0 if you do not have a title page. Default is 1.
-    If you want to print your scrapbook later, it might be useful to set
-    the BINDINGOFFSET parameter, e.g. to 80px.
-
-    Specify FONT and the base FONTSIZE. Btw, this tool comes with its own font
-    called nefcal (install it from the styles/fonts/ directory).
-
-    The default browser for taking selenium screenshots is firefox.
-    Specify BROWER=chrome if you prefer.
-    The quality setting sets the zoom factor of the browser when
-    taking screenshots. The higher the quality, the larger (and sharper!)
-    the output.
--->
 TITLE            = Scrapbook Tutorial
-STYLE            = simple
-FORMAT           = A4-portrait
-PALETTE          = light
-PAGENUMBEROFFSET = 1
-BINDINGOFFSET    = 0px
-LAYFLAT          = false
-FONT             = Gentium
-FONTSIZE         = 33px
+<!-- Title of your scrapbook. Will appear in the footer. -->
 BROWSER          = firefox
-QUALITY          = 1.0
+<!-- Choose Selenium driver. [firefox, chrome] -->
+FORMAT           = 21.1:29.7
+<!-- Specify format of your scrapbook [cm:cm] -->
+QUALITY          = 200
+<!-- Specify resolution. Larger values are recommended for printing. Changeing the quality setting might alter the layout slightly. [dpi] -->
+LAYFLAT          = false
+<!-- Set "true" if you plan to use layflat binding for your printed scrapbooks. Popular for photo books. -->
+BINDINGOFFSET    = 0px
+<!-- Binding offset. Relevant for printing. -->
+STYLE            = simple
+<!-- Choose style from: [simple] -->
+PALETTE          = light
+<!-- Choose color palette from: [light, plain black, beach, antarctica, tacky, aurora australis, summer] -->
+PAGENUMBEROFFSET = 1
+<!-- Page number offset. Set to 0 if there is no title page. -->
+FONT             = Gentium
+<!-- Specify font family. -->
+FONTSIZE         = 1
+<!-- Scaling factor for font size. Default is 1, fits the format automatically. Set to e.g. 1.1 for larger base font, or 0.9 for smaller. [0, 2] -->
 
 
 <!-- Custom style classes can go here -->
@@ -42,59 +31,41 @@ div.custom {
 }
 
 div.background {
-    background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 1plain%);
+    background: linear-gradient(to bottom right, rgba(var(--grad3), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad1), 1) 100%);
+}
+
+div.cell {
+    padding: 1.5%;
 }
 
 --CUSTOMSTYLES
 
 <!-- FRAME ------------------------------------------------------------>
 LAYOUT = plain
-BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
-<!-- BACKGROUND_COLOR = rgba(255, 255, 255, 0.8) -->
 
 BOX1--
-    style="border: 25px solid transparent; border-image: url(../../../styles/images/borders/border_wavy.png) 70 round; border-image-outset: -10px -6px 0px 3px;"
-
-    <figure class="abs" style=" top: -30px; left: 120px; transform: rotate(45deg);">
-        <!-- $NEFTOX is translated to the local tool path. -->
-        <img src="$NEFTOX/styles/images/stamps/flowers-03.png" style="width: 1plainpx;">
-    </figure>
-    <figure class="abs" style=" top: -20px; right: 120px; transform: rotate(-45deg);">
-        <img src="$NEFTOX/styles/images/stamps/flowers-01.png" style="width: 1plainpx;">
+    <figure class="abs passepartout oval" style="width: 70%; top: 30%; left: 50%; transform: translate(-50%, -30%);">
+        <img class="placeholder" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg" style="filter: saturate(0.8);">
     </figure>
 
-    <figure style="margin-top: 1plainpx;">
-        <img src="../pictures/testimage_plain.jpg" style="width: 90%; border-width: 8px; border-style: double; border-radius: 50%; filter: saturate(50%) sepia(50%);">
-    </figure>
-
-    <p class="headline" style="margin-top: 50px;">
+    <p class="abs headline" style="top: 5%;">
         Scrapbook Tutorial
     </p>
-    <!-- <hr style="width: 98%; height: 1.5px; margin-top: 80px;"> -->
-    <p class="subheadline" style="margin-top: 80px; font-size: 40pt;">
+    <p class="abs subheadline" style="top: 75%;">
         Creating digital scrapbooks<br>with neftox
     </p>
-
-    <figure class="abs bottom" style="bottom: 0px; left: -10px; transform: scaleX(-1);">
-        <img src="$NEFTOX/styles/images/stamps/flowers-04.png" style="width: 210px;">
-    </figure>
-    <figure class="abs bottom" style="right: 0; bottom: 0;">
-        <img src="$NEFTOX/styles/images/stamps/flowers-06.png" style="width: 180px;">
-    </figure>
-
 --BOX1
 
 
 <!-- FRAME ------------------------------------------------------------>
 LAYOUT = columns
-BACKGROUND = background-image: url($NEFTOX/styles/images/backgrounds/paper-01-A4-portrait.jpg); filter: saturate(70%);
 
 BOXTITLE--
 --BOXTITLE
 
 BOX1--
     <p><b>Creating digital scrapbooks with neftox</b></p>
-    <p style="font-size: 25px;">07. April 2024</p>
+    <p class="small">11. April 2024</p>
     <br>
 
     <p>
@@ -110,11 +81,11 @@ BOX1--
     </p>
     <br>
 
-    <figure class="tesa c" style="margin-left: -5px; transform: rotate(-1.5deg); width: 105%">
-        <img src="../pictures/testimage_01.jpg" style="width: 1plain%;">
+    <figure class="tape c" style="width: 80%; margin: auto; transform: rotate(-1.5deg);">
+        <img class="placeholder" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg">
         <figcaption>This is a figure caption.</figcaption>
     </figure>
-    <br>
+    <br><br>
 
     <p>
     You can add text and images and style them in any way you want using HTML
@@ -122,18 +93,17 @@ BOX1--
     </p>
     <br>
 
-    <figure style="margin-left: -50px; margin-top: -30px;">
-        <img src="../pictures/testimage_04.png" style="width: 75%; border-radius: 50%; box-shadow: 5px 5px 5px black;">
+    <figure style="margin: auto;">
+        <img class="placeholder" src="$NEFTOX/styles/images/placeholders/letter_4x3-01.jpg" style="width: 75%; border-radius: 50%; box-shadow: 5px 5px 5px black;">
         <figcaption class="r" style="left: 42%; top: 20%; transform: rotate(65deg);">
             Another caption.
         </figcaption>
     </figure>
-    <img class="clip i l" style="width: 80px; bottom: 70px; left: 35px; transform: rotate(-80deg);">
 --BOX1
 
 BOX2--
-    <figure class="cborder plain" style="margin-top: 10px;">
-        <img src="../pictures/testimage_03.png" style="width: 98%;">
+    <figure class="dborder plain" style="width: 100%;">
+        <img class="placeholder" src="$NEFTOX/styles/images/placeholders/letter_7x5-01.jpg">
     </figure>
     <br>
 
@@ -146,8 +116,8 @@ BOX2--
     </p>
     <br>
 
-    <figure class="tesa t" style="margin-right: -80px; margin-top: 10px; transform: rotate(2deg);">
-        <img src="../pictures/testimage_02.jpg" style="width: 1plain%;">
+    <figure class="framing" style="width: 80%; margin: auto; transform: rotate(2deg);">
+        <img class="placeholder" src="$NEFTOX/styles/images/placeholders/letter_10x8-01.jpg">
     </figure>
     <br>
 
@@ -155,12 +125,6 @@ BOX2--
     You can of course add your own photos and style elements,
     like dried flowers or movie theater tickets — or images of them, at least.
     A handwriting font might look cool, too!
-    </p>
-    <br>
-
-    <p style="font-size: 20px;">
-    The technical drawings used as example images are taken from my<br>own publication:<br>
-    https://www.uni-muenster.de/imperia/md/content/physik_kp/agkappes/abschlussarbeiten/doktorarbeiten/doktorarbeit_raffaela.pdf
     </p>
     <br>
 --BOX2

@@ -70,7 +70,9 @@ class Presentation(object):
         self.SetPalette()
 
         self.stylefile  = 'styles/sheets/{}.css'.format(self.STYLE)
-        self.formatfile = 'styles/formats/{}.css'.format(self.FORMAT)
+        # self.formatfile = 'styles/formats/{}.css'.format(self.FORMAT)
+
+        self.SetFormat()
 
         self.SetStyle()
         self.GetFrames()
@@ -82,15 +84,15 @@ class Presentation(object):
             'AUTHOR'            : '',
             'DATE'              : '',
             'STYLE'             : 'simple',
-            'FOMRAT'            : '16x9-landscape',
+            'FORMAT'            : '21:21',
+            'QUALITY'           : '300',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
             'LAYFLAT'           : 'false',
             'PALETTE'           : 'beach',
             'FONT'              : 'Gentium',
-            'FONTSIZE'          : '30px',
+            'FONTSIZE'          : '1',
             'BROWSER'           : 'firefox',
-            'QUALITY'           : '1.0',
         }
 
         ## Parse the user meta data:
@@ -103,12 +105,6 @@ class Presentation(object):
         for key, value in meta:
             setattr(self, key, value)
 
-        if 'pt' in self.FONTSIZE:
-            self.FONTSIZE = float(self.FONTSIZE.rstrip('pt'))*96./72.
-        else:
-            self.FONTSIZE = float(self.FONTSIZE.rstrip('px'))
-
-
         ## Parse additional style classes:
         match_ = MatchBetween('CUSTOMSTYLES--', '--CUSTOMSTYLES', self.rawcontent)
         if match_[0]:
@@ -116,6 +112,20 @@ class Presentation(object):
         else:
             customstyles = ''
         self.customstyles = customstyles
+
+    def SetFormat(self):
+        width  = int(float(self.FORMAT.split(':')[0])/2.54*float(self.QUALITY))
+        height = int(float(self.FORMAT.split(':')[1])/2.54*float(self.QUALITY))
+
+        self.width  = width
+        self.height = height
+        self.format = (
+             ':root {\n'
+            +'\t --totalwidth: {}px;\n'.format(width)
+            +'\t--totalheight: {}px;\n'.format(height)
+            +'\t --fontfactor: {};\n'.format(self.FONTSIZE)
+            +'}\n'
+        )
 
     def SetPalette(self):
         ## Writes the user-defined style options from the input file meta
@@ -154,8 +164,8 @@ class Presentation(object):
         ## Read stylesheet:
         with open(self.stylefile, 'r') as sf:
             stylesheet = sf.read()
-        with open(self.formatfile, 'r') as sf:
-            formatsheet = sf.read()
+        # with open(self.formatfile, 'r') as sf:
+        #     formatsheet = sf.read()
         with open(self.customstylefile, 'r') as cf:
             customstylesheet = cf.read()
 
@@ -170,23 +180,6 @@ class Presentation(object):
             self.LAYFLAT = False
         self.WriteStyle(':root', [('layflat', layflat)])
 
-        ## Extract style elements that are relevant for the frame layout
-        ## on script level:
-        elements = [
-            # ('fontfactor',    r'--fontfactor: *(\d*.*\d*);'),
-            ('totalwidth',    r'--totalwidth: *(\d*)px;'),
-            ('totalheight',   r'--totalheight: *(\d*)px;'),
-            ('boxmargin',     r'--boxmargin: *(\d*)px;'),
-            ('boxpadding',    r'--boxpadding: *(\d*)px;'),
-        ]
-        styles = {}
-        for el, regex in elements:
-            el_ = re.search(regex, stylesheet)
-            if not el_:
-                el_ = re.search(regex, formatsheet)
-            styles[el] = (el_.group(1) if el_ else '')
-
-        self.styles = styles
         self.FindFont()
 
         ## Load the layouts:
@@ -213,7 +206,7 @@ class Presentation(object):
         ## Set custom styles:
         for _loc in [self.customstylefile, '{}/custom.css'.format(parsedir)]:
             with open(_loc, 'a') as f:
-                f.write(formatsheet)
+                f.write(self.format)
                 f.write(self.customstyles)
                 f.write('\n')
 
@@ -240,7 +233,8 @@ class Presentation(object):
 
         fonts = LocateFontFile(
             # self.FONT, int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
-            self.FONT, int(float(self.FONTSIZE))
+            # self.FONT, int(float(self.FONTSIZE))
+            self.FONT, 1
         )
         try:
             assert fonts['regular'].getname()
@@ -264,7 +258,6 @@ class Presentation(object):
 
         self.WriteStyle(':root', [
             ('fontfamily', self.FONT),
-            ('basesize', '{}px'.format(self.FONTSIZE)),
             ('bindingoffset', self.BINDINGOFFSET),
         ])
 
@@ -282,7 +275,7 @@ class Presentation(object):
         ## Attributes that are being passed over to the frame class:
         passattr = [
             ('inputdir',         inputdir),
-            ('styles',           self.styles),
+            # ('styles',           self.styles),
             ('fonts',            self.fonts),
             ('layouts',          self.layouts),
             ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
@@ -368,12 +361,12 @@ class Presentation(object):
 
         ## Determine window size. Get browser zoom factor from quality setting.
         ## The layflat setting doubles the window width.
-        zf = float(self.QUALITY)
         df = (2 if self.LAYFLAT else 1)
         windowsize = {
-            # 'width'  : int(self.styles['totalwidth'])*zf,
-            'width'  : int(self.styles['totalwidth'])*df*zf,
-            'height' : int(self.styles['totalheight'])*zf,
+            # 'width'  : int(self.styles['totalwidth'])*df,
+            # 'height' : int(self.styles['totalheight']),
+            'width'  : self.width,
+            'height' : self.height,
         }
 
         ## Initiate web driver:
@@ -389,9 +382,6 @@ class Presentation(object):
                 options=options,
                 # executable_path='/usr/bin/chromedriver',
             )
-            zoomstrings = [
-                'document.body.style.zoom = "scale({})";'.format(zf)
-            ]
         else:
             print('Initializing Firefox driver ...')
             service = webdriver.FirefoxService(executable_path='/snap/bin/geckodriver')
@@ -405,10 +395,6 @@ class Presentation(object):
                 options=options,
                 # service_log_path=os.path.devnull,
             )
-            zoomstrings = [
-                'document.body.style.MozTransform = "scale({})";'.format(zf),
-                'document.body.style.MozTransformOrigin = "0 0";'
-            ]
 
         driver.set_window_size(windowsize['width'], windowsize['height'])
         url = 'file:///{}parse/output.html'.format(inputdir)
@@ -427,18 +413,19 @@ class Presentation(object):
         os.remove(testfile)
 
         print('Creating preview ...')
+        print('Image size: {}'.format(driver.get_window_size()))
         imgfiles = []
         scroll = windowsize['height']+scrolloffset
 
         for f in range(len(self.frames)):
             ## Skip every other page for layflat formats:
-            if self.LAYFLAT and f%2!=0:
-                continue
+            # if self.LAYFLAT and f%2!=0:
+            #     continue
 
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
 
-            for zoomstring in zoomstrings:
-                driver.execute_script(zoomstring)
+            # for zoomstring in zoomstrings:
+            #     driver.execute_script(zoomstring)
 
             newframe = driver.find_element("id", 'frame-{}'.format(f))
             driver.execute_script('arguments[0].scrollIntoView();', newframe)
@@ -597,7 +584,7 @@ class Frame(object):
                 # ' {} '.format(self.boxes['BOXTITLE'].content)
             )
             # titlewidth += 2*int(self.styles['boxpadding'])
-            titlewidth += 4*int(self.styles['boxpadding'])
+            # titlewidth += 4*int(self.styles['boxpadding'])
             # self.boxes['BOXTITLE'].SetStyle([('width', '{}px'.format(titlewidth))])
         else:
             titlewidth = 0

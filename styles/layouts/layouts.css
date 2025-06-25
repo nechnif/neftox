@@ -6,12 +6,12 @@ html { box-sizing: border-box; }
 
 /* Widths and heights */
 :root {
-    --titleheight: 120px;
-    --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) - 4 * var(--boxmargin) );
-   --footerheight: calc( 2 * var(--basesize) );
-      --boxmargin: 8px;
-     --boxpadding: 15px;
-    --textpadding: 4px;
+       --fontsize: calc( var(--totalheight) * var(--fontfactor) / 50 );
+    --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) );
+   --footerheight: calc( 2.5 * var(--fontsize) );
+      --boxmargin: 0px;
+     --boxpadding: 0px;
+    --textpadding: 0px;
 }
 
 body {
@@ -19,7 +19,8 @@ body {
        padding: 0;
     background: white;
    font-family: var(--fontfamily);
-     min-width: calc(var(--totalwidth) * var(--layflat));
+         width: calc(var(--totalwidth) * var(--layflat));
+     /* min-width: calc(var(--totalwidth) * var(--layflat)); */
      /* border: 1px solid blue; */
 }
 
@@ -28,9 +29,9 @@ body {
 div.frame {
             width: calc(var(--totalwidth) - var(--bindingoffset));
            height: var(--totalheight);
-          padding: calc(var(--boxpadding) / 2);
+          /* padding: calc(var(--boxpadding) / 2); */
         clip-path: border-box;
-    margin-bottom: 5px;
+    margin-bottom: 1%;
            /* border: 1px solid red; */
 }
 div.frame.even {
@@ -49,6 +50,7 @@ div.frame.layflat {
 div.frame.layflat.even {
          float: left;
     overflow-x: visible;
+  /* border-right: 1px dashed gray; */
 }
 div.frame.layflat.odd {
     overflow-x: hidden;
@@ -69,12 +71,12 @@ div.background {
 
 div.cell {
             position: relative;
-              margin: var(--boxmargin);
-             padding: var(--boxpadding);
+              /* margin: var(--boxmargin);
+             padding: var(--boxpadding); */
      background-size: cover;
-           font-size: var(--basesize);
+           font-size: var(--fontsize);
               color: rgba(var(--text), 1);
-              /* border: 1px solid red; */
+             /* border: 1px solid red; */
 }
 
 div.cell.plain.BOX1 {
@@ -86,6 +88,16 @@ div.cell.plain.BOX1 {
 div.cell.onebox.BOX1 {
          width: calc( 100% - 2 * var(--boxmargin) );
         height: calc( var(--totalheight) - var(--footerheight) - 6 * var(--boxmargin) );
+    visibility: hidden;
+}
+
+div.cell.smallbox.BOX1 {
+         width: calc( var(--totalwidth) * 0.75 );
+        height: calc( var(--totalheight) * 0.75 );
+ margin-bottom: calc( var(--totalheight) * 0.25 - 5 * var(--boxmargin) - var(--footerheight) );
+           top: 50%;
+          left: 50%;
+     transform: translate(-50%, -50%);
     visibility: hidden;
 }
 
@@ -111,7 +123,8 @@ div.cell.rows.BOX1 {
 
 div.cell.rows.BOX2 {
          width: calc( 100% - 2 * var(--boxmargin) );
-        height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) );
+        /* height: calc( var(--totalheight) / 2 - 8 * var(--boxmargin) ); */
+        height: calc( var(--totalheight) / 2 - var(--footerheight) );
     visibility: hidden;
 }
 
@@ -120,9 +133,8 @@ div.cell.BOXFOOTER {
            width: var(--footerwidth);
           height: var(--footerheight);
           margin: var(--boxmargin);
-       font-size: calc( var(--basesize) / 2 + 15px );
-     line-height: calc( var(--footerheight) - ( var(--basesize) / 2 + 10px ) );
-     text-align: center;
+      text-align: center;
+       /* border: 1px solid green; */
 }
 
 
@@ -132,35 +144,36 @@ span.footer.title {
 span.footer.float {
     width: 10%;
 }
-span.footer.float.even {
+span.footer.float.odd {
     float: left;
 }
-span.footer.float.odd {
+span.footer.float.even {
     float: right;
 }
 span.footer.page {
     width: 10%;
 }
-span.footer.page.even {
-         float: right;
-    text-align: right;
-}
 span.footer.page.odd {
+         float: right;
+    text-align: center;
+}
+span.footer.page.even {
          float: left;
-    text-align: left;
+    text-align: center;
 }
 
 
 div.cell.columns-fleft.BOX1 {
          float: left;
-         width: calc( 50% - 6 * var(--boxmargin) - var(--footerheight) );
+         width: calc( 50% - var(--footerheight) );
         height: calc(var(--totalheight) - 4 * var(--boxmargin));
+   margin-left: var(--footerheight);
     visibility: hidden;
 }
 
 div.cell.columns-fleft.BOX2 {
          float: right;
-         width: calc( 50% - 2 * var(--boxmargin) );
+         width: 50%;
         height: calc(var(--totalheight) - 4 * var(--boxmargin));
     visibility: hidden;
 }
@@ -182,23 +195,20 @@ div.cell.BOXFOOTER-left {
            float: left;
            width: var(--footerheight);
           /* height: calc(var(--totalheight) - 4 * var(--boxmargin)); */
-       font-size: 20pt;
            color: rgba(var(--text), 0.7);
 }
 
 div.BOXFOOTER-left span.footer {
              display: block;
-            position: relative;
+            /* position: relative; */
     transform-origin: top left;
                 left: 0;
                  top: 0;
-        padding-left: var(--boxpadding);
+        /* padding-left: var(--boxpadding); */
            transform: rotate(-90deg) translateX(calc(-100% + 2 * var(--boxmargin))) translateY(calc(-2 * var(--boxmargin)));
                width: calc(var(--totalheight) - 4 * var(--boxmargin));
               height: var(--footerheight);
          line-height: var(--footerheight);
-           font-size: calc(var(--basesize) - 4pt);
-              /* border: 1px solid red; */
 }
 div.BOXFOOTER-left span.page {
      display: block;
@@ -215,14 +225,17 @@ div.BOXFOOTER-left span.page {
 div.BOXFOOTER-left span.date {
          position: absolute;
             right: 0;
-    padding-right: calc(1.5 * var(--boxpadding));
-    /* border: 1px solid red; */
+    /* padding-right: calc(1.5 * var(--boxpadding)); */
+    padding-right: 2%;
 }
 
 div.BOXFOOTER-left span.title {
      position: absolute;
         width: calc(var(--totalheight) * 0.5);
-    font-size: calc(var(--basesize) - 2pt);
    text-align: center;
   font-weight: bold;
+}
+
+div.BOXFOOTER-left span.author {
+     padding-left: 2%;
 }

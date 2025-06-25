@@ -8,28 +8,53 @@
 
 /*--- TEXT STYLES ----------------------------------------------------------- */
 
+div.abs { position: absolute; }
+
+/* Wrap text inside a circle (not as easy as it sounds): */
+div.circletext {
+              --p: 15px; /*padding*/
+    border-radius: 50%;
+       text-align: justify;
+           /* border: 4px double rgba(var(--text), 1); */
+}
+div.circletext i,
+div.circletext::before {
+          content: '';
+            float: left;
+           height: 100%;
+            width: 50%;
+    shape-outside: radial-gradient(farthest-side at right, transparent calc(100% - var(--p)), #fff 0);
+}
+div.circletext i {
+            float: right;
+    shape-outside: radial-gradient(farthest-side at left,  transparent calc(100% - var(--p)), #fff 0);
+}
+
+
+
 /* Classes for list item separation: */
 ul, ol {
     margin: var(--boxmargin);
     /* list-style-type: circle; */
 }
-li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.5); }
-ul.ultrawide  li:not(:last-child) { margin-bottom: calc(var(--basesize) * 1.5); }
-ul.wide       li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.8); }
-ul.tight      li:not(:last-child) { margin-bottom: calc(var(--basesize) * 0.3); }
+li:not(:last-child) { margin-bottom: calc(var(--fontsize) * 0.5); }
+ul.ultrawide  li:not(:last-child) { margin-bottom: calc(var(--fontsize) * 1.5); }
+ul.wide       li:not(:last-child) { margin-bottom: calc(var(--fontsize) * 0.8); }
+ul.tight      li:not(:last-child) { margin-bottom: calc(var(--fontsize) * 0.3); }
 
 p {
     margin: 0;
    padding: var(--textpadding) 0;
+     color: rgba(var(--text), 1);
 }
 p.headline {
-     font-size: 100px;
+     font-size: calc( var(--fontsize) * 1.5 );
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
 }
 p.subheadline {
-     font-size: 70px;
+     font-size: calc( var(--fontsize) * 1.2 );
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
@@ -37,7 +62,7 @@ p.subheadline {
 p.caption {
        position: absolute;
     font-family: sans-serif;
-      font-size: calc(var(--basesize) - 15pt);
+      font-size: calc(var(--fontsize) - 15pt);
 }
 p.abs {
     position: absolute;
@@ -49,21 +74,31 @@ hr {
     background-color: rgba(var(--text), 1);
 }
 
+.abs { position: absolute; }
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 /* General text styles: */
-.large { font-size: calc(var(--basesize) + 5pt); }
-.small { font-size: calc(var(--basesize) - 5pt); }
-.tiny { font-size: calc(var(--basesize) - 10pt); }
+.large { font-size: calc(var(--fontsize) * 1.2); }
+.small { font-size: calc(var(--fontsize) * 0.8); }
+.tiny {  font-size: calc(var(--fontsize) * 0.6); }
 .bold { font-weight: bold; }
 .tty { font-family: monospace; }
 
-.shadow { text-shadow: 4px 4px 4px rgba(var(--text), 1); }
-.shadowwhite { text-shadow: 4px 4px 4px white; }
-.boxshadow { box-shadow: 8px 8px 8px rgba(var(--text), 1); }
-.minshadow { box-shadow: 2px 2px 2px rgba(var(--text), 1); }
-.fshadow { filter: drop-shadow(5px 5px 5px rgba(var(--text), 1)); }
-.minfshadow { filter: drop-shadow(2px 2px 2px rgba(var(--text), 1)); }
-.engraving { filter: drop-shadow(0px 0px 0.5px rgba(var(--text), 1)); }
+.shadow {      text-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
+.shadowwhite { text-shadow: 0.1vh 0.1vh 0.1vh white; }
+.boxshadow { box-shadow: 0.05vh 0.05vh 0.2vh rgba(var(--text), 1); }
+.maxshadow { box-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
+.minshadow { box-shadow: 0.03vh 0.03vh 0.03vh rgba(var(--text), 1); }
+.fshadow { filter: drop-shadow(0.05vh 0.05vh 0.1vh rgba(var(--text), 1)); }
+.minfshadow { filter: drop-shadow(0.03vh 0.03vh 0.03vh rgba(var(--text), 1)); }
+.engraving {  filter: drop-shadow(0 0 0.03vh rgba(var(--text), 1)); }
 .border { border: 5px solid white; }
+.opc { filter: opacity(80%); }
 
 .none { list-style: none; }
 /* Classes for horizontal alignment: */
@@ -95,8 +130,8 @@ figure.abs.bottom {
 }
 figcaption {
     position: absolute;
-     padding: 0 var(--boxpadding);
-   font-size: calc(var(--basesize) - 5px);
+     padding: 10px var(--boxpadding);
+   /* font-size: calc(var(--fontsize) - 5px); */
      z-index: 2;
   text-align: center;
        width: 100%;
@@ -130,6 +165,8 @@ img {
            width: 100%;
     border-color: rgba(var(--text), 1);
 }
+img.abs { position: absolute; }
+
 figure img {
     vertical-align: top;
 }
@@ -139,17 +176,16 @@ figure img {
 
 /* Simple frames with shadow */
 figure.framing {
-          box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
-             padding: 4%;
+          box-shadow: 1px 1px 5px 1px rgba(50, 50, 50, 0.5);
+             padding: 2%;
     background-color: white;
 }
 figure.framing img {
-    box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
+    box-shadow: 1px 1px 1px rgba(50, 50, 50, 0.5);
 }
 figure.framing figcaption {
     position: absolute;
          top: 102%;
-
 }
 
 
@@ -184,13 +220,13 @@ figure.tape.stripes45::after {
     border-image: url(../images/borders/tape_sides_stripes45.png) 80 stretch;
 }
 figure.tape.c.dots::after {
-    border-image: url(../images/borders/tape_corners_dots.png) 400 stretch;
+    border-image: url(../images/borders/tape_corners_dots.png) 600 stretch;
 }
 figure.tape.c.stripes::after {
-    border-image: url(../images/borders/tape_corners_stripes.png) 400 stretch;
+    border-image: url(../images/borders/tape_corners_stripes.png) 600 stretch;
 }
 figure.tape.c.stripes45::after {
-    border-image: url(../images/borders/tape_corners_stripes45.png) 400 stretch;
+    border-image: url(../images/borders/tape_corners_stripes45.png) 600 stretch;
 }
 figure.tape.t::after {
       border-top: 50px solid transparent;
@@ -206,7 +242,7 @@ figure.tape.r::after {
 }
 figure.tape.c::after {
           border: 80px solid transparent;
-    border-image: url(../images/borders/tape_corners.png) 400 stretch;
+    border-image: url(../images/borders/tape_corners.png) 600 stretch;
 }
 /* Colors of tapes: */
 figure.tape.red::after    { filter: hue-rotate(0deg); }
@@ -221,11 +257,12 @@ figure.tape.violet::after { filter: hue-rotate(-100deg); }
 
 /* Polaroid effect */
 figure.polaroid {
-               width: 500px;
-             padding: 30px;
+              --polw: 360px;
+               width: var(--polw);
+             padding: calc( var(--polw) * 0.055 );
       padding-bottom: 0;
     background-color: white;
-          box-shadow: 1px 3px 3px 1px rgba(50, 50, 50, 0.5);
+          box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
           /* border: 1px solid green; */
 }
 figure.polaroid img {
@@ -235,33 +272,78 @@ figure.polaroid img {
 figure.polaroid figcaption {
           /* position: absolute; */
             /* height: calc( var(--polpadding) * 5 - var(--polpadding) ); */
-            height: 110px;
+            height: calc( var(--polw) * 0.22 );
            display: flex;
               left: 0;
     justify-content: center;
         align-items: center;
    background-color: white;
-         box-shadow: 1px 4px 3px 1px rgba(50, 50, 50, 0.5);
+         box-shadow: 1px 1px 2px rgba(50, 50, 50, 0.5);
          margin-top: -3px;
 }
 
 /* Drawn borders: */
-figure.dborder img { box-shadow: 3px 3px 3px rgba(50, 50, 50, 1); }
+figure.dborder img { box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 1); }
 figure.dborder.plain {
-                 border: 12px solid transparent;
+                 border: 5px solid transparent;
            border-image: url(../images/borders/border_plain.png) 35 stretch;
-    border-image-outset: 3px 7px 0px 3px;
+    border-image-outset: 3px;
 }
 figure.dborder.stamp {
-                 border: 25px solid transparent;
+                 border: 12px solid transparent;
            border-image: url(../images/borders/border_stamp.png) 10% round;
-    border-image-outset: 3px 7px 0px 3px;
+    border-image-outset: 3px;
 }
 figure.dborder.wavy {
-                 border: 25px solid transparent;
+                 border: 12px solid transparent;
            border-image: url(../images/borders/border_wavy.png) 70 round;
-    border-image-outset: 3px 6px 0px 3px;
+    border-image-outset: 3px;
 }
+
+/* Photo borders: */
+figure.pborder img {
+    box-shadow: 0 0 0 0;
+    border-radius: 1%; }
+figure.pborder.old01 {
+                 border: 30px solid transparent;
+           border-image: url(../images/borders/border_old01.png) 5% round;
+    border-image-outset: 0px;
+}
+figure.pborder.old02 {
+                 border: 30px solid transparent;
+           border-image: url(../images/borders/border_old02.png) 5% round;
+    border-image-outset: 0px;
+}
+
+
+/* Drawn corners */
+img.corner {
+        --os: -25px;    /* outset */
+    position: absolute;
+       width: 22%;
+      filter: opacity(80%);
+     z-index: -4;
+}
+img.corner.topleft {
+       top: var(--os);
+      left: var(--os);
+}
+img.corner.bottomleft {
+    bottom: var(--os);
+      left: var(--os);
+ transform: rotate(-90deg);
+}
+img.corner.topright {
+       top: var(--os);
+     right: var(--os);
+ transform: rotate(90deg);
+}
+img.corner.bottomright {
+    bottom: var(--os);
+     right: var(--os);
+ transform: rotate(180deg);
+}
+
 
 /* Fabric borders */
 /* figure.fborder {
@@ -285,11 +367,12 @@ figure.passepartout {
           border: 10px solid rgba(0, 0, 0, .1);
       border-top: 10px solid rgba(0, 0, 0, .2);
     border-right: 10px solid rgba(0, 0, 0, .2);
+ transform-style: preserve-3d;
 }
 figure.passepartout img {
     vertical-align: top;
           position: relative;
-           z-index: -1;
+         transform: translateZ(-10px);
 }
 figure.passepartout.oval {
            border: 12px solid rgba(0, 0, 0, .1);
@@ -302,11 +385,14 @@ figure.passepartout.oval {
 figure.stamp img {
     filter: opacity(80%);
 }
+img.stamp {
+    filter: opacity(80%);
+}
 
 
 /* Paper clips */
 figure.clip {
-    padding: 5%;
+    padding: 1%;
 }
 figure.clip img {
     box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
@@ -316,7 +402,7 @@ figure.clip.t::after {
              content: '';
     background-image: url(../images/elements/clip_o.png);
    background-repeat: no-repeat;
-     background-size: 60px;
+     background-size: 40px;
     transform-origin: 0% 0%;
            transform: rotate(4deg);
                width: 100%;
@@ -373,6 +459,9 @@ figure.scraps img {
 
 /* Dried pressed flowers */
 figure.flowers {
+    position: absolute;
+}
+figure.flowers img {
     position: absolute;
 }
 
