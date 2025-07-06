@@ -12,7 +12,7 @@ div.abs { position: absolute; }
 
 /* Wrap text inside a circle (not as easy as it sounds): */
 div.circletext {
-              --p: 15px; /*padding*/
+              --p: 2%; /*padding*/
     border-radius: 50%;
        text-align: justify;
            /* border: 4px double rgba(var(--text), 1); */
@@ -48,13 +48,13 @@ p {
      color: rgba(var(--text), 1);
 }
 p.headline {
-     font-size: calc( var(--fontsize) * 1.5 );
+     font-size: calc( var(--fontsize) * 2 );
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
 }
 p.subheadline {
-     font-size: calc( var(--fontsize) * 1.2 );
+     font-size: calc( var(--fontsize) * 1.5 );
    font-weight: bold;
     text-align: center;
          color: rgba(var(--text), 1);
@@ -62,7 +62,7 @@ p.subheadline {
 p.caption {
        position: absolute;
     font-family: sans-serif;
-      font-size: calc(var(--fontsize) - 15pt);
+      font-size: calc( var(--fontsize) - 0.9 );
 }
 p.abs {
     position: absolute;
@@ -82,23 +82,14 @@ hr {
     transform: translate(-50%, -50%);
 }
 
-/* General text styles: */
+/* General text and list styles: */
+.huge {  font-size: calc(var(--fontsize) * 2); }
 .large { font-size: calc(var(--fontsize) * 1.2); }
+.normal { font-size: calc(var(--fontsize) * 1); }
 .small { font-size: calc(var(--fontsize) * 0.8); }
 .tiny {  font-size: calc(var(--fontsize) * 0.6); }
 .bold { font-weight: bold; }
 .tty { font-family: monospace; }
-
-.shadow {      text-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
-.shadowwhite { text-shadow: 0.1vh 0.1vh 0.1vh white; }
-.boxshadow { box-shadow: 0.05vh 0.05vh 0.2vh rgba(var(--text), 1); }
-.maxshadow { box-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
-.minshadow { box-shadow: 0.03vh 0.03vh 0.03vh rgba(var(--text), 1); }
-.fshadow { filter: drop-shadow(0.05vh 0.05vh 0.1vh rgba(var(--text), 1)); }
-.minfshadow { filter: drop-shadow(0.03vh 0.03vh 0.03vh rgba(var(--text), 1)); }
-.engraving {  filter: drop-shadow(0 0 0.03vh rgba(var(--text), 1)); }
-.border { border: 5px solid white; }
-.opc { filter: opacity(80%); }
 
 .none { list-style: none; }
 /* Classes for horizontal alignment: */
@@ -109,6 +100,31 @@ hr {
 .top    { vertical-align: top; }
 .bottom { vertical-align: bottom; }
 .middle { vertical-align: middle; }
+
+/* Shadows */
+:root {
+          --shadow01 : rgba(50, 50, 50, 1);
+
+       --boxshadow01 : calc( var(--em) * 0.03 ) calc( var(--em) * 0.03 ) calc( var(--em) * 0.1 ) var(--shadow01);
+       --boxshadow02 : calc( var(--em) * 0.05 ) calc( var(--em) * 0.05 ) calc( var(--em) * 0.1 ) var(--shadow01);
+       --boxshadow03 : calc( var(--em) * 0.07 ) calc( var(--em) * 0.07 ) calc( var(--em) * 0.15 ) var(--shadow01);
+       --boxshadow05 : calc( var(--em) * 0.2 ) calc( var(--em) * 0.2 ) calc( var(--em) * 0.3) calc( var(--em) * -0.3 ) var(--shadow01);
+}
+
+.shadow {      text-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
+.shadowwhite { text-shadow: 0.1vh 0.1vh 0.1vh white; }
+.boxshadow { box-shadow: var(--boxshadow02); }
+.maxshadow { box-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
+.minshadow { box-shadow: 0.03vh 0.03vh 0.03vh rgba(var(--text), 1); }
+.fshadow { filter: drop-shadow(0.05vh 0.05vh 0.1vh rgba(var(--text), 1)); }
+.minfshadow { filter: drop-shadow(0.03vh 0.03vh 0.03vh rgba(var(--text), 1)); }
+.engraving {  filter: drop-shadow(0 0 0.03vh rgba(var(--text), 1)); }
+.border { border: 5px solid white; }
+.opc { filter: opacity(80%); }
+
+
+
+
 
 
 /*--- IMAGES AND BORDERS ---------------------------------------------------- */
@@ -130,8 +146,8 @@ figure.abs.bottom {
 }
 figcaption {
     position: absolute;
-     padding: 10px var(--boxpadding);
-   /* font-size: calc(var(--fontsize) - 5px); */
+ padding-top: calc( var(--em) * 0.2 );
+   font-size: calc( var(--fontsize) * 0.8 );
      z-index: 2;
   text-align: center;
        width: 100%;
@@ -158,7 +174,7 @@ figcaption.centered {
                 top: 50%;
                left: 50%;
           transform: translate(-50%, -50%);
-          font-size: 50px;
+          /* font-size: 50px; */
 }
 
 img {
@@ -176,12 +192,12 @@ figure img {
 
 /* Simple frames with shadow */
 figure.framing {
-          box-shadow: 1px 1px 5px 1px rgba(50, 50, 50, 0.5);
+          box-shadow: var(--boxshadow02);
              padding: 2%;
     background-color: white;
 }
 figure.framing img {
-    box-shadow: 1px 1px 1px rgba(50, 50, 50, 0.5);
+    box-shadow: var(--boxshadow01);
 }
 figure.framing figcaption {
     position: absolute;
@@ -191,7 +207,7 @@ figure.framing figcaption {
 
 /* Masking tape */
 figure.tape {
-         padding: 25px;
+         padding: calc( var(--em) * 0.75 );
          z-index: 1;
           /* border: 1px solid red; */
 }
@@ -199,7 +215,7 @@ figure.tape img {
     position: relative;
      z-index: 0;
        width: 100%;
-  box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
+  box-shadow: var(--boxshadow01);
 }
 figure.tape::after {
         position: absolute;
@@ -229,19 +245,19 @@ figure.tape.c.stripes45::after {
     border-image: url(../images/borders/tape_corners_stripes45.png) 600 stretch;
 }
 figure.tape.t::after {
-      border-top: 50px solid transparent;
+      border-top: calc( var(--em) * 1.5 ) solid transparent;
 }
 figure.tape.b::after {
-   border-bottom: 50px solid transparent;
+   border-bottom: calc( var(--em) * 1.5 ) solid transparent;
 }
 figure.tape.l::after {
-     border-left: 50px solid transparent;
+     border-left: calc( var(--em) * 1.5 ) solid transparent;
 }
 figure.tape.r::after {
-    border-right: 50px solid transparent;
+    border-right: calc( var(--em) * 1.5 ) solid transparent;
 }
 figure.tape.c::after {
-          border: 80px solid transparent;
+          border: calc( var(--em) * 3 ) solid transparent;
     border-image: url(../images/borders/tape_corners.png) 600 stretch;
 }
 /* Colors of tapes: */
@@ -257,47 +273,44 @@ figure.tape.violet::after { filter: hue-rotate(-100deg); }
 
 /* Polaroid effect */
 figure.polaroid {
-              --polw: 360px;
+              --polw: calc( var(--em) * 20 );
                width: var(--polw);
              padding: calc( var(--polw) * 0.055 );
       padding-bottom: 0;
     background-color: white;
-          box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
-          /* border: 1px solid green; */
+          box-shadow: var(--boxshadow05);
 }
 figure.polaroid img {
         filter: saturate(70%) sepia(20%) blur(0.3px);
     box-shadow: 0 0 0;
 }
 figure.polaroid figcaption {
-          /* position: absolute; */
-            /* height: calc( var(--polpadding) * 5 - var(--polpadding) ); */
-            height: calc( var(--polw) * 0.22 );
-           display: flex;
-              left: 0;
+             height: calc( var(--polw) * 0.22 );
+            display: flex;
+               left: 0;
     justify-content: center;
         align-items: center;
    background-color: white;
-         box-shadow: 1px 1px 2px rgba(50, 50, 50, 0.5);
-         margin-top: -3px;
+         box-shadow: var(--boxshadow05);
+         /* margin-top: -3px; */
 }
 
 /* Drawn borders: */
-figure.dborder img { box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 1); }
+figure.dborder img { box-shadow: var(--boxshadow01); }
 figure.dborder.plain {
-                 border: 5px solid transparent;
+                 border: calc( var(--em) * 0.4 ) solid transparent;
            border-image: url(../images/borders/border_plain.png) 35 stretch;
-    border-image-outset: 3px;
+    border-image-outset: calc( var(--em) * 0.1 );
 }
 figure.dborder.stamp {
-                 border: 12px solid transparent;
+                 border: calc( var(--em) * 0.6 ) solid transparent;
            border-image: url(../images/borders/border_stamp.png) 10% round;
-    border-image-outset: 3px;
+    border-image-outset: calc( var(--em) * 0.1 );
 }
 figure.dborder.wavy {
-                 border: 12px solid transparent;
+                 border: calc( var(--em) * 0.6 ) solid transparent;
            border-image: url(../images/borders/border_wavy.png) 70 round;
-    border-image-outset: 3px;
+    border-image-outset: calc( var(--em) * 0.1 );
 }
 
 /* Photo borders: */
@@ -305,20 +318,20 @@ figure.pborder img {
     box-shadow: 0 0 0 0;
     border-radius: 1%; }
 figure.pborder.old01 {
-                 border: 30px solid transparent;
+                 border: calc( var(--em) * 1 ) solid transparent;
            border-image: url(../images/borders/border_old01.png) 5% round;
-    border-image-outset: 0px;
+    border-image-outset: 0;
 }
 figure.pborder.old02 {
-                 border: 30px solid transparent;
+                 border: calc( var(--em) * 1 ) solid transparent;
            border-image: url(../images/borders/border_old02.png) 5% round;
-    border-image-outset: 0px;
+    border-image-outset: 0;
 }
 
 
 /* Drawn corners */
 img.corner {
-        --os: -25px;    /* outset */
+        --os: calc( var(--em) * -1 );    /* outset */
     position: absolute;
        width: 22%;
       filter: opacity(80%);
@@ -326,21 +339,21 @@ img.corner {
 }
 img.corner.topleft {
        top: var(--os);
-      left: var(--os);
+      left: calc( var(--os) * 1.1 );
 }
 img.corner.bottomleft {
     bottom: var(--os);
-      left: var(--os);
+      left: calc( var(--os) * 1.1 );
  transform: rotate(-90deg);
 }
 img.corner.topright {
        top: var(--os);
-     right: var(--os);
+     right: calc( var(--os) * 1.1 );
  transform: rotate(90deg);
 }
 img.corner.bottomright {
     bottom: var(--os);
-     right: var(--os);
+     right: calc( var(--os) * 1.1 );
  transform: rotate(180deg);
 }
 
@@ -363,21 +376,21 @@ figure.fborder.kloeppel {
 
 /* Passepartouts */
 figure.passepartout {
-      box-shadow: 0px 0px 12px 4px black inset;
-          border: 10px solid rgba(0, 0, 0, .1);
-      border-top: 10px solid rgba(0, 0, 0, .2);
-    border-right: 10px solid rgba(0, 0, 0, .2);
+      box-shadow: 0 0 calc( var(--em) * 1 ) calc( var(--em) * 0.05 ) var(--shadow01) inset;
+          border: calc( var(--em) * 0.3 ) solid rgba(0, 0, 0, .1);
+      border-top: calc( var(--em) * 0.3 ) solid rgba(0, 0, 0, .2);
+    border-right: calc( var(--em) * 0.3 ) solid rgba(0, 0, 0, .2);
  transform-style: preserve-3d;
 }
 figure.passepartout img {
     vertical-align: top;
           position: relative;
-         transform: translateZ(-10px);
+         transform: translateZ( calc( var(--em) * -1 ) );
 }
 figure.passepartout.oval {
-           border: 12px solid rgba(0, 0, 0, .1);
-       border-top: 12px solid rgba(0, 0, 0, .1);
-     border-right: 12px solid rgba(0, 0, 0, .1);
+           border: calc( var(--em) * 0.4 ) solid rgba(0, 0, 0, .1);
+       border-top: calc( var(--em) * 0.4 ) solid rgba(0, 0, 0, .1);
+     border-right: calc( var(--em) * 0.4 ) solid rgba(0, 0, 0, .1);
 }
 
 
@@ -395,14 +408,14 @@ figure.clip {
     padding: 1%;
 }
 figure.clip img {
-    box-shadow: 3px 3px 3px rgba(50, 50, 50, 1);
+    box-shadow: var(--boxshadow02);
 }
 figure.clip.t::after {
             position: absolute;
              content: '';
     background-image: url(../images/elements/clip_o.png);
    background-repeat: no-repeat;
-     background-size: 40px;
+     background-size: calc( var(--em) * 1.5 );
     transform-origin: 0% 0%;
            transform: rotate(4deg);
                width: 100%;

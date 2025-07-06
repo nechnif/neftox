@@ -6,9 +6,11 @@ html { box-sizing: border-box; }
 
 /* Widths and heights */
 :root {
+       --basesize: calc( var(--totalheight) / 50 );
+             --em: var(--basesize);
        --fontsize: calc( var(--totalheight) * var(--fontfactor) / 50 );
     --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) );
-   --footerheight: calc( 2.5 * var(--fontsize) );
+   --footerheight: calc( 3 * var(--fontsize) );
       --boxmargin: 0px;
      --boxpadding: 0px;
     --textpadding: 0px;
@@ -75,7 +77,7 @@ div.cell {
              padding: var(--boxpadding); */
      background-size: cover;
            font-size: var(--fontsize);
-              color: rgba(var(--text), 1);
+               color: rgba(var(--text), 1);
              /* border: 1px solid red; */
 }
 
