@@ -418,18 +418,11 @@ class Presentation(object):
         scroll = windowsize['height']+scrolloffset
 
         for f in range(len(self.frames)):
-            ## Skip every other page for layflat formats:
-            # if self.LAYFLAT and f%2!=0:
-            #     continue
 
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
 
-            # for zoomstring in zoomstrings:
-            #     driver.execute_script(zoomstring)
-
             newframe = driver.find_element("id", 'frame-{}'.format(f))
             driver.execute_script('arguments[0].scrollIntoView();', newframe)
-            # print('frame-{}'.format(f))
             # driver.execute_script('window.scrollTo(0, '+str(scroll)+')')
             # scroll += windowsize['height']+scrolloffset
 
@@ -440,13 +433,15 @@ class Presentation(object):
             command = 'convert {} -background white -alpha remove -alpha off {}'.format(png, png)
             call = subprocess.Popen([command], stdout=subprocess.PIPE, shell=True)
             (output, error) = call.communicate()
-            # ## Convert the images to jpg, which reduces size of output
-            # ## PDF significantly:
-            # jpg = png.replace('.png', '.jpg')
-            # imgfiles.append(jpg)
-            # Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
-            # os.remove(png)
-            imgfiles.append(png)
+
+            ## Convert the images to jpg, which reduces size of output
+            ## PDF significantly:
+            jpg = png.replace('.png', '.jpg')
+            Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
+            imgfiles.append(jpg)
+            os.remove(png)
+
+            print('processed frame {:02d}'.format(f))
 
         driver.quit()
         self.imgfiles = list(np.sort(imgfiles))
@@ -461,8 +456,8 @@ class Presentation(object):
         with open(inputdir+outfile, 'wb') as f:
             f.write(img2pdf.convert(self.imgfiles))
 
-        for imgfile in self.imgfiles:
-            os.remove(imgfile)
+        # for imgfile in self.imgfiles:
+        #     os.remove(imgfile)
 
         print('Done!')
 
