@@ -1,0 +1,28 @@
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/palettes.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/elements.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/layouts.css");
+@import url("../styles.css");
+
+:root {
+    --layflat: 1;
+}
+:root {
+    --fontfamily: Gentium;
+    --bindingoffset: 0px;
+}
+@font-face {
+    font-family: Gentium;
+    src: url('/usr/share/fonts/truetype/gentium/Gentium-R.ttf');
+}
+:root {
+    --totalwidth: 1259px;
+    --totalheight: 708px;
+    --fontfactor: 1.7;
+}
+:root {
+    --grad1: 219, 219, 219;
+    --grad2: 255, 248, 239;
+    --grad3: 255, 255, 255;
+    --text:  50,  55,  59;
+    --highlight: 255, 109,   0;
+}

@@ -45,11 +45,6 @@ class Presentation(object):
         global neftoxdir
         neftoxdir = self.dir
 
-        ## Re-start custom style file:
-        self.customstylefile = 'styles/sheets/customs.css'
-        if 'customs.css' in os.listdir('styles/sheets/'):
-            os.remove(self.customstylefile)
-
         ## Extract raw input content:
         global inputdir, parsedir, equdir
         inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
@@ -67,14 +62,11 @@ class Presentation(object):
         self.rawcontent = rawcontent
 
         self.ParseMeta()
-        self.SetPalette()
-
-        self.stylefile  = 'styles/sheets/{}.css'.format(self.STYLE)
-        # self.formatfile = 'styles/formats/{}.css'.format(self.FORMAT)
-
-        self.SetFormat()
 
         self.SetStyle()
+        self.SetFormat()
+        self.SetPalette()
+
         self.GetFrames()
 
     def ParseMeta(self):
@@ -105,13 +97,14 @@ class Presentation(object):
         for key, value in meta:
             setattr(self, key, value)
 
-        ## Parse additional style classes:
-        match_ = MatchBetween('CUSTOMSTYLES--', '--CUSTOMSTYLES', self.rawcontent)
-        if match_[0]:
-            customstyles = match_[0]
-        else:
-            customstyles = ''
-        self.customstyles = customstyles
+    def WriteStyle(self, bracket, styles, prefix='--'):
+        ## Writes user-defined styles into a custom style sheet.
+        placeholder = '    {}{}: {};\n'
+        with open(self.stylefile, 'a') as f:
+            f.write('{} {{\n'.format(bracket))
+            for name, value in styles:
+                f.write(placeholder.format(prefix, name, value))
+            f.write('}\n')
 
     def SetFormat(self):
         width  = int(float(self.FORMAT.split(':')[0])/2.54*float(self.QUALITY))
@@ -119,13 +112,21 @@ class Presentation(object):
 
         self.width  = width
         self.height = height
-        self.format = (
-             ':root {\n'
-            +'\t --totalwidth: {}px;\n'.format(width)
-            +'\t--totalheight: {}px;\n'.format(height)
-            +'\t --fontfactor: {};\n'.format(self.FONTSIZE)
-            +'}\n'
-        )
+        # self.format = (
+        #      ':root {\n'
+        #     +'\t --totalwidth: {}px;\n'.format(width)
+        #     +'\t--totalheight: {}px;\n'.format(height)
+        #     +'\t --fontfactor: {};\n'.format(self.FONTSIZE)
+        #     +'}\n'
+        # )
+        #
+        # print(width, height, self.FONTSIZE)
+
+        self.WriteStyle(':root', [
+            ('totalwidth',  '{}px'.format(width)),
+            ('totalheight', '{}px'.format(height)),
+            ('fontfactor', self.FONTSIZE)
+        ])
 
     def SetPalette(self):
         ## Writes the user-defined style options from the input file meta
@@ -143,7 +144,6 @@ class Presentation(object):
 
         colors = []
         for name, color in zip(
-            # ['box', 'text', 'color', 'highlight', 'back'],
             ['grad1', 'grad2', 'grad3', 'text', 'highlight'],
             palette.split('--')[1:]
         ):
@@ -151,23 +151,21 @@ class Presentation(object):
 
         self.WriteStyle(':root', colors)
 
-    def WriteStyle(self, bracket, styles, prefix='--'):
-        ## Writes user-defined styles into a custom style sheet.
-        placeholder = '    {}{}: {};\n'
-        with open('styles/sheets/customs.css', 'a') as f:
-            f.write('{} {{\n'.format(bracket))
-            for name, value in styles:
-                f.write(placeholder.format(prefix, name, value))
-            f.write('}\n')
-
     def SetStyle(self):
-        ## Read stylesheet:
-        with open(self.stylefile, 'r') as sf:
-            stylesheet = sf.read()
-        # with open(self.formatfile, 'r') as sf:
-        #     formatsheet = sf.read()
-        with open(self.customstylefile, 'r') as cf:
-            customstylesheet = cf.read()
+
+        self.stylefile  = '{}/parse.css'.format(parsedir)
+
+        imports = (
+              '@import url("{}/styles/sheets/palettes.css");\n'.format(neftoxdir)
+            + '@import url("{}/styles/sheets/elements.css");\n'.format(neftoxdir)
+            + '@import url("{}/styles/sheets/layouts.css");\n'.format(neftoxdir)
+            + '@import url("../styles.css");\n\n'
+        )
+
+        if 'parse.css' in os.listdir(parsedir):
+            os.remove(self.stylefile)
+        with open(self.stylefile, 'w') as sf:
+            sf.write(imports)
 
         ## Determine whether format is a layflat (meaning the binding technique
         ## common for modern photo books, essentially doubles the page width)
@@ -192,7 +190,6 @@ class Presentation(object):
 
         ## Insert style sheet and meta info into layouts:
         rules = [
-            # ('{STYLE}', '{}styles/{}/{}.css'.format(self.dir, self.STYLE.split(':')[0], self.STYLE.split(':')[1])),
             ('{TITLE}',  self.TITLE),
             ('{AUTHOR}', self.AUTHOR),
             ('{DATE}',   self.DATE),
@@ -202,13 +199,6 @@ class Presentation(object):
                 layout.content = layout.content.replace(rule[0], rule[1])
 
         self.layouts = layouts
-
-        ## Set custom styles:
-        for _loc in [self.customstylefile, '{}/custom.css'.format(parsedir)]:
-            with open(_loc, 'a') as f:
-                f.write(self.format)
-                f.write(self.customstyles)
-                f.write('\n')
 
     def FindFont(self):
         ## Locate chosen font, and revert to default if not found:
@@ -338,7 +328,7 @@ class Presentation(object):
             '<body>\n'
         )
 
-        HTML = HTML.replace('{STYLE}', '{}styles/sheets/{}.css'.format(self.dir, self.STYLE.split(':')[0]))
+        HTML = HTML.replace('{STYLE}', './parse.css'.format(self.dir, self.STYLE.split(':')[0]))
 
         for framenumber, frame in self.frames.items():
             HTML += '\n<!-- FRAME #{} -->\n'.format(str(framenumber))

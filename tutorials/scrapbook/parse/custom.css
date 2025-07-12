@@ -2408,3 +2408,20 @@ div.background {
 div.cell {
     padding: 1.5%;
 }
+:root {
+	 --totalwidth: 1661px;
+	--totalheight: 2338px;
+	 --fontfactor: 1;
+}
+div.custom {
+    width: 50%;
+   border: 1px solid red;
+}
+
+div.background {
+    background: linear-gradient(to bottom right, rgba(var(--grad3), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad1), 1) 100%);
+}
+
+div.cell {
+    padding: 1.5%;
+}

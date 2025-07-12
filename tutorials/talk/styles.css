@@ -1,0 +1,17 @@
+table {
+         width: 100%;
+    text-align: center;
+        /* border: 1px solid black; */
+}
+table.colortable {
+    border-collapse: collapse;
+}
+table.colortable td {
+             width: calc( 100% / 5 );
+            height: calc( var(--totalheight) - 260px );
+            /* height: calc(var(--totalheight) - var(--titleheight) - 8 * var(--boxmargin) - var(--boxpadding)); */
+    vertical-align: bottom;
+    padding-bottom: 20px;
+       font-weight: bold;
+            border: 1.5px solid rgba(var(--text), 1);
+}
