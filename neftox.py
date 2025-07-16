@@ -82,7 +82,7 @@ class Presentation(object):
             'BINDINGOFFSET'     : '0px',
             'LAYFLAT'           : 'false',
             'PALETTE'           : 'beach',
-            'FONT'              : 'Gentium',
+            'FONT'              : '',
             'FONTSIZE'          : '1',
             'BROWSER'           : 'firefox',
         }
@@ -112,20 +112,12 @@ class Presentation(object):
 
         self.width  = width
         self.height = height
-        # self.format = (
-        #      ':root {\n'
-        #     +'\t --totalwidth: {}px;\n'.format(width)
-        #     +'\t--totalheight: {}px;\n'.format(height)
-        #     +'\t --fontfactor: {};\n'.format(self.FONTSIZE)
-        #     +'}\n'
-        # )
-        #
-        # print(width, height, self.FONTSIZE)
 
         self.WriteStyle(':root', [
-            ('totalwidth',  '{}px'.format(width)),
-            ('totalheight', '{}px'.format(height)),
-            ('fontfactor', self.FONTSIZE)
+            ('totalwidth',    '{}px'.format(width)),
+            ('totalheight',   '{}px'.format(height)),
+            ('fontfactor',    self.FONTSIZE),
+            ('bindingoffset', self.BINDINGOFFSET),
         ])
 
     def SetPalette(self):
@@ -159,6 +151,7 @@ class Presentation(object):
               '@import url("{}/styles/sheets/palettes.css");\n'.format(neftoxdir)
             + '@import url("{}/styles/sheets/elements.css");\n'.format(neftoxdir)
             + '@import url("{}/styles/sheets/layouts.css");\n'.format(neftoxdir)
+            + '@import url("{}/styles/sheets/{}.css");\n'.format(neftoxdir, self.STYLE)
             + '@import url("../styles.css");\n\n'
         )
 
@@ -221,52 +214,41 @@ class Presentation(object):
 
             return fonts
 
-        fonts = LocateFontFile(
-            # self.FONT, int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
-            # self.FONT, int(float(self.FONTSIZE))
-            self.FONT, 1
-        )
-        try:
-            assert fonts['regular'].getname()
-        except:
-            print('FONT not found, reverting to default font.')
-            fonts = LocateFontFile(
-                # self.defaultmeta['FONT'], int(float(self.FONTSIZE)*float(self.styles['fontfactor']))
-                self.defaultmeta['FONT'], int(float(self.FONTSIZE))
+        if self.FONT == '':
+            pass
+        else:
+            fonts = LocateFontFile(self.FONT, 1)
+            try:
+                assert fonts['regular'].getname()
+            except:
+                print('FONT not found, reverting to default font.')
+                fonts = LocateFontFile(
+                    self.defaultmeta['FONT'], int(float(self.FONTSIZE))
+                )
+                self.FONT = self.defaultmeta['FONT']
+
+            fonts['bold'] = (fonts['regular'] if not fonts['bold'] else fonts['bold'])
+
+            self.WriteStyle(':root', [
+                ('fontfamily', self.FONT),
+            ])
+
+            ## Some fonts have to be enabled in the style sheet:
+            self.WriteStyle('@font-face', [
+                    ('font-family', self.FONT),
+                    ('src', 'url(\'{}\')'.format(fonts['path'])),
+                ],
+                prefix = ''
             )
-            self.FONT = self.defaultmeta['FONT']
 
-        ## The default font needs to be manually installed before first use:
-        if self.FONT==self.defaultmeta['FONT'] and fonts['regular'] == None:
-            print(
-                '\nDefault font not found.'
-                # 'If this is your first use, please '
-                # 'install it from neftox/styles/fonts/\n.'
-            )
-
-        fonts['bold'] = (fonts['regular'] if not fonts['bold'] else fonts['bold'])
-
-        self.WriteStyle(':root', [
-            ('fontfamily', self.FONT),
-            ('bindingoffset', self.BINDINGOFFSET),
-        ])
-
-        ## Some fonts have to be enabled in the style sheet:
-        self.WriteStyle('@font-face', [
-                ('font-family', self.FONT),
-                ('src', 'url(\'{}\')'.format(fonts['path'])),
-            ],
-            prefix = ''
-        )
-
-        self.fonts = fonts
+            self.fonts = fonts
 
     def GetFrames(self):
         ## Attributes that are being passed over to the frame class:
         passattr = [
             ('inputdir',         inputdir),
             # ('styles',           self.styles),
-            ('fonts',            self.fonts),
+            # ('fonts',            self.fonts),
             ('layouts',          self.layouts),
             ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
             ('LAYFLAT',          self.LAYFLAT),

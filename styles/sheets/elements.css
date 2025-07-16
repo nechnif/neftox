@@ -1,9 +1,38 @@
 /* stylesheet for neftox scrapbooks */
 
 
-/*--- TEXT STYLES ----------------------------------------------------------- */
+/* --- POSITIONING ------------------------------------------------------ */
+.topleft {
+     position: absolute;
+          top: 0%;
+         left: 0%;
+    transform: translate(-0%, -0%);
+}
+.topright {
+     position: absolute;
+          top: 0%;
+        right: 0%;
+}
+.bottomleft {
+     position: absolute;
+       bottom: 0%;
+         left: 0%;
+}
+.bottomright {
+     position: absolute;
+       bottom: 0%;
+        right: 0%;
+}
+.centermiddle {
+     position: absolute;
+          top: 50%;
+         left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-div.abs { position: absolute; }
+
+
+/*--- TEXT STYLES ----- ------------------------------------------------- */
 
 /* Wrap text inside a circle (not as easy as it sounds): */
 div.circletext {
@@ -185,6 +214,8 @@ figure img {
     border-radius: 50%;
 }
 
+
+
 /* Simple frames with shadow */
 figure.framing {
           box-shadow: var(--boxshadow02);
@@ -198,6 +229,7 @@ figure.framing figcaption {
     position: absolute;
          top: 102%;
 }
+
 
 
 /* Masking tape */
@@ -266,6 +298,7 @@ figure.tape.pink::after   { filter: hue-rotate(-50deg); }
 figure.tape.violet::after { filter: hue-rotate(-100deg); }
 
 
+
 /* Polaroid effect */
 figure.polaroid {
               --polw: calc( var(--em) * 20 );
@@ -290,6 +323,8 @@ figure.polaroid figcaption {
          /* margin-top: -3px; */
 }
 
+
+
 /* Drawn borders: */
 figure.dborder img { box-shadow: var(--boxshadow01); }
 figure.dborder.plain {
@@ -308,6 +343,8 @@ figure.dborder.wavy {
     border-image-outset: calc( var(--em) * 0.1 );
 }
 
+
+
 /* Photo borders: */
 figure.pborder img {
     box-shadow: 0 0 0 0;
@@ -322,6 +359,7 @@ figure.pborder.old02 {
            border-image: url(../images/borders/border_old02.png) 5% round;
     border-image-outset: 0;
 }
+
 
 
 /* Drawn corners */
@@ -353,21 +391,6 @@ img.corner.bottomright {
 }
 
 
-/* Fabric borders */
-/* figure.fborder {
-    box-shadow: 1px 1px 15px 1px rgba(50, 50, 50, 0.5);
-}
-figure.fborder img {
-    box-shadow: 1px 1px 2px 1px rgba(50, 50, 50, 0.5);
-}
-figure.fborder.kloeppel {
-                 border: 70px solid transparent;
-           border-image: url(../images/borders/kloeppel_01.png) 90 round;
-    border-image-outset: 10px 6px 15px 3px;
-             box-sizing: border-box;
-       background-color: #fff9f3;
-} */
-
 
 /* Passepartouts */
 figure.passepartout {
@@ -389,6 +412,7 @@ figure.passepartout.oval {
 }
 
 
+
 /* Rubber stamps */
 figure.stamp img {
     filter: opacity(80%);
@@ -396,6 +420,7 @@ figure.stamp img {
 img.stamp {
     filter: opacity(80%);
 }
+
 
 
 /* Paper clips */
@@ -459,10 +484,12 @@ figure.clip.r::after {
 }
 
 
+
 /* Stickers and scraps */
 figure.scraps img {
     filter: drop-shadow(2px 2px 2px rgba(var(--text), 1));
 }
+
 
 
 /* Dried pressed flowers */
