@@ -15,7 +15,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 import img2pdf
 
 #-- Global functions and variables -------------------------------------
-global neftoxdir, inputdir, parsedir, equdir
+# global neftoxdir, inputdir, parsedir, equdir
+picnum = 0
 
 def MatchBetween(start, stop, string, len=1):
     ## Grab the content between two custom tags.
@@ -38,6 +39,8 @@ class Presentation(object):
     regex_meta         = r'([A-Z]*) *= *(.*)\n|\r'
     regex_style        = r'\/\* palette PALETTE \*\/\s:root\s*{\n((.|\s)*?)}'
     regex_layout       = r'layout_.*\.html'
+
+    picnum = 0
 
     def __init__(self, inputargs):
 
@@ -69,6 +72,9 @@ class Presentation(object):
 
         self.GetFrames()
 
+        global picnum
+        picnum = 0
+
     def ParseMeta(self):
         ## Default meta data:
         self.defaultmeta = {
@@ -84,17 +90,20 @@ class Presentation(object):
             'PALETTE'           : 'beach',
             'FONT'              : '',
             'FONTSIZE'          : '1',
-            'BROWSER'           : 'firefox',
+            'BROWSER'           : 'chrome',
         }
 
         ## Parse the user meta data:
-        meta = re.findall(
-            Presentation.regex_meta,
-            self.rawcontent.split('<!-- FRAME')[0]
-        )
+        meta  = re.findall(Presentation.regex_meta, self.rawcontent.split('<!-- FRAME')[0])
         for dkey, dvalue in self.defaultmeta.items():
             setattr(self, dkey, dvalue)
         for key, value in meta:
+            setattr(self, key, value)
+
+        with open ('{}/styles/sheets/{}.css'.format(neftoxdir, self.STYLE), 'r') as sf:
+            sheet = sf.read()
+        meta_ = re.findall(Presentation.regex_meta, sheet)
+        for key, value in meta_:
             setattr(self, key, value)
 
     def WriteStyle(self, bracket, styles, prefix='--'):
@@ -470,6 +479,7 @@ class Frame(object):
 
         self.CutComments()
         self.ParseMeta()
+        self.AutomaticFrame()
         self.ParseBackground()
         self.ParseContent()
 
@@ -477,11 +487,11 @@ class Frame(object):
         self.rawframe = re.sub(Frame.regex_comment, '', self.rawframe)
 
     def ParseMeta(self):
-        ## Set default meta data. Default layout has to be the one with the
-        ## most allowed elements (boxes):
+        ## Set default layout, kind and template for the frame to revert to if
+        ## nothing is specified.
         self.KIND     = 'frame'
         self.LAYOUT   = 'plain'
-        # self.BACKGROUND = 'background: linear-gradient(to bottom right, rgba(var(--grad1), 1) 0%, rgba(var(--grad2), 1) 70%, rgba(var(--grad3), 1) 100%);'
+        self.TEMPLATE = ''
 
         ## Parse the user meta data:
         meta = re.findall(Frame.regex_meta, self.rawframe)
@@ -535,13 +545,47 @@ class Frame(object):
 
         self.boxes = boxes
 
+    def AutomaticFrame(self):
+
+        regex_templ = r'TEMPLATE = .*'
+        regex_phide = r'<p class=".*HIDE.*">.*[\s\S]*?<\/p>\n'
+        regex_imsrc = r' src="[^"]*"?'
+
+        if self.TEMPLATE == '':
+            return 0
+
+        else:
+            ## Read the template file and identify template:
+            with open('./templates/input.html', 'r') as tf:
+                content = tf.read()
+
+            frames = content.split('<!-- FRAME')
+            for frame in frames:
+                if 'TEMPLATE = {}\n'.format(self.TEMPLATE) in frame:
+                    template = '<!-- FRAME{}'.format(frame)
+
+            ## Remove/ replace stuff:
+            match_ = re.search(regex_templ, template)
+            template = template.replace(match_.group(0), '<!-- {} -->\n'.format(match_.group(0)))
+
+            matches_ = re.findall(regex_phide, template)
+            for match_ in matches_:
+                template = template.replace(match_, '')
+
+            matches_ = re.findall(regex_imsrc, template)
+            for match_ in matches_:
+                template = template.replace(match_, ' src="{IMG}"')
+
+            ## Print template to tty for copy and paste:
+            print(template)
+
     def InsertIntoLayout(self):
 
         HTML = self.layouts[self.LAYOUT].content
         ## Insert page number, background, etc.:
-        HTML = HTML.replace('{#}',    '{}'.format(self.number))
-        HTML = HTML.replace('{OE}',   '{}'.format(self.OE))
-        HTML = HTML.replace('{page}', '{}'.format(self.page))
+        HTML = HTML.replace('{#}',          '{}'.format(self.number))
+        HTML = HTML.replace('{OE}',         '{}'.format(self.OE))
+        HTML = HTML.replace('{page}',       '{}'.format(self.page))
         HTML = HTML.replace('{background}', '{}'.format(self.background))
 
         ## Determine width of title (used in some layouts):
@@ -584,6 +628,7 @@ class Box(object):
 
     re_style = r'^\s*style *= *\"(.*)\" *'
     re_li    = r'(<li((.|\s)*?)<\/li>)'
+    re_img   = r'{IMG}'
 
     def __init__(self, rawbox, layout, framenumber):
         self.name     = rawbox[0]
@@ -592,6 +637,7 @@ class Box(object):
         self.frame    = framenumber
 
         self.ParseContent(rawbox[1])
+        self.AutomaticImages()
 
         if not self.name=='BOXFOOTER':
             self.Appear()
@@ -646,6 +692,7 @@ class Box(object):
 
         content = DeleteBracket(*Equation.re_brackets, content)
         content = content.strip('\n').strip(' ')
+
         self.content = content
 
     def UpdateContent(self, newcontent, rev=False):
@@ -672,6 +719,25 @@ class Box(object):
             third = first + second
 
         self.content = third
+
+    def AutomaticImages(self):
+
+        def ImgCount():
+            global picnum
+
+            if picnum <= len(pictures) - 1:
+                img = pictures[picnum]
+                picnum += 1
+            else:
+                picnum = 0
+                img = pictures[picnum]
+                picnum += 1
+            return img
+
+        pictures = os.listdir(inputdir+'pictures')
+        autoimg_num = re.findall(Box.re_img, self.content)
+        for n in autoimg_num:
+            self.content = re.sub(Box.re_img, '{}/pictures/{}'.format(inputdir, ImgCount()), self.content, count=1)
 
     def Appear(self):
         ## Boxes are hidden by default. This makes them visible.

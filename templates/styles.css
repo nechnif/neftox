@@ -1,0 +1,21 @@
+:root {
+    --grey: rgba(0, 0, 0, 0.4);
+}
+
+div.frame {
+    /* border-right: 1px dashed gray; */
+}
+div.cell {
+    border: 1px dashed var(--grey);
+}
+
+p.HIDE {
+        padding: 2%;
+          color: var(--grey);
+        z-index: 10;
+    font-family: monospace;
+}
+
+img {
+    filter: saturate(0%) sepia(40%);
+}

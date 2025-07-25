@@ -1,0 +1,29 @@
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/palettes.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/elements.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/layouts.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/simple.css");
+@import url("../styles.css");
+
+:root {
+    --layflat: 2;
+}
+:root {
+    --fontfamily: AmaticSC;
+}
+@font-face {
+    font-family: AmaticSC;
+    src: url('/home/nechnif/.local/share/fonts/AmaticSC-Regular.ttf');
+}
+:root {
+    --totalwidth: 1653px;
+    --totalheight: 1653px;
+    --fontfactor: 1.2;
+    --bindingoffset: 0px;
+}
+:root {
+    --grad1: 219, 219, 219;
+    --grad2: 255, 248, 239;
+    --grad3: 255, 255, 255;
+    --text:  50,  55,  59;
+    --highlight: 255, 109,   0;
+}
