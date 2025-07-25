@@ -3,32 +3,69 @@
 
 /* --- POSITIONING ------------------------------------------------------ */
 .topleft {
+        --rot: 0deg;
      position: absolute;
-          top: 0%;
-         left: 0%;
-    transform: translate(-0%, -0%);
+          top: 5%;
+         left: 5%;
+    transform: translate(-0%, -0%) rotate(var(--rot));
 }
 .topright {
+        --rot: 0deg;
      position: absolute;
-          top: 0%;
-        right: 0%;
+          top: 5%;
+        right: 5%;
+    transform: translate(-0%, -0%) rotate(var(--rot));
 }
-.bottomleft {
+.topcenter {
+        --rot: 0deg;
      position: absolute;
-       bottom: 0%;
-         left: 0%;
+          top: 5%;
+         left: 50%;
+    transform: translate(-50%, -0%) rotate(var(--rot));
 }
-.bottomright {
+.middleleft {
+        --rot: 0deg;
      position: absolute;
-       bottom: 0%;
-        right: 0%;
+          top: 50%;
+         left: 5%;
+    transform: translate(-0%, -50%) rotate(var(--rot));
 }
-.centermiddle {
+.middleright {
+        --rot: 0deg;
+     position: absolute;
+          top: 50%;
+        right: 5%;
+    transform: translate(-0%, -50%) rotate(var(--rot));
+}
+.middlecenter {
+        --rot: 0deg;
      position: absolute;
           top: 50%;
          left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) rotate(var(--rot));
 }
+.bottomleft {
+        --rot: 0deg;
+     position: absolute;
+       bottom: 5%;
+         left: 5%;
+    transform: translate(-0%, -0%) rotate(var(--rot));
+}
+.bottomright {
+        --rot: 0deg;
+     position: absolute;
+       bottom: 5%;
+        right: 5%;
+    transform: translate(-0%, -0%) rotate(var(--rot));
+}
+.bottomcenter {
+       --rot: 0deg;
+    position: absolute;
+      bottom: 5%;
+        left: 50%;
+   transform: translate(-50%, -0%) rotate(var(--rot));
+}
+
 
 
 
@@ -129,8 +166,8 @@ hr {
 :root {
           --shadow01 : rgba(50, 50, 50, 1);
 
-       --boxshadow01 : calc( var(--em) * 0.03 ) calc( var(--em) * 0.03 ) calc( var(--em) * 0.1 ) var(--shadow01);
-       --boxshadow02 : calc( var(--em) * 0.05 ) calc( var(--em) * 0.05 ) calc( var(--em) * 0.1 ) var(--shadow01);
+       --boxshadow01 : calc( var(--em) * 0.01 ) calc( var(--em) * 0.01 ) calc( var(--em) * 0.05 ) var(--shadow01);
+       --boxshadow02 : calc( var(--em) * 0.03 ) calc( var(--em) * 0.03 ) calc( var(--em) * 0.1 ) var(--shadow01);
        --boxshadow03 : calc( var(--em) * 0.07 ) calc( var(--em) * 0.07 ) calc( var(--em) * 0.15 ) var(--shadow01);
        --boxshadow05 : calc( var(--em) * 0.2 ) calc( var(--em) * 0.2 ) calc( var(--em) * 0.3) calc( var(--em) * -0.3 ) var(--shadow01);
 }
@@ -301,7 +338,7 @@ figure.tape.violet::after { filter: hue-rotate(-100deg); }
 
 /* Polaroid effect */
 figure.polaroid {
-              --polw: calc( var(--em) * 20 );
+              --polw: calc( var(--em) * 13 );
                width: var(--polw);
              padding: calc( var(--polw) * 0.055 );
       padding-bottom: 0;

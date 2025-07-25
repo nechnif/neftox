@@ -1,0 +1,18 @@
+/*
+FONT     = HomemadeApple
+FONTSIZE = 0.8
+*/
+
+div.background {
+            --huerot: 220deg;
+    background-image: url(../images/backgrounds/background_paper.jpg);
+     background-size: 600px;
+   background-repeat: repeat;
+              filter: hue-rotate(var(--huerot)) saturate(1) brightness(1.1);
+}
+
+figure.dborder {
+                 border: calc( var(--em) * 0.6 ) solid transparent;
+           border-image: url(../images/borders/border_wavy.png) 70 round;
+    border-image-outset: calc( var(--em) * 0.1 );
+}

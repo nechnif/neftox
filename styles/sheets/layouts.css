@@ -8,6 +8,8 @@ html { box-sizing: border-box; }
 :root {
        --basesize: calc( var(--totalheight) / 50 );
              --em: var(--basesize);
+           --emd2: calc( var(--basesize) / 2 );
+          --emd10: calc( var(--basesize) / 10 );
        --fontsize: calc( var(--totalheight) * var(--fontfactor) / 50 );
     --footerwidth: calc( var(--totalwidth) - var(--bindingoffset) );
    --footerheight: calc( 3 * var(--fontsize) );

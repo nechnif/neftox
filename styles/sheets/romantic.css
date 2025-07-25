@@ -1,27 +1,20 @@
+/*
+FONT = CedarvilleCursive
+*/
+
 div.background {
-    background-image: url(/home/nechnif/LOCAL/Projects/neftox/styles/images/backgrounds/paper-01-SQ.jpg);
-     background-size: 400px;
-   background-repeat: repeat;
-              filter: saturate(90%);
-}
-div.background {
-    background-image: url(/home/nechnif/LOCAL/Projects/neftox/styles/images/backgrounds/paper-01-SQ.jpg);
+    background-image: url(../images/backgrounds/paper-01-SQ.jpg);
               filter: saturate(80%);
      background-size: 12%;
 }
+
 div.cell.BOXFOOTER {
     color: rgba(var(--text), 0.8);
     font-family: Dancing Script;
 }
 
-img.placeholder {
-    filter: saturate(0%) sepia(40%);
-}
-
-:root {
-    --fontfamily: CedarvilleCursive;
-}
-@font-face {
-    font-family: CedarvilleCursive;
-    src: url('/usr/share/fonts/googlefonts/Cedarville_Cursive/CedarvilleCursive-Regular.ttf');
+figure.dborder {
+                 border: calc( var(--em) * 0.6 ) solid transparent;
+           border-image: url(../images/borders/border_wavy.png) 70 round;
+    border-image-outset: calc( var(--em) * 0.1 );
 }
