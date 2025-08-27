@@ -13,8 +13,8 @@ BROWSER          = chrome
 <!-- AmaticSC, CedarvilleCursive, Charmonman, HomemadeApple, -->
 
 
-<!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = plain -->
+<!-- FRAME ---------------------------------------------------------- -->
+TEMPLATE = plain
 LAYOUT = plain
 
 BOX1--
@@ -23,7 +23,7 @@ BOX1--
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox -->
+TEMPLATE = onebox
 LAYOUT = onebox
 
 BOX1--
@@ -32,7 +32,7 @@ BOX1--
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = smallbox -->
+TEMPLATE = smallbox
 LAYOUT = smallbox
 
 BOX1--
@@ -41,7 +41,7 @@ BOX1--
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = columns -->
+TEMPLATE = columns
 LAYOUT = columns
 
 BOX1--
@@ -54,7 +54,7 @@ BOX2--
 --BOX2
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = rows -->
+TEMPLATE = rows
 LAYOUT = rows
 
 BOX1--
@@ -76,28 +76,45 @@ LAYOUT = plain
 
 
 
+
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-fig01-01 -->
+TEMPLATE = plain-passp-01
+LAYOUT = plain
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: plain-passp-01</p>
+
+    <figure class="middlecenter passepartout oval" style="width: 65%;">
+        <img src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg">
+    </figure>
+
+    <p class="bottomcenter headline center shadow" style="bottom: 8%;">
+        Scrapbook 2025
+    </p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig01-01
 LAYOUT = onebox
 
 BOX1--
     <p class="HIDE topleft">TEMPLATE: onebox-fig01-01</p>
 
     <figure class="middlecenter boxshadow" style="width: 55%;">
-        <img class="" src="../pictures/letter_8x10-01.jpg">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg">
         <figcaption>caption</figcaption>
     </figure>
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-fig01-02 -->
+TEMPLATE = onebox-fig01-02
 LAYOUT = onebox
 
 BOX1--
     <p class="HIDE topleft">TEMPLATE: onebox-fig01-02</p>
 
     <figure class="middleright boxshadow" style="width: 55%;">
-        <img class="" src="../pictures/letter_8x10-01.jpg">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg">
         <figcaption>caption</figcaption>
     </figure>
 
@@ -109,37 +126,37 @@ BOX1--
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-fig02-02 -->
+TEMPLATE = onebox-fig02-02
 LAYOUT = onebox
 
 BOX1--
     <p class="HIDE topleft">TEMPLATE: onebox-fig02-01</p>
 
     <figure class="middlecenter" style="width: 75%;">
-        <img class="boxshadow" src="../pictures/letter_1x2-01.jpg" style="width: 48%; float: left;">
-        <img class="boxshadow" src="../pictures/letter_1x2-02.jpg" style="width: 48%; float: left; margin-left: var(--em);">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_1x2-01.jpg" style="width: 48%; float: left;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_1x2-02.jpg" style="width: 48%; float: left; margin-left: var(--em);">
         <figcaption style="margin-top: 98%;">caption</figcaption>
     </figure>
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-fig03-01 -->
+TEMPLATE = onebox-fig03-01
 LAYOUT = onebox
 
 BOX1--
     <p class="HIDE topleft">TEMPLATE: onebox-fig03-01</p>
 
     <figure class="middlecenter" style="width: 65%;">
-        <img class="boxshadow" src="../pictures/letter_SQ-01.jpg" style="width: 48%; float: left;">
-        <img class="boxshadow" src="../pictures/letter_SQ-01.jpg" style="width: 48%; float: left; margin-left: var(--em); margin-bottom: var(--em);">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg" style="width: 48%; float: left;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg" style="width: 48%; float: left; margin-left: var(--em); margin-bottom: var(--em);">
         <br>
-        <img class="boxshadow" src="../pictures/letter_2x1-01.jpg" style="float: left; width: calc( 96% + var(--em) );">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_2x1-01.jpg" style="float: left; width: calc( 96% + var(--em) );">
         <figcaption style="margin-top: 98%;">caption</figcaption>
     </figure>
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-fig04-01 -->
+TEMPLATE = onebox-fig04-01
 LAYOUT = onebox
 
 BOX1--
@@ -147,15 +164,15 @@ BOX1--
 
     <div class="middleright" style="width: 60%; right: 2%;">
         <figure style="width: 48%; margin-top: 0%; float: left;">
-            <img class="boxshadow" src="../pictures/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
             <br>
-            <img class="boxshadow" src="../pictures/letter_8x10-02.jpg" style="">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
             <figcaption>caption</figcaption>
         </figure>
         <figure style="width: 48%; margin-top: 20%; float: left; left: var(--em);">
-            <img class="boxshadow" src="../pictures/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
             <br>
-            <img class="boxshadow" src="../pictures/letter_8x10-02.jpg" style="">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
             <figcaption>caption</figcaption>
         </figure>
     </div>
@@ -166,7 +183,7 @@ BOX1--
 --BOX1
 
 <!-- FRAME ------------------------------------------------------------>
-<!-- TEMPLATE = onebox-pol-01 -->
+TEMPLATE = smallbox-pol-01
 LAYOUT = smallbox
 
 BOX1--
@@ -179,7 +196,7 @@ BOX1--
     </p>
 
     <figure class="topleft polaroid" style="top: 20%; left: -7%;">
-        <img class="" src="../pictures/letter_8x10-02.jpg" style="">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
         <figcaption> </figcaption>
         <p class="bottomcenter" style="width: 90%; bottom: -65%;">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -188,7 +205,7 @@ BOX1--
     </figure>
 
     <figure class="middlecenter polaroid" style="--rot: 2deg;">
-        <img class="" src="../pictures/letter_8x10-01.jpg" style="">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="">
         <figcaption> </figcaption>
         <p class="bottomcenter" style="width: 90%; bottom: -65%;">
             Vivamus elementum, augue vel fermentum efficitur, ex orci interdum arcu.
@@ -197,7 +214,7 @@ BOX1--
     </figure>
 
     <figure class="topright polaroid" style="top: 15%; right: -7%;">
-        <img class="" src="../pictures/letter_8x10-02.jpg" style="">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
         <figcaption> </figcaption>
         <p class="bottomcenter" style="width: 90%; bottom: -65%;">
             Fusce facilisis sapien ac orci convallis, nec dictum sapien vestibulum.

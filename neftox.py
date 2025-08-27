@@ -82,6 +82,7 @@ class Presentation(object):
             'AUTHOR'            : '',
             'DATE'              : '',
             'STYLE'             : 'simple',
+            'TEMPLATE'          : 'square',
             'FORMAT'            : '21:21',
             'QUALITY'           : '300',
             'PAGENUMBEROFFSET'  : '0',
@@ -258,6 +259,7 @@ class Presentation(object):
             ('inputdir',         inputdir),
             # ('styles',           self.styles),
             # ('fonts',            self.fonts),
+            ('prestemp',         self.TEMPLATE),
             ('layouts',          self.layouts),
             ('PAGENUMBEROFFSET', self.PAGENUMBEROFFSET),
             ('LAYFLAT',          self.LAYFLAT),
@@ -548,7 +550,8 @@ class Frame(object):
     def AutomaticFrame(self):
 
         regex_templ = r'TEMPLATE = .*'
-        regex_phide = r'<p class=".*HIDE.*">.*[\s\S]*?<\/p>\n'
+        regex_phide = r'<p class=".*HIDE.*">.*<\/p>\n'
+        # regex_phide = r'<p class=".*HIDE.*">.*[\s\S]*?<\/p>\n'
         regex_imsrc = r' src="[^"]*"?'
 
         if self.TEMPLATE == '':
@@ -556,7 +559,7 @@ class Frame(object):
 
         else:
             ## Read the template file and identify template:
-            with open('./templates/input.html', 'r') as tf:
+            with open('./templates/{}/input.html'.format(self.prestemp), 'r') as tf:
                 content = tf.read()
 
             frames = content.split('<!-- FRAME')

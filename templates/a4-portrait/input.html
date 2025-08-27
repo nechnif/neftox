@@ -1,0 +1,225 @@
+<!-- meta -------------------------------------------------------------->
+TITLE            = Templates
+TEMPLATE         = a4-portrait
+FORMAT           = 21:29.7
+QUALITY          = 200
+STYLE            = simple
+BINDINGOFFSET    = 0px
+LAYFLAT          = true
+PAGENUMBEROFFSET = 1
+BROWSER          = chrome
+
+
+<!-- Good fonts: -->
+<!-- AmaticSC, CedarvilleCursive, Charmonman, HomemadeApple, -->
+
+
+<!-- FRAME ---------------------------------------------------------- -->
+TEMPLATE = plain
+LAYOUT = plain
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: plain<br>LAYOUT: plain</p>
+    <p class="HIDE topright">BOX1</p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox<br>LAYOUT: onebox</p>
+    <p class="HIDE topright">BOX1</p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = smallbox
+LAYOUT = smallbox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: smallbox<br>LAYOUT: smallbox</p>
+    <p class="HIDE topright">BOX1</p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = columns
+LAYOUT = columns
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: columns<br>LAYOUT: columns</p>
+    <p class="HIDE topright">BOX1</p>
+--BOX1
+
+BOX2--
+    <p class="HIDE topright">BOX2</p>
+--BOX2
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = rows
+LAYOUT = rows
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: rows<br>LAYOUT: rows</p>
+    <p class="HIDE topright">BOX1</p>
+--BOX1
+
+BOX2--
+    <p class="HIDE topright">BOX2</p>
+--BOX2
+
+
+
+
+<!-- FRAME ------------------------------------------------------------>
+LAYOUT = plain
+
+
+
+
+
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = plain-passp-01
+LAYOUT = plain
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: plain-passp-01</p>
+
+    <figure class="middlecenter passepartout oval" style="width: 65%;">
+        <img src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg">
+    </figure>
+
+    <p class="bottomcenter headline center shadow" style="bottom: 8%;">
+        Scrapbook 2025
+    </p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig01-01
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox-fig01-01</p>
+
+    <figure class="middlecenter boxshadow" style="width: 55%;">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg">
+        <figcaption>caption</figcaption>
+    </figure>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig01-02
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox-fig01-02</p>
+
+    <figure class="middleright boxshadow" style="width: 55%;">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg">
+        <figcaption>caption</figcaption>
+    </figure>
+
+    <figure class="bottomcenter dborder" style="width: 85%; height: 40%; z-index: -1;">
+        <p class="topleft" style="width: 28%; text-align: left; margin-left: -1%;">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque volutpat tortor vel malesuada ullamcorper. Vivamus elementum.
+        </p>
+    </figure>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig02-02
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox-fig02-01</p>
+
+    <figure class="middlecenter" style="width: 75%;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_1x2-01.jpg" style="width: 48%; float: left;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_1x2-02.jpg" style="width: 48%; float: left; margin-left: var(--em);">
+        <figcaption style="margin-top: 98%;">caption</figcaption>
+    </figure>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig03-01
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox-fig03-01</p>
+
+    <figure class="middlecenter" style="width: 65%;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg" style="width: 48%; float: left;">
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_SQ-01.jpg" style="width: 48%; float: left; margin-left: var(--em); margin-bottom: var(--em);">
+        <br>
+        <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_2x1-01.jpg" style="float: left; width: calc( 96% + var(--em) );">
+        <figcaption style="margin-top: 98%;">caption</figcaption>
+    </figure>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = onebox-fig04-01
+LAYOUT = onebox
+
+BOX1--
+    <p class="HIDE topleft">TEMPLATE: onebox-fig04-01</p>
+
+    <div class="middleright" style="width: 60%; right: 2%;">
+        <figure style="width: 48%; margin-top: 0%; float: left;">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
+            <br>
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
+            <figcaption>caption</figcaption>
+        </figure>
+        <figure style="width: 48%; margin-top: 20%; float: left; left: var(--em);">
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="margin-bottom: var(--em);">
+            <br>
+            <img class="boxshadow" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
+            <figcaption>caption</figcaption>
+        </figure>
+    </div>
+
+    <p class="middleleft" style="width: 30%; text-align: justify;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque volutpat tortor vel malesuada ullamcorper. Vivamus elementum, augue vel fermentum efficitur, ex orci interdum arcu, sit amet vehicula libero magna nec tortor. Fusce facilisis sapien ac orci convallis, nec dictum sapien vestibulum.
+    </p>
+--BOX1
+
+<!-- FRAME ------------------------------------------------------------>
+TEMPLATE = smallbox-pol-01
+LAYOUT = smallbox
+
+BOX1--
+    <p class="HIDE topleft" style="top: -10%; left: -10%;">TEMPLATE: onebox-pol-01</p>
+
+    <p class="headline huge center" style="width: 100%; top: 0%;">
+        <span class="huge" style="margin-right: 4%;">*</span>
+        <span class="">Großer Titel</span>
+        <span class="huge" style="margin-left: 4%; transform: rotate(90deg);"><sub>*</sub></span>
+    </p>
+
+    <figure class="topleft polaroid" style="top: 20%; left: -7%;">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
+        <figcaption> </figcaption>
+        <p class="bottomcenter" style="width: 90%; bottom: -65%;">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </p>
+        <img class="bottomcenter" src="$NEFTOX/styles/images/stamps/flowers-03.png" style="height: 50%; width: auto; --rot: 90deg; bottom: -110%;">
+    </figure>
+
+    <figure class="middlecenter polaroid" style="--rot: 2deg;">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-01.jpg" style="">
+        <figcaption> </figcaption>
+        <p class="bottomcenter" style="width: 90%; bottom: -65%;">
+            Vivamus elementum, augue vel fermentum efficitur, ex orci interdum arcu.
+        </p>
+        <img class="topcenter" src="$NEFTOX/styles/images/stamps/flowers-02.png" style="height: 50%; width: auto; --rot: -85deg; top: -45%;">
+    </figure>
+
+    <figure class="topright polaroid" style="top: 15%; right: -7%;">
+        <img class="" src="$NEFTOX/styles/images/placeholders/letter_8x10-02.jpg" style="">
+        <figcaption> </figcaption>
+        <p class="bottomcenter" style="width: 90%; bottom: -65%;">
+            Fusce facilisis sapien ac orci convallis, nec dictum sapien vestibulum.
+        </p>
+        <img class="bottomright" src="$NEFTOX/styles/images/stamps/flowers-04.png" style="height: 45%; width: auto; --rot: -85deg; bottom: -100%; right: 20%;">
+    </figure>
+--BOX1
