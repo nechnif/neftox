@@ -167,79 +167,60 @@ span.footer.page.even {
 }
 
 
+div.row {
+    display: flex;
+}
 div.cell.columns-fleft.BOX1 {
-         float: left;
          width: calc( 50% - var(--footerheight) );
-        height: calc(var(--totalheight) - 4 * var(--boxmargin));
-   margin-left: var(--footerheight);
+        height: var(--totalheight);
     visibility: hidden;
 }
-
 div.cell.columns-fleft.BOX2 {
-         float: right;
          width: 50%;
-        height: calc(var(--totalheight) - 4 * var(--boxmargin));
+        height: var(--totalheight);
     visibility: hidden;
 }
 div.cell.rows-fleft.BOX1 {
          float: right;
-         width: calc(var(--totalwidth) - var(--footerheight) - 6 * var(--boxmargin));
-        height: calc( ( var(--totalheight) / 2 ) - 4 * var(--boxmargin) - var(--boxpadding));
+         width: calc(var(--totalwidth) - var(--footerheight));
+        height: calc( var(--totalheight) / 2 );
+    margin-top: calc( -1 * var(--footerheight) );
     visibility: hidden;
 }
 div.cell.rows-fleft.BOX2 {
          float: right;
-         width: calc(var(--totalwidth) - var(--footerheight) - 6 * var(--boxmargin));
-        /* height: calc((var(--totalheight) - 5 * var(--boxmargin)) * 0.5); */
+         width: calc(var(--totalwidth) - var(--footerheight));
         height: calc( var(--totalheight) / 2 );
     visibility: hidden;
 }
-
 div.cell.BOXFOOTER-left {
-           float: left;
-           width: var(--footerheight);
-          /* height: calc(var(--totalheight) - 4 * var(--boxmargin)); */
-           color: rgba(var(--text), 0.7);
+         width: var(--footerheight);
+         color: rgba(var(--text), 0.7);
 }
 
-div.BOXFOOTER-left span.footer {
-             display: block;
-            /* position: relative; */
+div.BOXFOOTER-left table.footer {
     transform-origin: top left;
                 left: 0;
                  top: 0;
-        /* padding-left: var(--boxpadding); */
-           transform: rotate(-90deg) translateX(calc(-100% + 2 * var(--boxmargin))) translateY(calc(-2 * var(--boxmargin)));
-               width: calc(var(--totalheight) - 4 * var(--boxmargin));
+           transform: rotate(-90deg) translateX(-100%);
+               width: var(--totalheight);
               height: var(--footerheight);
          line-height: var(--footerheight);
+         border-collapse: collapse;
 }
-div.BOXFOOTER-left span.page {
-     display: block;
-    position: relative;
- margin-left: calc(-1 * var(--boxpadding));
-  margin-top: calc(var(--totalheight) - 4 * var(--boxmargin) - var(--boxpadding) - 2 * var(--footerwidth));
-       width: var(--footerwidth);
-      height: var(--footerwidth);
-  text-align: center;
- line-height: var(--footerwidth);
- font-weight: bold;
+table.footer td {
+    /* border: 1px solid red; */
 }
-
-div.BOXFOOTER-left span.date {
-         position: absolute;
-            right: 0;
-    /* padding-right: calc(1.5 * var(--boxpadding)); */
-    padding-right: 2%;
+table.footer td.page {
+         width: calc( var(--footerheight) * 1.5 );
+        height: var(--footerheight);
+    text-align: center;
+     transform: rotate(90deg);
 }
-
-div.BOXFOOTER-left span.title {
-     position: absolute;
-        width: calc(var(--totalheight) * 0.5);
-   text-align: center;
-  font-weight: bold;
+table.footer td.title {
+    font-weight: bold;
 }
-
-div.BOXFOOTER-left span.author {
-     padding-left: 2%;
+table.footer td.date {
+     min-width: 15%;
+    text-align: center;
 }

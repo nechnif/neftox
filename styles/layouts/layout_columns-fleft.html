@@ -4,21 +4,25 @@
 
     <div class="frame" id="frame-{#}">
 
-        <div class="cell BOXFOOTER-left" {BOXFOOTER style}>
-            <span class="footer">
-                <span class="author">{AUTHOR}</span>
-                <span class="title">{TITLE}</span>
-                <span class="date">{DATE}</span>
-            </span>
-            <span class="page">{page}</span>
-        </div>
+        <div class="row">
 
-        <div class="cell columns-fleft BOX1" {BOX1 style}>
-            {BOX1}
-        </div>
+            <div class="cell BOXFOOTER-left" {BOXFOOTER style}>
+                <table class="footer"><tr class="footer">
+                    <td class="page">{page}</td>
+                    <td class="author">{AUTHOR}</td>
+                    <td class="title">{TITLE}</td>
+                    <td class="date">{DATE}</td>
+                </tr></table>
+            </div>
 
-        <div class="cell columns-fleft BOX2" {BOX2 style}>
-            {BOX2}
+            <div class="cell columns-fleft BOX1" {BOX1 style}>
+                {BOX1}
+            </div>
+
+            <div class="cell columns-fleft BOX2" {BOX2 style}>
+                {BOX2}
+            </div>
+
         </div>
 
     </div>

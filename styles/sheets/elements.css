@@ -144,6 +144,7 @@ hr {
 }
 
 /* General text and list styles: */
+.huger {  font-size: calc(var(--fontsize) * 2.5); }
 .huge {  font-size: calc(var(--fontsize) * 2); }
 .large { font-size: calc(var(--fontsize) * 1.2); }
 .normal { font-size: calc(var(--fontsize) * 1); }
@@ -164,12 +165,14 @@ hr {
 
 /* Shadows */
 :root {
-          --shadow01 : rgba(50, 50, 50, 1);
+          --shadow01 : rgba(50, 50, 50, 0.3);
+          --shadow02 : rgba(50, 50, 50, 0.5);
+          --shadow03 : rgba(50, 50, 50, 1);
 
-       --boxshadow01 : calc( var(--em) * 0.01 ) calc( var(--em) * 0.01 ) calc( var(--em) * 0.05 ) var(--shadow01);
-       --boxshadow02 : calc( var(--em) * 0.03 ) calc( var(--em) * 0.03 ) calc( var(--em) * 0.1 ) var(--shadow01);
-       --boxshadow03 : calc( var(--em) * 0.07 ) calc( var(--em) * 0.07 ) calc( var(--em) * 0.15 ) var(--shadow01);
-       --boxshadow05 : calc( var(--em) * 0.2 ) calc( var(--em) * 0.2 ) calc( var(--em) * 0.3) calc( var(--em) * -0.3 ) var(--shadow01);
+       --boxshadow01 : calc( var(--em) * 0.01 ) calc( var(--em) * 0.01 ) calc( var(--em) * 0.05 ) var(--shadow03);
+       --boxshadow02 : calc( var(--em) * 0.03 ) calc( var(--em) * 0.03 ) calc( var(--em) * 0.1 ) var(--shadow03);
+       --boxshadow03 : calc( var(--em) * 0.07 ) calc( var(--em) * 0.07 ) calc( var(--em) * 0.15 ) var(--shadow03);
+       --boxshadow05 : calc( var(--em) * 0.1 ) calc( var(--em) * 0.1 ) calc( var(--em) * 0.3) var(--shadow02);
 }
 
 .shadow {      text-shadow: 0.1vh 0.1vh 0.1vh rgba(var(--text), 1); }
@@ -349,15 +352,13 @@ figure.polaroid img {
         filter: saturate(70%) sepia(20%) blur(0.3px);
     box-shadow: 0 0 0;
 }
-figure.polaroid figcaption {
+figure.polaroid div {
              height: calc( var(--polw) * 0.22 );
             display: flex;
                left: 0;
     justify-content: center;
         align-items: center;
    background-color: white;
-         box-shadow: var(--boxshadow05);
-         /* margin-top: -3px; */
 }
 
 
