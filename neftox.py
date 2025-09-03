@@ -94,18 +94,22 @@ class Presentation(object):
             'BROWSER'           : 'chrome',
         }
 
-        ## Parse the user meta data:
-        meta  = re.findall(Presentation.regex_meta, self.rawcontent.split('<!-- FRAME')[0])
+        ## Parse the default meta data:
         for dkey, dvalue in self.defaultmeta.items():
             setattr(self, dkey, dvalue)
+
+        ## Parse the user meta data:
+        meta  = re.findall(Presentation.regex_meta, self.rawcontent.split('<!-- FRAME')[0])
         for key, value in meta:
             setattr(self, key, value)
 
+        ## Parse the style default meta data:
         with open ('{}/styles/sheets/{}.css'.format(neftoxdir, self.STYLE), 'r') as sf:
             sheet = sf.read()
         meta_ = re.findall(Presentation.regex_meta, sheet)
         for key, value in meta_:
-            setattr(self, key, value)
+            if key not in [k_[0] for k_ in meta]:
+                setattr(self, key, value)
 
     def WriteStyle(self, bracket, styles, prefix='--'):
         ## Writes user-defined styles into a custom style sheet.
