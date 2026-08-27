@@ -6,7 +6,12 @@ html { box-sizing: border-box; }
 
 /* Widths and heights */
 :root {
-       --basesize: calc( var(--totalheight) / 50 );
+     --pagewidth: calc( var(--totalwidth) + 2 * var(--bleed) );
+    --pageheight: calc( var(--totalheight) + 2 * var(--bleed) );
+     /* --pagewidth: calc( var(--totalwidth) ); */
+     /* --pagewidth: calc( var(--totalwidth) + var(--bleed) ); */
+    /* --pageheight: calc( var(--totalheight) + 2 * var(--bleed) ); */
+
              --em: var(--basesize);
            --emd2: calc( var(--basesize) / 2 );
           --emd10: calc( var(--basesize) / 10 );
@@ -19,30 +24,60 @@ html { box-sizing: border-box; }
 }
 
 body {
-        margin: 0;
-       padding: 0;
     background: white;
    font-family: var(--fontfamily);
-         width: calc(var(--totalwidth) * var(--layflat));
-     /* min-width: calc(var(--totalwidth) * var(--layflat)); */
-     /* border: 1px solid blue; */
+        margin: 0;
+       padding: 0;
+         width: calc( var(--pagewidth) * var(--layflat));
+         /* width: calc(var(--totalwidth) * var(--layflat)); */
+         /* min-width: calc(var(--totalwidth) * var(--layflat)); */
+         /* border: 1px solid blue; */
 }
 
 
 /* Specify the frame containers. */
+
+div.bleed {
+    /* The div.bleed is for printing purposes. Photobook software sometimes crops the images so that a margin around becomes necessary. Specify BLEED in the input file. */
+    position: absolute;
+       width: 0px;
+      height: 0px;
+}
+div.bleed.even {
+    /* background: red; */
+}
+div.bleed.odd {
+    left: calc( 2 * var(--pagewidth) );
+    /* background: blue; */
+}
+
 div.frame {
             width: calc(var(--totalwidth) - var(--bindingoffset));
            height: var(--totalheight);
-          /* padding: calc(var(--boxpadding) / 2); */
         clip-path: border-box;
-    margin-bottom: 1%;
-           /* border: 1px solid red; */
+           /* margin: var(--bleed); */
+           margin: var(--bleed) calc( 2 * var(--bleed) );
+           /* margin: var(--bleed) 0; */
+    margin-bottom: calc( var(--bleed) + 1% );
+    /* border: 1px solid red; */
 }
+/* div.frame {
+            width: calc( var(--totalwidth) - var(--bindingoffset) - 2 * var(--bleed) );
+           height: calc( var(--totalheight) - 2 * var(--bleed));
+          margin: var(--bleed);
+        clip-path: border-box;
+           border: 1px solid red;
+} */
 div.frame.even {
-    margin-left: var(--bindingoffset);
+    /* margin-left: var(--bindingoffset); */
+    /* margin-left: calc( var(bleed) + var(--bindingoffset) ); */
+    margin-left: calc( 2 * var(bleed) + var(--bindingoffset) );
+    margin-right: 0;
 }
 div.frame.odd {
-    margin-right: var(--bindingoffset);
+    /* margin-right: var(--bindingoffset) ); */
+    margin-left: 0;
+    margin-right: calc( 2 * var(bleed) + var(--bindingoffset) );
 }
 
 div.frame.layflat {
@@ -63,8 +98,8 @@ div.frame.layflat.odd {
 
 div.background {
         position: absolute;
-           width: calc( var(--totalwidth) * var(--layflat) ) ;
-          height: var(--totalheight);
+           width: calc( var(--pagewidth) * var(--layflat) );
+          height: var(--pageheight);
  /* background-size: cover; */
          z-index: -100;
          /* border: 1px solid green; */
@@ -169,6 +204,11 @@ span.footer.page.even {
 
 div.row {
     display: flex;
+}
+div.cell.onebox-fleft.BOX1 {
+         width: calc( 100% - var(--footerheight) );
+        height: var(--totalheight);
+    visibility: hidden;
 }
 div.cell.columns-fleft.BOX1 {
          width: calc( 50% - var(--footerheight) );
