@@ -17,6 +17,8 @@
 :root {
     --totalwidth: 1653px;
     --totalheight: 1653px;
+    --basesize: 32px;
+    --aspectratio: 1.0;
     --fontfactor: 1.2;
     --bindingoffset: 0px;
 }

@@ -2,6 +2,7 @@
 
 import numpy as np
 import os, sys
+import argparse
 import re
 import subprocess
 import copy
@@ -50,7 +51,8 @@ class Presentation(object):
 
         ## Extract raw input content:
         global inputdir, parsedir, equdir
-        inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
+        # inputdir = os.path.join(os.path.abspath(inputargs[1]), '')
+        inputdir = os.path.join(os.path.abspath(inputargs.directory), '')
         parsedir = os.path.join('{}parse'.format(inputdir), '')
         equdir = os.path.join(parsedir, 'equations', '')
         if not os.path.isdir(parsedir):
@@ -59,7 +61,7 @@ class Presentation(object):
             for equ in os.listdir(equdir):
                 os.remove(equdir+equ)
 
-        addargs  = inputargs[2:]
+        # addargs  = inputargs[2:]
         with open(inputdir+'/input.html', 'r') as f:
             rawcontent = f.read()
         self.rawcontent = rawcontent
@@ -87,6 +89,7 @@ class Presentation(object):
             'QUALITY'           : '300',
             'PAGENUMBEROFFSET'  : '0',
             'BINDINGOFFSET'     : '0px',
+            'BLEED'             : '0px',
             'LAYFLAT'           : 'false',
             'PALETTE'           : 'beach',
             'FONT'              : '',
@@ -126,12 +129,22 @@ class Presentation(object):
 
         self.width  = width
         self.height = height
+        # self.bleedwidth  = width
+        self.bleedwidth  = width  - 2*int(self.BLEED.replace('px', ''))
+        self.bleedheight = height - 2*int(self.BLEED.replace('px', ''))
+        basesize    = int(height/50.) - int(height/50.) % 2
+        # print(width, height)
+        # print(self.bleedwidth, self.bleedheight)
+        # print(basesize)
 
         self.WriteStyle(':root', [
-            ('totalwidth',    '{}px'.format(width)),
-            ('totalheight',   '{}px'.format(height)),
+            ('totalwidth',    '{}px'.format(self.bleedwidth)),
+            ('totalheight',   '{}px'.format(self.bleedheight)),
+            ('basesize',      '{}px'.format(basesize)),
+            ('aspectratio',   '{}'.format(float(width)/float(height))),
             ('fontfactor',    self.FONTSIZE),
             ('bindingoffset', self.BINDINGOFFSET),
+            ('bleed',         self.BLEED),
         ])
 
     def SetPalette(self):
@@ -342,7 +355,7 @@ class Presentation(object):
         with open(parsedir+'output.html', 'w') as pf:
             pf.write(self.HTML)
 
-    def CreatePreview(self):
+    def CreatePreview(self, frameid):
         ## Creating "screenshots" of the HTML preview pages using
         ## Selenium. Hoping to support different browers in the future.
 
@@ -352,7 +365,9 @@ class Presentation(object):
         windowsize = {
             # 'width'  : int(self.styles['totalwidth'])*df,
             # 'height' : int(self.styles['totalheight']),
-            'width'  : self.width,
+            # 'width'  : self.width,
+            # 'height' : self.height,
+            'width'  : self.width * df,
             'height' : self.height,
         }
 
@@ -406,6 +421,12 @@ class Presentation(object):
 
         for f in range(len(self.frames)):
 
+            if (frameid != -1) and (f != frameid):
+                continue
+
+            if (df==2) and (f%2==0):
+                continue
+
             png = '{}parse/output_{:02d}.png'.format(inputdir, f)
 
             newframe = driver.find_element("id", 'frame-{}'.format(f))
@@ -424,7 +445,8 @@ class Presentation(object):
             ## Convert the images to jpg, which reduces size of output
             ## PDF significantly:
             jpg = png.replace('.png', '.jpg')
-            Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
+            # Image.open(png).save(jpg, 'JPEG', optimize=True, quality=95)
+            Image.open(png).convert('RGB').save(jpg, 'JPEG', optimize=True, quality=95)
             imgfiles.append(jpg)
             os.remove(png)
 
@@ -484,6 +506,7 @@ class Frame(object):
             setattr(self, name, pr)
 
         self.CutComments()
+        self.ReplacePlaceholders()
         self.ParseMeta()
         self.AutomaticFrame()
         self.ParseBackground()
@@ -491,6 +514,16 @@ class Frame(object):
 
     def CutComments(self):
         self.rawframe = re.sub(Frame.regex_comment, '', self.rawframe)
+
+    def ReplacePlaceholders(self):
+        ## Replace placeholders for page numbers etc.; sometimes it can be quite
+        ## useful to have them in the content as well, not just the layout.
+
+        self.rawframe = self.rawframe.replace('{#}',       '{}'.format(int(self.number)))
+        self.rawframe = self.rawframe.replace('{#mod2}',   '{}'.format(int(self.number % 2)))
+        self.rawframe = self.rawframe.replace('{#mod4}',   '{}'.format(int(self.number % 4)))
+        self.rawframe = self.rawframe.replace('{#mod4/2}', '{}'.format(int(self.number / 2 % 4)))
+        self.rawframe = self.rawframe.replace('{#mod8}',   '{}'.format(int(self.number % 8)))
 
     def ParseMeta(self):
         ## Set default layout, kind and template for the frame to revert to if
@@ -725,6 +758,8 @@ class Box(object):
         else:
             third = first + second
 
+        # third = first + second
+
         self.content = third
 
     def AutomaticImages(self):
@@ -829,33 +864,31 @@ class Equation(object):
         )
 
 
-#--- Parse arguments ---------------------------------------------------
+##--- Parse arguments ---------------------------------------------------
+parser = argparse.ArgumentParser()
 
-def CheckArguments(args):
-    try:
-        assert 'input.html' in os.listdir(sys.argv[1])
-        for arg in sys.argv[2:]:
-            assert arg in [item for sublist in possargs for item in sublist]
-        pass
-    except:
-        print('\nUsage:\n./neftox.py <presentation directory> [optional args]\n')
-        raise ValueError('Bad or wrong number of arguments.')
+parser.add_argument('directory')
+parser.add_argument('--html', '--HTML', action='store_true')
+parser.add_argument('--preview', action='store_true')
+parser.add_argument('--f', default=-1)
+parser.add_argument('--pdf', '--PDF', action='store_true')
 
-#--- Make it so! -------------------------------------------------------
-possargs = [
-    ['--html', '--HTML'],
-    ['--preview'],
-    ['--pdf', '--PDF'],
-]
+args = parser.parse_args()
 
-CheckArguments(sys.argv)
-pres = Presentation(sys.argv)
+# Check that input.html exists in the presentation directory
+if not os.path.isfile(os.path.join(args.directory, 'input.html')):
+    parser.error(
+    f"'{args.directory}' does not contain input.html"
+    )
 
-if sys.argv[2] in ['--html', '--HTML']:
+##--- Make it so! -------------------------------------------------------
+pres = Presentation(args)
+
+if args.html == True:
     pres.CreateHTML()
-if sys.argv[2] in ['--preview']:
+if args.preview == True:
     pres.CreateHTML()
-    pres.CreatePreview()
-if sys.argv[2] in ['--pdf', '--PDF']:
+    pres.CreatePreview(int(args.f))
+if args.pdf == True:
     pres.CreateHTML()
     pres.CreatePDF()
