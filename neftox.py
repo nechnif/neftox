@@ -456,14 +456,20 @@ class Presentation(object):
         self.imgfiles = list(np.sort(imgfiles))
 
     def CreatePDF(self):
-        ## Convert images to PDF presentation, and delete preview.
-        self.CreatePreview()
+        ## Convert images to PDF presentation.
+
+        # self.CreatePreview()
+        imgfiles = []
+        for f in sorted(os.listdir(parsedir)):
+            if '.jpg' in f:
+                imgfiles.append(parsedir+f)
 
         print('Converting to PDF ...')
 
         outfile = '{}.pdf'.format(os.path.basename(os.path.normpath(inputdir)))
         with open(inputdir+outfile, 'wb') as f:
-            f.write(img2pdf.convert(self.imgfiles))
+            # f.write(img2pdf.convert(self.imgfiles))
+            f.write(img2pdf.convert(imgfiles))
 
         # for imgfile in self.imgfiles:
         #     os.remove(imgfile)

@@ -1,6 +1,7 @@
 @import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/palettes.css");
 @import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/elements.css");
 @import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/layouts.css");
+@import url("/home/nechnif/LOCAL/Projects/neftox//styles/sheets/simple.css");
 @import url("../styles.css");
 
 :root {
@@ -8,7 +9,6 @@
 }
 :root {
     --fontfamily: Gentium;
-    --bindingoffset: 0px;
 }
 @font-face {
     font-family: Gentium;
@@ -17,7 +17,11 @@
 :root {
     --totalwidth: 1661px;
     --totalheight: 2338px;
+    --basesize: 46px;
+    --aspectratio: 0.7104362703165098;
     --fontfactor: 1;
+    --bindingoffset: 0px;
+    --bleed: 0px;
 }
 :root {
     --grad1: 219, 219, 219;

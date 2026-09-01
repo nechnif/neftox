@@ -9,7 +9,6 @@
 }
 :root {
     --fontfamily: Gentium;
-    --bindingoffset: 0px;
 }
 @font-face {
     font-family: Gentium;
@@ -18,7 +17,11 @@
 :root {
     --totalwidth: 1259px;
     --totalheight: 708px;
+    --basesize: 14px;
+    --aspectratio: 1.7782485875706215;
     --fontfactor: 1.7;
+    --bindingoffset: 0px;
+    --bleed: 0px;
 }
 :root {
     --grad1: 219, 219, 219;

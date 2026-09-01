@@ -204,6 +204,7 @@ hr {
 .larger { font-size: calc(var(--fontsize) * 1.5); }
 .large { font-size: calc(var(--fontsize) * 1.2); }
 .normal { font-size: calc(var(--fontsize) * 1); }
+.subnormal { font-size: calc(var(--fontsize) * 0.9); }
 .small { font-size: calc(var(--fontsize) * 0.8); }
 .tiny {  font-size: calc(var(--fontsize) * 0.6); }
 .tinyer {  font-size: calc(var(--fontsize) * 0.4); }
